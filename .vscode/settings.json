@@ -1,0 +1,7 @@
+{
+    "search.exclude": {
+        "**/old": true,
+        "**/storage": true
+    }
+    
+}
