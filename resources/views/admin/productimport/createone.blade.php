@@ -111,9 +111,18 @@
 											</div>
 										</div>
 										<div class="col-lg-12">
-											<input type="text" class="input-field" placeholder="{{ __(" Enter Product
-												Link") }}" name="affiliate_link" required="">
+											<input type="text" class="input-field" placeholder="{{ __(" Enter Product Link") }}" name="affiliate_link" required="">
 										</div>
+									</div>
+
+									<div class="moreAffilates">
+										<h5 style="display: none">Other Affiliates</h5>
+
+									</div>
+
+									<div class="row">
+										<a href="javascript:;" id="other_affiliates" class="add-more mt-4 mb-3"><i
+											class="fas fa-plus"></i>Add other Affilates</a>
 									</div>
 
 									<div class="row">
@@ -697,6 +706,12 @@
      $('.selected-image .row').html('');
     $('#geniusform').find('.removegal').val(0);
   });
+
+  const showAffiliateBox = () => {
+	e.preventDefault();
+	alert("helo")
+  }
+
                                         
                                 
   $("#uploadgallery").change(function(){
@@ -762,6 +777,49 @@ $(document).on('click','#size-check',function(){
 	}else{
 		$('#default_stock').removeClass('d-none');
 	}
+})
+
+var count = 0;
+$('#other_affiliates').click(function(){
+	count = count + 1;
+	$('.moreAffilates h5').css({display:'block'});
+	$('.moreAffilates').append(
+		`<hr/><div class="row"><div class="col-lg-12"><div class="left-area">
+												<h4 class="heading">{{ __("Affilate From") }}* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<select class="" required name="affiliates_from_others[${count}]">
+												<option value="" selected disabled>Select Affiliate From</option>
+												@foreach($affiliates_from as $affiliate)
+													<option value="{{ $affiliate->id }}">{{$affiliate->name}}</option>
+												@endforeach
+											</select>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">{{ __("Product Affiliate Link") }}* </h4>
+												<p class="sub-heading">{{ __("(External Link)") }}</p>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input type="text" class="input-field" placeholder="{{ __(" Enter Product Link") }}" name="affiliate_link_others[${count}]" required="">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="left-area">
+												<h4 class="heading">{{ __("Product Price") }}* </h4>
+											</div>
+										</div>
+										<div class="col-lg-12">
+											<input type="text" class="input-field" placeholder="{{ __("Enter Product Price") }}" name="affiliate_price_others[${count}]" required="">
+										</div>
+									</div>`
+	)
 })
 
 </script>
