@@ -1,4 +1,4 @@
-<div class="main-nav d-lg-block d-none py-3">
+<div class="main-nav bg-light d-lg-block d-none py-3">
     <div class="container">
         <div class="row">
             <div class="col-xl-4 col-md-4">
@@ -13,7 +13,7 @@
             <div class="col-xl-8 col-md-8">
                 <div class="margin-right-1 d-flex align-items-center justify-content-end h-100">
                     <div class="product-search-one flex-grow-1 global-search touch-screen-view">
-                        <form id="searchForm" class="search-form form-inline search-pill-shape" action="{{ route('front.category', [Request::route('category'),Request::route('subcategory'),Request::route('childcategory')]) }}" method="GET">
+                        <form id="searchForm" class="search-form border_black    form-inline search-pill-shape" action="{{ route('front.category', [Request::route('category'),Request::route('subcategory'),Request::route('childcategory')]) }}" method="GET">
 
                             @if (!empty(request()->input('sort')))
                             <input type="hidden" name="sort" value="{{ request()->input('sort') }}">
@@ -24,7 +24,7 @@
                             @if (!empty(request()->input('maxprice')))
                             <input type="hidden" name="maxprice" value="{{ request()->input('maxprice') }}">
                             @endif
-                            <input type="text" id="prod_name" class="col form-control search-field " name="search" placeholder="Search Products..." value="{{ request()->input('search') }}">
+                            <input type="text" id="prod_name" class="col form-control search-field " name="search" placeholder="Search Product For" value="{{ request()->input('search') }}">
                             <div class=" categori-container select-appearance-none " id="catSelectForm">
                                 <select name="category" class="form-control categoris " id="category_select">
                                     <option selected="">{{ __('All Categories') }}</option>

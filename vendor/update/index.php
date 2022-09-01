@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>GeniusOcean - Script Installer</title>
+    <title>Filsq8 - Script Installer</title>
 
     <!-- Website Font style -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
@@ -20,7 +20,7 @@
 <div class="container">
     <div class="row main">
         <div class="main-login main-center">
-            <h3 class="text-center">GeniusOcean Project Installer</h3>
+            <h3 class="text-center">Filsq8 Project Installer</h3>
             <hr>
             <div class="row">
 
