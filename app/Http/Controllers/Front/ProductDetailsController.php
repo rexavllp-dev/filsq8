@@ -61,6 +61,7 @@ class ProductDetailsController extends FrontBaseController
         }
 
 
+        $other_affiliates = [];
         if ($productt->other_affilates != null) {
             $other_affiliates = unserialize($productt->other_affilates);
             foreach ($other_affiliates as $key => $value) {

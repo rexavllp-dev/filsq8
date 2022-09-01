@@ -410,7 +410,7 @@
 
       <div class="col-lg-3 col-md-4">
 
-        <div class="pro-details-sidebar-item mb-4">
+        <div class="pro-details-sidebar-item mb-2">
           <h6>Other Affiliates</h6>
           @foreach ($other_affiliates as $other)
           <a href={{$other['affliate_link']}} target="_blank">
