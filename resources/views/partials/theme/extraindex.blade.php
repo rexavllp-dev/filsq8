@@ -1,7 +1,7 @@
 
 @if($ps->service == 1)
 
-<section class="info-area">
+<!-- section class="info-area">
         <div class="container">
         <div class="row">
                 @foreach($services as $key => $value)
@@ -25,11 +25,11 @@
         </div>
         </div>
     </section>
-   
+    -->
 
 @endif
 @if($ps->featured_category == 1)
-<section class="featured-categories-wrap">
+<!-- <section class="featured-categories-wrap">
 
 	<div class="container">
 		<div class="featured-categories-header"><div class="featured-categories-text">
@@ -48,12 +48,12 @@
                                 </ul>
                             </div>
                         </div>
-                    </section>
+                    </section> -->
 @endif
 @if($ps->small_banner == 1)
 
 <!-- Banner Area One Start -->
-<section class="banner-section">
+<section class="banner-section mt30">
 	<div class="container">
 
 
@@ -83,7 +83,7 @@
          <div class="row justify-content-center">
              <div class="col-lg-5">
                  <span class="text-secondary pb-2 d-table tagline mx-auto text-uppercase text-center">{{ __('Featured Products') }}</span>
-                 <h2 class="main-title mb-4 text-center text-secondary">{{ __('Our Featured Products') }}</h2>
+                 <h2 class="main-title mb60 text-center text-secondary mb30">{{ __('Our Featured Products') }}</h2>
              </div>
          </div>
          <div class="products product-style-1">
@@ -248,7 +248,7 @@
 
 <!--==================== Top Products Section Start ====================-->
 @if($ps->best_sellers==1)
-<div class="full-row bg-light p-3">
+<div class="full-row bg-white p-3">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-5">
@@ -338,7 +338,7 @@
     <!--==================== Newsleter Section End ====================-->
 @endif
     <!--==================== Footer Section Start ====================-->
-    <footer class="full-row bg-white">
+    <footer class="full-row bg-light">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-6">
@@ -408,33 +408,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-widget widget-nav mb-5">
-                        <h3 class="widget-title mb-4">{{ __('Recent Post') }}</h3>
-                        <ul>
-                            @foreach (DB::table('blogs')->where('language_id',$langg->id)->latest()->limit(3)->get() as $footer_blog)
-                            <li>
-                                <div class="post">
-                                    <div class="post-img">
-                                        <img class="lozad lazy" data-src="{{ asset('assets/images/blogs/'.$footer_blog->photo) }}" alt="">
-                                        </div>
-                                        <div class="post-details">
-                                        <a href="{{ route('front.blogshow',$footer_blog->slug) }}">
-                                            <h4 class="post-title">
-                                                {{mb_strlen($footer_blog->title,'UTF-8') > 45 ? mb_substr($footer_blog->title,0,45,'UTF-8')." .." : $footer_blog->title}}
-                                            </h4>
-                                        </a>
-                                        <p class="date">
-                                            {{ date('M d - Y',(strtotime($footer_blog->created_at))) }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </li>
-
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
+                
             </div>
         </div>
     </footer>

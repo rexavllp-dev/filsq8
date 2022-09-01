@@ -15,21 +15,21 @@
 
           <div class="hover-area">
             @if($prod->product_type == "affiliate")
-            <div class="cart-button">
+         <!--    <div class="cart-button">
                <a href="javascript:;" data-href="{{ $product->affiliate_link }}" class="button add_to_cart_button affilate-btn" data-bs-toggle="tooltip" data-bs-placement="right" title="" data-bs-original-title="{{ __('Add To Cart') }}" aria-label="{{ __('Add To Cart') }}"></a>
-            </div>
+            </div> -->
             @else
             @if($prod->emptyStock())
             <div class="closed">
                <a class="cart-out-of-stock button add_to_cart_button" href="#" title="{{ __('Out Of Stock') }}" ><i class="flaticon-cancel flat-mini mx-auto"></i></a>
             </div>
             @else
-            <div class="cart-button">
+            <!-- <div class="cart-button">
                <a href="javascript:;" data-href="{{ route('product.cart.add',$prod->id) }}" class="add-cart button add_to_cart_button" data-bs-toggle="tooltip" data-bs-placement="right" title="" data-bs-original-title="{{ __('Add To Cart') }}" aria-label="{{ __('Add To Cart') }}"></a>
-            </div>
-            <div class="cart-button buynow">
-                <a  class="button add_to_cart_button add-to-cart-quick" href="javascript:;" data-bs-toggle="tooltip" data-href="{{ route('product.cart.quickadd',$prod->id) }}" data-bs-placement="right" title="{{ __('Buy Now') }}" data-bs-original-title="{{ __('Buy Now') }}"></a>
-            </div>
+            </div> -->
+           <!--  <div class="cart-button buynow">
+                <a  class="button add_to_cart_button" href="javascript:;" data-bs-toggle="tooltip" data-href="{{ route('product.cart.quickadd',$prod->id) }}" data-bs-placement="right" title="{{ __('Buy Now') }}" data-bs-original-title="{{ __('Buy Now') }}"></a>
+            </div> -->
             @endif
             @endif
             @if(Auth::check())
@@ -48,12 +48,6 @@
        </div>
        <div class="product-info">
           <h3 class="product-title"><a href="{{ route('front.product', $prod->slug) }}">{{ $prod->showName() }}</a></h3>
-          <div class="product-price">
-             <div class="price">
-                <ins>{{ $prod->showPrice() }} </ins>
-                <del>{{ $prod->showPreviousPrice() }}</del>
-             </div>
-          </div>
           <div class="shipping-feed-back">
              <div class="star-rating">
                 <div class="rating-wrap">
@@ -61,6 +55,13 @@
                 </div>
              </div>
           </div>
+          <div class="product-price">
+             <div class="price">
+                <ins>{{ $prod->showPrice() }} </ins>
+                <del>{{ $prod->showPreviousPrice() }}</del>
+             </div>
+          </div>
+          
        </div>
     </div>
  </div>

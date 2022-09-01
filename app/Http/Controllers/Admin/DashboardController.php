@@ -238,7 +238,7 @@ class DashboardController extends AdminBaseController
         $src = base_path().'/vendor/update';
         $this->recurse_copy($src,$destination);
         $files = public_path();
-        $bkupname = 'Filsq8-By-GeniusOcean-'.date('Y-m-d').'.zip';
+        $bkupname = 'Filsq8-By-Filsq8-'.date('Y-m-d').'.zip';
 
         $zipper = new \Chumper\Zipper\Zipper;
 

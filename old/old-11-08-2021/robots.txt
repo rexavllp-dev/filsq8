@@ -1,9 +1,0 @@
-User-agent: *
-Allow: /
-Sitemap: https://showpeklowpek.com/sitemap.xml
-Sitemap: https://showpeklowpek.com/sitemap0.xml
-Sitemap: https://showpeklowpek.com/sitemap1.xml
-Sitemap: https://showpeklowpek.com/sitemap2.xml
-Sitemap: https://showpeklowpek.com/sitemap3.xml
-Sitemap: https://showpeklowpek.com/sitemap4.xml
-Sitemap: https://showpeklowpek.com/sitemap5.xml

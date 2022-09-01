@@ -15,57 +15,76 @@
 
 </header>
 @if($ps->slider == 1)
-<section class="hero_area">
-@if($ps->slider == 1)
-
-    @if(count($sliders))
-    <div class="hero_area_slider_wrapper">
-        <div class="hero-area-slider">
-        <div class="position-relative">
-        <!-- <span class="nextBtn"></span>
-        <span class="prevBtn"></span> -->
+    <div class="position-relative">
+        <span class="nextBtn"></span>
+        <span class="prevBtn"></span>
         <section class="home-slider owl-theme owl-carousel">
             @foreach($sliders as $data)
             <div class="banner-slide-item" style="background: url('{{asset('assets/images/sliders/'.$data->photo)}}') no-repeat center center / cover ;">
                 <div class="container">
                     <div class="banner-wrapper-item text-{{ $data->position }}">
                         <div class="banner-content text-dark ">
-                            <h5 class="subtitle text-dark slide-h5 subtitle8" style="font-size: {{$data->subtitle_size}}px; color: {{$data->subtitle_color}}" class="subtitle subtitle{{$data->id}}" data-animation="animated {{$data->subtitle_anime}}">{{$data->subtitle_text}}</h5>
+                            <h5 class="subtitle text-dark slide-h5">{{$data->subtitle_text}}</h5>
 
-                            <h2 class="title text-dark slide-h5 title8" style="font-size: {{$data->title_size}}px; color: {{$data->title_color}}" class="title title{{$data->id}}" data-animation="animated {{$data->title_anime}}">{{$data->title_text}}</h2>
+                            <h2 class="title text-dark slide-h5">{{$data->title_text}}</h2>
 
-                            <p class="slide-h5c text text8" style="font-size: {{$data->details_size}}px; color: {{$data->details_color}}"  class="text text{{$data->id}}" data-animation="animated {{$data->details_anime}}">{{$data->details_text}}</p>
-                            <div class="layer col-sm-12">
-                            <a href="{{$data->link}}" class="cmn--btn " target="_blank">{{ __('SHOP NOW') }}</a>
-                            </div>
+                            <p class="slide-h5">{{$data->details_text}}</p>
+
+                            <a href="{{$data->link}}" class="cmn--btn ">{{ __('SHOP NOW') }}</a>
                         </div>
                     </div>
                 </div>
             </div>
             @endforeach
         </section>
-        </div>
-        </div>    
+    </div>
     @endif
-    <div class="hero-right-area">
-            
 @if($ps->arrival_section == 1)
         <!--==================== Fashion Banner Section Start ====================-->
-        <div class="full-row">
+        <!-- <div class="full-row">
             <div class="container">
                 <div class="fashion-banner-wrapper">
                 @foreach ($arrivals as $key=>$arrival)
 
-                <div class="col-sm-12 banner">
-                   
+                <div class="row row-cols-lg-2 row-cols-1 justify-content-between">
+                    <div class="col">
                         <div class="banner-wrapper hover-img-zoom custom-class-121">
                             <div class="banner-image overflow-hidden transation">
                                 <a href="{{ route('front.category') }}"><img class="lazy" data-src="{{ $arrival->photo ?  asset('assets/images/arrival/'.$arrival->photo): "" }}" alt="Banner Image"></a>
-                            </div>                            
+                            </div>
+                            <div class="banner-content position-absolute">
+                                <div class="product-tag" style="font-size: 15px;text-transform: uppercase; color: var(--theme-secondary-color); letter-spacing: 3px;"><span>{{ __('Men Collection') }}</span></div>
+                                <h2 style="margin: 10px 0 20px;"><a href="{{ route('front.category') }}" class="text-dark mb-10 d-block">{{ __('New Autumn Arrival 2021') }}</a></h2>
+                                <a href="{{ route('front.category') }}" class="btn-link-left-line">{{ __('Shop Now') }}</a>
+                            </div>
                         </div>
 
-                    
-                   
+                    </div>
+                    <div class="col hide1">
+                        <div class="products-avilable-number fact-counter">
+                            @if($loop->first)
+                            <div class="mb-30 count wow fadeIn" data-wow-duration="300ms">
+                                <div class="counting d-table">
+                                    <div>
+                                        <span class="count-num" data-speed="3000" data-stop="{{ $products->count() }}">0</span>
+                                        <span>+</span>
+                                        <span class="title">@lang('Products For You')</span>
+                                    </div>
+                                </div>
+                            </div>
+                            @elseif($loop->last)
+                            <div class="mb-30 count wow fadeIn counting-bottom" data-wow-duration="300ms">
+                                <div class="counting d-table">
+                                    <div>
+                                        <span class="count-num" data-speed="3000" data-stop="{{ $ratings->count()>0 ? $ratings->count() : '2156' }}">0</span>
+                                        <span>+</span>
+                                        <span class="title">@lang('Feedback Given By Customer')</span>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
                 </div>
 
 
@@ -73,13 +92,8 @@
                 @endforeach
             </div>
             </div>
-        </div>
+        </div> -->
         <!--==================== Fashion Banner Section End ====================-->
-@endif
-
-    </div>
-</section>
-    @endif
 @endif
 
 
@@ -119,15 +133,15 @@
 
 @endsection
 @section('script')
-	<script>
-		let checkTrur = 0;
-		$(window).on('scroll', function(){
+    <script>
+        let checkTrur = 0;
+        $(window).on('scroll', function(){
 
-		if(checkTrur == 0){
-			$('#extraData').load('{{route('front.extraIndex')}}');
-			checkTrur = 1;
-		}
-		});
+        if(checkTrur == 0){
+            $('#extraData').load('{{route('front.extraIndex')}}');
+            checkTrur = 1;
+        }
+        });
         var owl = $('.home-slider').owlCarousel({
         loop: true,
         nav: false,
@@ -138,7 +152,6 @@
         animateIn: 'fadeInDown',
         animateOut: 'fadeOutUp',
         mouseDrag: false,
-        
     })
     $('.nextBtn').click(function() {
         owl.trigger('next.owl.carousel', [300]);
@@ -146,5 +159,5 @@
     $('.prevBtn').click(function() {
         owl.trigger('prev.owl.carousel', [300]);
     })
-	</script>
+    </script>
 @endsection
