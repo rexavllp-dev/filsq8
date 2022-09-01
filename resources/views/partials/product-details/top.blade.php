@@ -414,7 +414,7 @@
           <h6>Other Affiliates</h6>
           @foreach ($other_affiliates as $other)
           <a href={{$other['affliate_link']}} target="_blank">
-            <div class="pro-details-sidebar-item mt-3">
+            <div class="pro-details-sidebar-item mt-3 p-0">
               <img src="{{asset('assets/logos/'.$other['affliate_from'])}}" style="width:70px;"/>
               <p>KWD {{$other['affliate_price']}}</p>
             </div>
