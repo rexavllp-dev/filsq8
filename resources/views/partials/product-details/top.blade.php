@@ -2,14 +2,15 @@
   <div class="container">
     <div class="row single-product-wrapper">
       <div class="col-12 col-lg-4 mb-4 mb-lg-0">
-        <div class="product-images overflow-hidden">
+        <div class="product-images overflow-hidden border border-grey p-3">
           <div class="images-inner">
             <div
               class="woocommerce-product-gallery woocommerce-product-gallery--with-images woocommerce-product-gallery--columns-4 images"
               data-columns="4" style="opacity: 1; transition: opacity 0.25s ease-in-out 0s;">
               <figure class="woocommerce-product-gallery__wrapper">
                 <div class="bg-light">
-                  <img id="single-image-zoom"
+                  {{-- <img id="single-image-zoom" --}}
+                  <img id=""
                     src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}"
                     alt="Thumb Image"
                     data-zoom-image="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}" />
@@ -18,7 +19,7 @@
                 <div id="gallery_09" class="product-slide-thumb">
                   <div class="owl-carousel four-carousel dot-disable nav-arrow-middle owl-mx-5">
                     @foreach($productt->galleries as $gal)
-                    <div class="item">
+                    <div class="item border border-grey p-1">
                       <a class="active" href="{{asset('assets/images/galleries/'.$gal->photo)}}"
                         data-image="{{asset('assets/images/galleries/'.$gal->photo)}}"
                         data-zoom-image="{{asset('assets/images/galleries/'.$gal->photo)}}">
@@ -82,7 +83,8 @@
 
                 <p class="price">
                   <span class="woocommerce-Price-amount amount mr-4">
-                    <bdi><span class="woocommerce-Price-currencySymbol" id="sizeprice">{{ $productt->showPrice()
+                    <bdi><span class="woocommerce-Price-currencySymbol" style="font-size: 2rem; font-weight: bold;"
+                        id="sizeprice">{{ $productt->showPrice()
                         }}</bdi>
                   </span>
                   <del class="ml-3"><small>{{ $productt->showPreviousPrice() }}</small></del>
@@ -272,7 +274,7 @@
                 @if($productt->product_type == "affiliate")
 
                 <li class="addtocart m-1">
-                  <a href="javascript:void();" class="affilate-btn" data-href="{{ $productt->affiliate_link }}"
+                  <a href="javascript:void();" class="affilate-btn" style="background: green !important;" data-href="{{ $productt->affiliate_link }}"
                     data-target="_blank"> {{ __('Buy Now') }}</a>
                 </li>
                 @else
@@ -406,21 +408,24 @@
         </div>
       </div>
 
-      
+
 
       <div class="col-lg-3 col-md-4">
 
+        @if(count($other_affiliates) > 0)
         <div class="pro-details-sidebar-item mb-2">
           <h6>Other Affiliates</h6>
           @foreach ($other_affiliates as $other)
           <a href={{$other['affliate_link']}} target="_blank">
             <div class="pro-details-sidebar-item mt-3 p-0">
-              <img src="{{asset('assets/logos/'.$other['affliate_from'])}}" style="width:70px;"/>
-              <p>KWD {{$other['affliate_price']}}</p>
+              <img src="{{asset('assets/logos/'.$other['affliate_from'])}}" style="width:70px;" class="m-3" />
+              <p style="background:#0fbfdf !important;padding:4px;color:#fff;font-size:1.5rem;font-weight:bold;border-bottom-left-radius: 5px;
+              border-bottom-right-radius: 5px">{{$other['affliate_price']}} <small style="font-weight: 100px;font-size: 12px;">KWD</small> </p> 
             </div>
           </a>
           @endforeach
         </div>
+        @endif
 
         <div class="pro-details-sidebar-item mb-4">
           <span>{{ __('Sold By') }}</span>
@@ -455,8 +460,6 @@
               {{ __('Visit Store') }}
             </a>
           </li>
-
-
           @endif
 
 
