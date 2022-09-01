@@ -60,12 +60,18 @@
 .categoris option:first-child{
   color: #fff ;
 }
+
+.categoris option:checked{
+   color:  #fff;
+}
 .categoris:focus{
   background-color: #0fbfdf  !important;
+   color:  #fff;
 }
 
 .categoris:active{
   background-color: #0fbfdf  !important;
+   color:  #fff;
 }
 
 
