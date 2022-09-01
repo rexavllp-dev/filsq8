@@ -120,7 +120,27 @@ class ImportController extends AdminBaseController
     //*** POST Request
     public function store(Request $request)
     {
-        dd($request);
+
+        // $newAffiliateArray = array(
+        //     $request->get('affiliates_from_others'),
+        //     $request->get('affiliate_link_others'),
+        //     $request->get('affiliate_price_others')
+        // );
+
+        // $indexValue = 0;
+
+        // $affiliatesArray = Array([]);
+        $arr = [];
+        foreach($request->get('affiliates_from_others') as $key => $value){
+
+            $arr[$key]['affliate_from'] =  $value;
+            $arr[$key]['affliate_link'] =  $request->get('affiliate_link_others')[$key];
+            $arr[$key]['affliate_price'] =  $request->get('affiliate_price_others')[$key];
+        }
+
+        $other_affliates = serialize($arr);
+
+
         if($request->image_source == 'file')
         {
             //--- Validation Section
@@ -142,6 +162,7 @@ class ImportController extends AdminBaseController
             $data = new Product;
             $sign = $this->curr;
             $input = $request->all();
+            $input['other_affilates'] = $other_affliates;
 
             // Check File
             if ($file = $request->file('file')) 
@@ -193,7 +214,6 @@ class ImportController extends AdminBaseController
                 $input['ship'] = null;
             } 
 
-           
             // Check Size
             if(empty($request->stock_check ))
             {
@@ -319,14 +339,19 @@ class ImportController extends AdminBaseController
                 else {
                     $prod->slug = Str::slug($data->name,'-').'-'.strtolower($data->sku);               
                 }
-                $fimageData = '/home/showpekl/public_html/assets/images/products/'.$prod->photo;
+
+                $fimageData = 'assets/images/products/'.$prod->photo;
                 if(filter_var($prod->photo,FILTER_VALIDATE_URL)){
                     $fimageData = $prod->photo;
                 }
-
+                // if(public_path('/thumbnails'))
+                // {
+                //     dd(true);
+                // }
+                // dd(public_path());
                 $img = Image::make($fimageData)->resize(285, 285);
                 $thumbnail = time().Str::random(8).'.jpg';
-                $img->save('/home/showpekl/public_html/assets/images/thumbnails/'.$thumbnail);
+                $img->save('assets/images/thumbnails/'.$thumbnail);
                 $prod->thumbnail  = $thumbnail;
                 $prod->update();
 
@@ -340,7 +365,7 @@ class ImportController extends AdminBaseController
                     $name = time().\Str::random(8).str_replace(' ', '', $file->getClientOriginalExtension());
                     $img = Image::make($file->getRealPath())->resize(800, 800);
                     $thumbnail = time().Str::random(8).'.jpg';
-                    $img->save('/home/showpekl/public_html/assets/images/galleries/'.$name);
+                    $img->save('assets/images/galleries/'.$name);
                     $gallery['photo'] = $name;
                     $gallery['product_id'] = $lastid;
                     $gallery->save();

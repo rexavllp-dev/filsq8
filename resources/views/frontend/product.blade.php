@@ -158,7 +158,7 @@
                         <div class="product-wrapper">
                            <div class="product-image">
                               <a href="{{ route('front.product', $item->slug) }}" class="woocommerce-LoopProduct-link"><img class="lazy" data-src="{{ $item->photo ? asset('assets/images/products/'.$item->photo):asset('assets/images/noimage.png')}}" alt="Product Image"></a>
-                              <div class="on-sale">-{{ round(App\Models\Product::find($item->id)->offPercentage()),2}}%</div>
+                              <div class="on-sale">-{{ round(App\Models\Product::find($item->id)->offPercentage(), 2)}}%</div>
                               <div class="hover-area">
                                  @if($item->product_type == "affiliate")
                                  <div class="cart-button">
