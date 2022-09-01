@@ -2,15 +2,16 @@
   <div class="container">
     <div class="row single-product-wrapper">
       <div class="col-12 col-lg-4 mb-4 mb-lg-0">
-        <div class="product-images overflow-hidden border border-grey p-3">
+        <div class="product-images overflow-hidden">
           <div class="images-inner">
             <div
               class="woocommerce-product-gallery woocommerce-product-gallery--with-images woocommerce-product-gallery--columns-4 images"
               data-columns="4" style="opacity: 1; transition: opacity 0.25s ease-in-out 0s;">
-              <figure class="woocommerce-product-gallery__wrapper">
-                <div class="bg-light">
-                  {{-- <img id="single-image-zoom" --}}
-                  <img id=""
+              <figure class="woocommerce-product-gallery__wrapper  ">
+                <div @if(count($productt->galleries)>0)class="bg-light wp-gallery"@endif>
+                  <img id="single-image-zoom"
+                    class="border border-grey "
+                  {{-- <img id="" --}}
                     src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}"
                     alt="Thumb Image"
                     data-zoom-image="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}" />
