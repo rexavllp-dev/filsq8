@@ -66,13 +66,13 @@
                     </div>
                     <div class="widget-ecommerce-contact">
                         @if($ps->phone != null)
-                        <span class="font-medium font-500 text-dark">{{ __('Got Questions ? Call us 24/7!') }}</span>
-                        <div class="text-dark h4 font-400 ">{{ $ps->phone }}</div>
+                        <span class="font-medium font-500 text-dark">{{ __('Got Questions ? ') }}</span>
+                        {{-- <div class="text-dark h4 font-400 ">{{ $ps->phone }}</div> --}}
                         @endif
-                        @if($ps->street != null)
+                        {{-- @if($ps->street != null)
                         <span class="h6 text-secondary mt-2">{{ __('Address :') }}</span>
                         <div class="text-general">{{ $ps->street }}</div>
-                        @endif
+                        @endif --}}
                         @if($ps->email != null)
                         <span class="h6 text-secondary mt-2">{{ __('Email :') }}</span>
                         <div class="text-general">{{ $ps->email }}</div>
@@ -97,7 +97,7 @@
                         </ul>
                 </div>
             </div>
-            <div class="col">
+            {{-- <div class="col">
                 <div class="footer-widget category-widget my-5">
                     <h6 class="widget-title mb-sm-4">{{ __('Customer Care') }}</h6>
                     <ul>
@@ -106,11 +106,11 @@
                             <a href="{{ route('front.index') }}">{{ __('Home') }}</a>
                         </li>
                         @endif
-                        {{-- @if($ps->blog == 1)
+                        @if($ps->blog == 1)
                             <li>
                                 <a href="{{ route('front.blog') }}">{{ __('Blog') }}</a>
                             </li>
-                        @endif --}}
+                        @endif
                         @if($ps->faq == 1)
                             <li>
                                 <a href="{{ route('front.faq') }}">{{ __('Faq') }}</a>
@@ -126,7 +126,7 @@
                         @endif
                     </ul>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="footer-widget media-widget mb-4 mt-2">
                 @foreach(DB::table('social_links')->where('user_id',0)->where('status',1)->get() as $link)

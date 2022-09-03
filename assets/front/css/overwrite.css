@@ -198,9 +198,9 @@
    width: 100px !important;
 }
 
-.header-cart-1 .cart-icon, .header-cart-6 .cart-icon, .search-view > a, .wishlist-view > a, .refresh-view > a, .cart-view > a, .sign-in > a {
+/* .header-cart-1 .cart-icon, .header-cart-6 .cart-icon, .search-view > a, .wishlist-view > a, .refresh-view > a, .cart-view > a, .sign-in > a {
   background-color: #f3f0f0 !important;
-}
+} */
 
 @media only screen and (max-width: 490px) {
    .wp-gallery {

@@ -87,11 +87,11 @@
                     @endif
                     </div>
 
-                    <div class="header-cart-1">
+                    {{-- <div class="header-cart-1">
                         <a href="{{ route('product.compare') }}" class="cart " title="Compare">
                             <div class="cart-icon"><i class="flaticon-shuffle flat-mini mx-auto text-dark"></i> <span class="header-cart-count " id="compare-count">{{ Session::has('compare') ? count(Session::get('compare')->items) : '0' }}</span></div>
                         </a>
-                    </div>
+                    </div> --}}
 
                     <!-- <div class="header-cart-1">
                         <a href="{{ route('front.cart') }}" class="cart has-cart-data" title="View Cart">
@@ -232,7 +232,7 @@
             </div>
             <div class="col-xxl-3 col-xl-4 col-lg-3 col-6 order-lg-3">
                 <div class="d-flex align-items-center justify-content-end h-100 md-py-10">
-                    {{-- <div class="sign-in position-relative font-general my-account-dropdown">
+                    <div class="sign-in position-relative font-general my-account-dropdown">
                         <a href="my-account.html" class="has-dropdown d-flex align-items-center text-dark text-decoration-none" title="My Account">
                             @if (Auth::check())
                             <img class="img-fluid user lazy" data-src="{{ Auth::user()->photo? asset('assets/images/users/'.Auth::user()->photo) : '<i class="flaticon-user-3 flat-mini mx-auto text-dark"></i>' }}" alt="">
@@ -256,7 +256,7 @@
                                 <li><a href="{{ route('user.register') }}"><span class="menu-item-text join" >{{ __('Join') }}</span></a></li>
                                 @endif
                         </ul>
-                    </div> --}}
+                    </div>
                     <div class="wishlist-view header-cart-1 ms-2">
                         @if (Auth::check())
                             <a href="{{ route('user-wishlists') }}" class="cart " title="View Wishlist">

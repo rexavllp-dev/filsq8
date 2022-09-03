@@ -348,24 +348,24 @@
                         </div>
                         <div class="widget-ecommerce-contact">
                             @if($ps->phone != null)
-                            <span class="font-medium font-500 text-dark">{{ __('Got Questions ? Call us 24/7!') }}</span>
-                            <div class="text-dark h4 font-400 ">{{ $ps->phone }}</div>
+                            <span class="font-medium font-500 text-dark">{{ __('Got Questions ? ') }}</span>
+                            {{-- <div class="text-dark h4 font-400 ">{{ $ps->phone }}</div> --}}
                             @endif
-                            @if($ps->street != null)
+                            {{-- @if($ps->street != null)
                             <span class="h6 text-secondary mt-2">{{ __('Address :') }}</span>
                             <div class="text-general">{{ $ps->street }}</div>
-                            @endif
+                            @endif --}}
                             @if($ps->email != null)
                             <span class="h6 text-secondary mt-2">{{ __('Email :') }}</span>
                             <div class="text-general">{{ $ps->email }}</div>
                             @endif
                         </div>
                     </div>
-                    <div class="footer-widget media-widget mb-5">
+                    {{-- <div class="footer-widget media-widget mb-5">
                         @foreach(DB::table('social_links')->where('user_id',0)->where('status',1)->get() as $link)
                         <a href="{{ $link->link }}"><i class="{{ $link->icon }}"></i></a>
                         @endforeach
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-widget category-widget mb-5">
@@ -378,19 +378,19 @@
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-6">
-                    <div class="footer-widget category-widget mb-5">
+                    {{-- <div class="footer-widget category-widget mb-5">
                         <h3 class="widget-title mb-4 xs-mx-none">{{ __('Footer Links') }}</h3>
                         <ul>
-                            {{-- @if($ps->home == 1)
+                            @if($ps->home == 1)
                             <li>
                                 <a href="{{ route('front.index') }}">{{ __('Home') }}</a>
                             </li>
-                            @endif --}}
-                            {{-- @if($ps->blog == 1)
+                            @endif
+                            @if($ps->blog == 1)
                             <li>
                                 <a href="{{ route('front.blog') }}">{{ __('Blog') }}</a>
                             </li>
-                                @endif --}}
+                                @endif
                                 @if($ps->faq == 1)
                             <li>
                                 <a href="{{ route('front.faq') }}">{{ __('Faq') }}</a>
@@ -406,6 +406,11 @@
                                 @endif
 
                         </ul>
+                    </div> --}}
+                    <div class="footer-widget media-widget mb-5">
+                        @foreach(DB::table('social_links')->where('user_id',0)->where('status',1)->get() as $link)
+                        <a href="{{ $link->link }}"><i class="{{ $link->icon }}"></i></a>
+                        @endforeach
                     </div>
                 </div>
                 
