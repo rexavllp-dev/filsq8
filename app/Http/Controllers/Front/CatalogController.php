@@ -214,7 +214,7 @@ class CatalogController extends FrontBaseController
       return view('frontend.ajax.category', $data);
     }
 
-
+    // dd($data['prods'][0]->affilateFrom->name);
     return view('frontend.products', $data);
   }
 

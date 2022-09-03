@@ -42,7 +42,10 @@
                      </div>
                 </div>
                 <div class="product-info">
+                    @if($product->slug)
+                    {{$product->slug}}
                     <h3 class="product-title"><a href="{{ route('front.product', $product->slug) }}">{{ $product->showName() }}</a></h3>
+                    @endif
                     <div class="product-price">
                         <div class="price">
                             <ins>{{ $product->showPrice() }}</ins>
@@ -71,7 +74,7 @@
         <div class="product type-product">
             <div class="product-wrapper">
                 <div class="product-image">
-                    <a href="{{ route('front.product','slug') }}" class="woocommerce-LoopProduct-link"><img class="lazy" data-src="{{ $product->thumbnail ? asset('assets/images/thumbnails/'.$product->thumbnail):asset('assets/images/noimage.png') }}" alt="Product Image"></a>
+                    <a href="{{ route('front.product', $product->slug) }}" class="woocommerce-LoopProduct-link"><img class="lazy" data-src="{{ $product->thumbnail ? asset('assets/images/thumbnails/'.$product->thumbnail):asset('assets/images/noimage.png') }}" alt="Product Image"></a>
                     <div class="hover-area">
                         @if($product->product_type == "affiliate")
                         <div class="cart-button">

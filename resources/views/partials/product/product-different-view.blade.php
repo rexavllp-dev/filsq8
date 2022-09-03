@@ -84,6 +84,11 @@
                      </div>
                   </div>
                </div>
+               @if($product->affilateFrom->name != null)
+               <img src="{{asset('assets/logos/'.$product->affilateFrom->logo)}}" style="width:30%"/>
+               @else
+               <p> - </p>
+               @endif
             </div>
          </div>
       </div>
@@ -175,6 +180,11 @@
                      </div>
                   </div>
                </div>
+               @if($product->affilateFrom->name != null)
+               <img src="{{asset('assets/logos/'.$product->affilateFrom->logo)}}" style="width:30%"/>
+               @else
+               <p> - </p>
+               @endif
             </div>
          </div>
       </div>
@@ -265,6 +275,11 @@
                      </div>
                   </div>
                </div>
+               @if($product->affilateFrom->name != null)
+               <img src="{{asset('assets/logos/'.$product->affilateFrom->logo)}}" style="width:30%"/>
+               @else
+               <p> - </p>
+               @endif
             </div>
          </div>
       </div>

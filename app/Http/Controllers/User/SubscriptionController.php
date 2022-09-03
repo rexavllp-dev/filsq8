@@ -76,6 +76,8 @@ class SubscriptionController extends UserBaseController
             $data['subscription_id'] = $subs->id;
             $data['method'] = 'Free';
             $data['status'] = 1;
+            $data['currency_sign'] = 'KWD';
+            $data['currency_code'] = 'KWD';
             $sub->fill($data)->save();
 
             $data = [

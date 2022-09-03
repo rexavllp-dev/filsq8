@@ -157,22 +157,22 @@ class ProductController extends VendorBaseController
         file_put_contents($path, $image);
                 if($data->photo != null)
                 {
-                    if (file_exists(public_path().'/assets/images/products/'.$data->photo)) {
-                        unlink(public_path().'/assets/images/products/'.$data->photo);
+                    if ('assets/images/products/'.$data->photo) {
+                        unlink('assets/images/products/'.$data->photo);
                     }
                 }
                         $input['photo'] = $image_name;
          $data->update($input);
                 if($data->thumbnail != null)
                 {
-                    if (file_exists(public_path().'/assets/images/thumbnails/'.$data->thumbnail)) {
-                        unlink(public_path().'/assets/images/thumbnails/'.$data->thumbnail);
+                    if (file_exists('assets/images/thumbnails/'.$data->thumbnail)) {
+                        unlink('assets/images/thumbnails/'.$data->thumbnail);
                     }
                 }
 
-        $img = Image::make(public_path().'/assets/images/products/'.$data->photo)->resize(285, 285);
+        $img = Image::make('assets/images/products/'.$data->photo)->resize(285, 285);
         $thumbnail = time().Str::random(8).'.jpg';
-        $img->save(public_path().'/assets/images/thumbnails/'.$thumbnail);
+        $img->save('assets/images/thumbnails/'.$thumbnail);
         $data->thumbnail  = $thumbnail;
         $data->update();
         return response()->json(['status'=>true,'file_name' => $image_name]);
@@ -676,11 +676,13 @@ class ProductController extends VendorBaseController
                     $prod->slug = Str::slug($data->name,'-').'-'.strtolower($data->sku);
                 }
             // Set Thumbnail
-                $img = Image::make(public_path().'/assets/images/products/'.$prod->photo)->resize(285, 285);
+                $img = Image::make('assets/images/products/'.$prod->photo)->resize(285, 285);
                 $thumbnail = time().Str::random(8).'.jpg';
-                $img->save(public_path().'/assets/images/thumbnails/'.$thumbnail);
+                $img->save('assets/images/thumbnails/'.$thumbnail);
                 $prod->thumbnail  = $thumbnail;
+                $prod->affilate_from_id = 9;
                 $prod->update();
+
 
             // Add To Gallery If any
                 $lastid = $data->id;
@@ -696,7 +698,7 @@ class ProductController extends VendorBaseController
                             $name = \PriceHelper::ImageCreateName($file);
                             $img = Image::make($file->getRealPath())->resize(800, 800);
                             $thumbnail = time().Str::random(8).'.jpg';
-                            $img->save(public_path().'/assets/images/galleries/'.$name);
+                            $img->save('assets/images/galleries/'.$name);
                             $gallery['photo'] = $name;
                             $gallery['product_id'] = $lastid;
                             $gallery->save();

@@ -98,6 +98,8 @@ class VendorController extends FrontBaseController
 
         $data['vprods'] = $prods;
 
+        // dd($data['latest_products']);
+
         if($request->ajax()) {
 
             $data['ajax_check'] = 1;
