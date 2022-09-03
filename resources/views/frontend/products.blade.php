@@ -2,23 +2,24 @@
 @section('content')
 @includeIf('partials.global.common-header')
 <!-- breadcrumb -->
-<div class="full-row bg-light overlay-dark py-5" style="background-image: url({{ $gs->breadcrumb_banner ? asset('assets/images/'.$gs->breadcrumb_banner):asset('assets/images/noimage.png') }}); background-position: center center; background-size: cover;">
+<div class="full-row  py-5">
    <div class="container">
-      <div class="row text-center text-white">
+      <div class="row text-center text-white bg-light p-3">
          <div class="col-12">
-            <h3 class="mb-2 text-white">{{ __('Product') }}</h3>
+            <h3 class="mb-2 text-uppercase">{{ __('Product') }}</h3>
          </div>
          <div class="col-12">
             <nav aria-label="breadcrumb">
                <ol class="breadcrumb mb-0 d-inline-flex bg-transparent p-0">
-                  <li class="breadcrumb-item"><a href="{{ route('front.index') }}">{{ __('Home') }}</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">{{ __('Product') }}</li>
+                  <li class="breadcrumb-item"><a class="text-dark" href="{{ route('front.index') }}">{{ __('Home') }}</a></li>
+                  <li class="breadcrumb-item active text-dark" aria-current="page">{{ __('Product') }}</li>
                </ol>
             </nav>
          </div>
       </div>
    </div>
 </div>
+
 <!-- breadcrumb -->
 {{-- There are two product page. you have to give condition here --}}
 <div class="full-row">

@@ -8,16 +8,19 @@
               class="woocommerce-product-gallery woocommerce-product-gallery--with-images woocommerce-product-gallery--columns-4 images"
               data-columns="4" style="opacity: 1; transition: opacity 0.25s ease-in-out 0s;">
               <figure class="woocommerce-product-gallery__wrapper  ">
-                <div @if(count($productt->galleries)>0)class="bg-light wp-gallery"@endif>
-                  <img id="single-image-zoom"
-                    class="border border-grey "
-                  {{-- <img id="" --}}
+                <div id="myBtn">
+                  <img
+                    src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}"
+                    alt="Thumb Image" />
+                  {{-- <img id="single-image-zoom" class="border border-grey img-product" <img id=""
                     src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}"
                     alt="Thumb Image"
                     data-zoom-image="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}" />
+                  --}}
                 </div>
 
-                <div id="gallery_09" class="product-slide-thumb">
+
+                {{-- <div id="gallery_09" class="product-slide-thumb">
                   <div class="owl-carousel four-carousel dot-disable nav-arrow-middle owl-mx-5">
                     @foreach($productt->galleries as $gal)
                     <div class="item border border-grey p-1">
@@ -29,12 +32,51 @@
                     </div>
                     @endforeach
                   </div>
-                </div>
+                </div> --}}
               </figure>
             </div>
           </div>
         </div>
       </div>
+
+      {{-- modal open --}}
+
+      <!-- Trigger/Open The Modal -->
+    {{-- <button >Open Modal</button> --}}
+
+    <!-- The Modal -->
+    <div id="myModal" class="modalBackground">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div id="myBtn">
+          {{-- <img
+            src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}"
+            alt="Thumb Image" /> --}}
+          <img id="single-image-zoom" class="border border-grey img-product text-center" <img id=""
+            src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}"
+            alt="Thumb Image"
+            data-zoom-image="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}" />
+         
+        </div>
+        <div id="gallery_09" class="product-slide-thumb">
+          <div class="owl-carousel four-carousel dot-disable nav-arrow-middle owl-mx-5">
+            @foreach($productt->galleries as $gal)
+            <div class="item border border-grey p-1">
+              <a class="active" href="{{asset('assets/images/galleries/'.$gal->photo)}}"
+                data-image="{{asset('assets/images/galleries/'.$gal->photo)}}"
+                data-zoom-image="{{asset('assets/images/galleries/'.$gal->photo)}}">
+                <img src="{{asset('assets/images/galleries/'.$gal->photo)}}" alt="Thumb Image" />
+              </a>
+            </div>
+            @endforeach
+          </div>
+        </div>
+      </div>
+
+    </div>
+
 
       <div class="col-12 col-lg-5 col-md-8">
         <div class="summary entry-summary">
@@ -143,7 +185,7 @@
             </div>
             @if ($productt->stock_check == 1)
             @if(!empty($productt->size))
-            <div class="product-size">
+            <div class="product-size mb-5">
               <p class="title">{{ __('Size :') }}</p>
               <ul class="siz-list">
                 @foreach(array_unique($productt->size) as $key => $data1)
@@ -186,11 +228,11 @@
             {{-- PRODUCT COLOR SECTION ENDS --}}
             @else
             @if(!empty($productt->size_all))
-            <div class="product-size" data-key="false">
+            <div class="product-size mb-3" data-key="false">
               <p class="title">{{ __('Size :') }}</p>
               <ul class="siz-list">
                 @foreach(array_unique(explode(',',$productt->size_all)) as $key => $data1)
-                <li class="{{ $loop->first ? 'active' : '' }}" data-key="{{ str_replace(' ','',$data1) }}">
+                <li class="{{ $loop->first ? 'active mt-2' : 'mt-2' }}" data-key="{{ str_replace(' ','',$data1) }}">
                   <span class="box">
                     {{ $data1 }}
                     <input type="hidden" class="size" value="{{$data1}}">
@@ -202,7 +244,7 @@
             </div>
             @endif
             @if(!empty($productt->color_all))
-            <div class="product-color" data-key="false">
+            <div class="product-color py-3" data-key="false">
               <div class="title">{{ __('Color :') }}</div>
               <ul class="color-list">
 
@@ -275,8 +317,8 @@
                 @if($productt->product_type == "affiliate")
 
                 <li class="addtocart m-1">
-                  <a href="javascript:void();" class="affilate-btn" style="background: green !important;" data-href="{{ $productt->affiliate_link }}"
-                    data-target="_blank"> {{ __('Buy Now') }}</a>
+                  <a href="javascript:void();" class="affilate-btn" style="background: green !important;"
+                    data-href="{{ $productt->affiliate_link }}" data-target="_blank"> {{ __('Buy Now') }}</a>
                 </li>
                 @else
                 <li class="addtocart m-1"><a class="view-stor btn--base" href="{{ route('user.login') }}">
@@ -421,7 +463,8 @@
             <div class="pro-details-sidebar-item mt-3 p-0">
               <img src="{{asset('assets/logos/'.$other['affliate_from'])}}" style="width:70px;" class="m-3" />
               <p style="background:#0fbfdf !important;padding:4px;color:#fff;font-size:1.5rem;font-weight:bold;border-bottom-left-radius: 5px;
-              border-bottom-right-radius: 5px">{{$other['affliate_price']}} <small style="font-weight: 100px;font-size: 12px;">KWD</small> </p> 
+              border-bottom-right-radius: 5px">{{$other['affliate_price']}} <small
+                  style="font-weight: 100px;font-size: 12px;">KWD</small> </p>
             </div>
           </a>
           @endforeach
@@ -667,3 +710,31 @@
     </div>
   </div>
 </div>
+
+<script>
+  // Get the modal
+  var modal = document.getElementById("myModal");
+  
+  // Get the button that opens the modal
+  var btn = document.getElementById("myBtn");
+  
+  // Get the <span> element that closes the modal
+  var span = document.getElementsByClassName("close")[0];
+  
+  // When the user clicks the button, open the modal 
+  btn.onclick = function() {
+    modal.style.display = "block";
+  }
+  
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+  
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>

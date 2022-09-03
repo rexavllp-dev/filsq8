@@ -115,7 +115,7 @@
                 <div class="d-flex align-items-center h-100 md-py-10">
                     <div class="nav-leftpush-overlay">
                         <nav class="navbar navbar-expand-lg nav-general nav-primary-hover">
-                            <button type="button" class="push-nav-toggle d-lg-none border-0">
+                            <button type="button" class="push-nav-toggle d-lg-none border-0" onclick="openCategory();">
                                 <i class="flaticon-menu-2 flat-small text-primary"></i>
                             </button>
                             <div class="navbar-slide-push transation-this">
@@ -149,10 +149,10 @@
                                 <div class="menu-and-category">
                                     <ul class="nav nav-pills wc-tabs" id="menu-and-category" role="tablist">
                                         <li class="nav-item" role="presentation">
-                                            <a class="nav-link active" id="pills-push-menu-tab" data-bs-toggle="pill" href="#pills-push-menu" role="tab" aria-controls="pills-push-menu" aria-selected="true">{{ __('Menu') }}</a>
-                                        </li>
-                                        <li class="nav-item" role="presentation">
-                                            <a class="nav-link" id="pills-push-categories-tab" data-bs-toggle="pill" href="#pills-push-categories" role="tab" aria-controls="pills-push-categories" aria-selected="true">{{ __('Categories') }}</a>
+                                            {{-- <a class="nav-link " id="pills-push-menu-tab" data-bs-toggle="pill" href="#pills-push-menu" role="tab" aria-controls="pills-push-menu" aria-selected="true">{{ __('Menu') }}</a> --}}
+                                            <li class="nav-item" role="presentation">
+                                                <a class="nav-link" id="pills-push-categories-tab" data-bs-toggle="pill" href="#pills-push-categories" role="tab" aria-controls="pills-push-categories" aria-selected="true">{{ __('Categories') }}</a>
+                                            </li>
                                         </li>
                                     </ul>
                                     <div class="tab-content" id="menu-and-categoryContent">
@@ -187,7 +187,7 @@
                                         </div>
                                         <div class="tab-pane fade" id="pills-push-categories" role="tabpanel" aria-labelledby="pills-push-categories-tab">
                                             <div id="woocommerce_product_categories-4" class="widget woocommerce widget_product_categories widget-toggle">
-                                                <h2 class="widget-title">{{ __('Product categories') }}</h2>
+                                                {{-- <h2 class="widget-title">{{ __('Product categories') }}</h2> --}}
                                                 <ul class="product-categories">
                                                     @foreach (App\Models\Category::where('language_id',$langg->id)->where('status',1)->get() as $category)
 
@@ -232,7 +232,7 @@
             </div>
             <div class="col-xxl-3 col-xl-4 col-lg-3 col-6 order-lg-3">
                 <div class="d-flex align-items-center justify-content-end h-100 md-py-10">
-                    <div class="sign-in position-relative font-general my-account-dropdown">
+                    {{-- <div class="sign-in position-relative font-general my-account-dropdown">
                         <a href="my-account.html" class="has-dropdown d-flex align-items-center text-dark text-decoration-none" title="My Account">
                             @if (Auth::check())
                             <img class="img-fluid user lazy" data-src="{{ Auth::user()->photo? asset('assets/images/users/'.Auth::user()->photo) : '<i class="flaticon-user-3 flat-mini mx-auto text-dark"></i>' }}" alt="">
@@ -256,7 +256,7 @@
                                 <li><a href="{{ route('user.register') }}"><span class="menu-item-text join" >{{ __('Join') }}</span></a></li>
                                 @endif
                         </ul>
-                    </div>
+                    </div> --}}
                     <div class="wishlist-view header-cart-1 ms-2">
                         @if (Auth::check())
                             <a href="{{ route('user-wishlists') }}" class="cart " title="View Wishlist">
@@ -323,3 +323,9 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    const openCategory = () => {
+        document.getElementById('pills-push-categories-tab').click();
+    }
+    </script>

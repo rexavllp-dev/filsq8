@@ -296,6 +296,7 @@ lazy();
          //initiate the plugin and pass the id of the div containing gallery images
       $("#single-image-zoom").elevateZoom({
          gallery: 'gallery_09',
+         // zoomType: "",
          zoomType: "inner",
          cursor: "crosshair",
          galleryActiveClass: 'active',

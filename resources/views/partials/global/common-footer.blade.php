@@ -26,19 +26,19 @@
 
 @if($ps->service == 1)
 
-<section class="info-area">
+<section class="info-area mr-3 ml-3 mb-2">
         <div class="container">
         <div class="row">
                 @foreach(App\Models\Service::where('language_id',$langg->id)->where('user_id','=',13)->take(4)->get() as $key => $value)
-                <div class="col-6 col-xl-3 p-0">
+                <div class="col-6 col-xl-3 p-0 d-flex justify-content-center">
 												<div class="info-box">
 													<div class="icon">
 														<img src="{{ asset('assets/images/services/'.$value->photo) }}">
 													</div>
 													<div class="info">
 														<div class="details">
-															<h4 class="title">{{ $value->title }}</h4>
-															<p class="text">
+															<h4 class="title text-center">{{ $value->title }}</h4>
+															<p class="text text-center">
 																{!! $value->details !!}
 															</p>
 														</div>
@@ -60,7 +60,7 @@
     <div class="container">
         <div class="row row-cols-xl-4 row-cols-md-2 row-cols-1">
             <div class="col">
-                <div class="footer-widget my-5">
+                <div class="footer-widget my-3">
                     <div class="footer-logo mb-4">
                         <a href="{{ route('front.index') }}"><img class="lazy" data-src="{{ asset('assets/images/'.$gs->footer_logo) }}" alt="Image not found!" /></a>
                     </div>
@@ -79,16 +79,16 @@
                         @endif
                     </div>
                 </div>
-                <div class="footer-widget media-widget mb-4">
+                {{-- <div class="footer-widget media-widget mb-4">
                     @foreach(DB::table('social_links')->where('user_id',0)->where('status',1)->get() as $link)
                         <a href="{{ $link->link }}" target="_blank">
                             <i class="{{ $link->icon }}"></i>
                         </a>
                     @endforeach
-                </div>
+                </div> --}}
             </div>
             <div class="col">
-                <div class="footer-widget category-widget my-5">
+                <div class="footer-widget category-widget my-3">
                     <h3 class="widget-title mb-4">{{ __('Product Category') }}</h3>
                         <ul>
                         @foreach (DB::table('categories')->where('language_id',Session::has('language')?Session::get('language'):1)->get()->take(6) as $cate)
@@ -106,11 +106,11 @@
                             <a href="{{ route('front.index') }}">{{ __('Home') }}</a>
                         </li>
                         @endif
-                        @if($ps->blog == 1)
+                        {{-- @if($ps->blog == 1)
                             <li>
                                 <a href="{{ route('front.blog') }}">{{ __('Blog') }}</a>
                             </li>
-                        @endif
+                        @endif --}}
                         @if($ps->faq == 1)
                             <li>
                                 <a href="{{ route('front.faq') }}">{{ __('Faq') }}</a>
@@ -127,7 +127,15 @@
                     </ul>
                 </div>
             </div>
-            <div class="col">
+
+            <div class="footer-widget media-widget mb-4 mt-2">
+                @foreach(DB::table('social_links')->where('user_id',0)->where('status',1)->get() as $link)
+                    <a href="{{ $link->link }}" target="_blank">
+                        <i class="{{ $link->icon }}"></i>
+                    </a>
+                @endforeach
+            </div>
+            {{-- <div class="col">
                 <div class="footer-widget widget-nav my-5">
                     <h6 class="widget-title mb-sm-4">{{ __('Recent Post') }}</h6>
                     <ul>
@@ -152,7 +160,7 @@
                         @endforeach
                     </ul>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </footer>

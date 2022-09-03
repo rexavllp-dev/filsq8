@@ -4,11 +4,11 @@
 @include('partials.global.common-header')
 
 <!-- breadcrumb -->
-<div class="full-row bg-light overlay-dark py-5" style="background-image: url({{ $gs->breadcrumb_banner ? asset('assets/images/'.$gs->breadcrumb_banner):asset('assets/images/noimage.png') }}); background-position: center center; background-size: cover;">
+<div class="full-row  py-5" >
     <div class="container">
-        <div class="row text-center text-white">
+        <div class="row text-center text-white bg-light p-3">
             <div class="col-12">
-                <h3 class="mb-2 text-white">{{ __('Login Page') }}</h3>
+                <h3 class="mb-2 text-uppercase">{{ __('Login Page') }}</h3>
             </div>
             <div class="col-12">
                 <nav aria-label="breadcrumb">

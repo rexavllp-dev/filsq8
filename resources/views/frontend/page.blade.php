@@ -14,7 +14,6 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 d-inline-flex bg-transparent p-0">
                         <li class="breadcrumb-item"><a href="{{ route('front.index') }}">{{ __('Home') }}</a></li>
-
                         <li class="breadcrumb-item active" aria-current="page">{{ $page->title }}</li>
                     </ol>
                 </nav>

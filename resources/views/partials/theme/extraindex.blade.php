@@ -61,7 +61,7 @@
 		<div class="row">
 			@foreach($top_small_banners as $img)
 			<div class="col-lg-4 remove-padding">
-				<div class="left">
+				<div class="left d-flex justify-content-center">
 					<a class="banner-effect hover-img-zoom" href="{{ $img->link }}" target="_blank">
 						<img src="{{asset('assets/images/banners/'.$img->photo)}}" alt="" class="lazy">
 					</a>
@@ -149,16 +149,16 @@
                     <div class="col">
                         <div class="top-collection-tab nav-tab-active-secondary">
                             <ul class="nav nav-pills list-color-general justify-content-center mb-5">
-                                <li class="nav-item">
+                                <li class="nav-item p-1 mt-1">
                                     <a class="nav-link active" data-bs-toggle="pill" href="#pills-new-arrival-two">{{ __('New Arrival') }}</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item p-1 mt-1">
                                     <a class="nav-link" data-bs-toggle="pill" href="#pills-Trending-two">{{ __('Trending') }}</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item p-1 mt-1">
                                     <a class="nav-link" data-bs-toggle="pill" href="#pills-best-selling-two">{{ __('Best Selling') }}</a>
                                 </li>
-                                <li class="nav-item">
+                                <li class="nav-item p-1 mt-3">
                                     <a class="nav-link" data-bs-toggle="pill" href="#pills-featured-two">{{ __('Hot Sale') }}</a>
                                 </li>
                             </ul>
@@ -381,16 +381,16 @@
                     <div class="footer-widget category-widget mb-5">
                         <h3 class="widget-title mb-4 xs-mx-none">{{ __('Footer Links') }}</h3>
                         <ul>
-                            @if($ps->home == 1)
+                            {{-- @if($ps->home == 1)
                             <li>
                                 <a href="{{ route('front.index') }}">{{ __('Home') }}</a>
                             </li>
-                            @endif
-                            @if($ps->blog == 1)
+                            @endif --}}
+                            {{-- @if($ps->blog == 1)
                             <li>
                                 <a href="{{ route('front.blog') }}">{{ __('Blog') }}</a>
                             </li>
-                                @endif
+                                @endif --}}
                                 @if($ps->faq == 1)
                             <li>
                                 <a href="{{ route('front.faq') }}">{{ __('Faq') }}</a>

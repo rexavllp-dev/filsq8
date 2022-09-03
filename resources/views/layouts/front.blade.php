@@ -61,6 +61,7 @@
     <link rel="stylesheet" href="{{ asset('assets/front/css/style.css') }}">
      <link rel="stylesheet" href="{{ asset('assets/front/css/category/default.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/front/css/toastr.min.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
     <link rel="stylesheet" href="{{ asset('assets/front/css/overwrite.css') }}">
     @if ($default_font->font_family)
 			<link rel="stylesheet" id="colorr" href="{{ asset('assets/front/css/font.php?font_familly='.$default_font->font_family) }}">
@@ -138,10 +139,12 @@
 
     </script>
      <!-- Include Scripts -->
-     <script src="{{ asset('assets/front/js/jquery.min.js') }}"></script>
-     <script src="{{ asset('assets/front/js/jquery-ui.min.js') }}"></script>
-     <script src="{{ asset('assets/front/js/popper.min.js') }}"></script>
+     {{-- <script src="{{ asset('assets/front/js/jquery.min.js') }}"></script> --}}
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+     {{-- <script src="{{ asset('assets/front/js/jquery-ui.min.js') }}"></script> --}}
      <script src="{{ asset('assets/front/js/bootstrap.min.js') }}"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+     <script src="{{ asset('assets/front/js/popper.min.js') }}"></script>
      <script src="{{ asset('assets/front/js/plugin.js') }}"></script>
      <script src="{{ asset('assets/front/js/waypoint.js') }}"></script>
      <script src="{{ asset('assets/front/js/owl.carousel.min.js') }}"></script>
