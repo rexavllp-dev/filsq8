@@ -103,11 +103,12 @@ class ImportController extends AdminBaseController
         $image = base64_decode($image);
         $image_name = time().Str::random(8).'.png';
         $path = 'assets/images/products/'.$image_name;
+        
         file_put_contents($path, $image);
                 if($data->photo != null)
                 {
-                    if (file_exists('/home/showpekl/public_html/assets/images/products/'.$data->photo)) {
-                        unlink('/home/showpekl/public_html/assets/images/products/'.$data->photo);
+                    if (file_exists('assets/images/products/'.$data->photo)) {
+                        unlink('assets/images/products/'.$data->photo);
                     }
                 } 
                         $input['photo'] = $image_name;
@@ -131,15 +132,19 @@ class ImportController extends AdminBaseController
 
         // $affiliatesArray = Array([]);
         $arr = [];
-        foreach($request->get('affiliates_from_others') as $key => $value){
 
-            $arr[$key]['affliate_from'] =  $value;
-            $arr[$key]['affliate_link'] =  $request->get('affiliate_link_others')[$key];
-            $arr[$key]['affliate_price'] =  $request->get('affiliate_price_others')[$key];
+        if($request->get('affiliates_from_others')!= null)
+        {
+            foreach($request->get('affiliates_from_others') as $key => $value){
+
+                $arr[$key]['affliate_from'] =  $value;
+                $arr[$key]['affliate_link'] =  $request->get('affiliate_link_others')[$key];
+                $arr[$key]['affliate_price'] =  $request->get('affiliate_price_others')[$key];
+            }
+    
         }
 
         $other_affliates = serialize($arr);
-
 
         if($request->image_source == 'file')
         {
@@ -420,8 +425,8 @@ class ImportController extends AdminBaseController
             else
             {
                 if($data->file!=null){
-                        if (file_exists('/home/showpekl/public_html/assets/files/'.$data->file)) {
-                        unlink('/home/showpekl/public_html/assets/files/'.$data->file);
+                        if (file_exists('assets/files/'.$data->file)) {
+                        unlink('assets/files/'.$data->file);
                     }
                 }
                 $input['file'] = null;            
@@ -604,12 +609,12 @@ class ImportController extends AdminBaseController
 
                 if($data->photo != null)
                 {
-                    if (file_exists('/home/showpekl/public_html/assets/images/thumbnails/'.$data->thumbnail)) {
-                        unlink('/home/showpekl/public_html/assets/images/thumbnails/'.$data->thumbnail);
+                    if (file_exists('assets/images/thumbnails/'.$data->thumbnail)) {
+                        unlink('assets/images/thumbnails/'.$data->thumbnail);
                     }
                 } 
 
-        $fimageData = '/home/showpekl/public_html/assets/images/products/'.$prod->photo;
+        $fimageData = 'assets/images/products/'.$prod->photo;
 
         if(filter_var($prod->photo,FILTER_VALIDATE_URL)){
             $fimageData = $prod->photo;
@@ -617,11 +622,11 @@ class ImportController extends AdminBaseController
         
         // dd($fimageData);
 
-        // $img = Image::make($fimageData)->resize(285, 285);
-        // $thumbnail = time().Str::random(8).'.jpg';
-        // $img->save('/home/showpekl/public_html/assets/images/thumbnails/'.$thumbnail);
-        // $prod->thumbnail  = $thumbnail;
-        // $prod->update();
+        $img = Image::make($fimageData)->resize(285, 285);
+        $thumbnail = time().Str::random(8).'.jpg';
+        $img->save('assets/images/thumbnails/'.$thumbnail);
+        $prod->thumbnail  = $thumbnail;
+        $prod->update();
 
         //--- Redirect Section        
         $msg = __('Product Updated Successfully.').'<a href="'.route('admin-import-index').'">'.__("View Product Lists.").'</a>';
