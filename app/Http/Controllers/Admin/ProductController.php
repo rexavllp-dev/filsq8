@@ -183,22 +183,22 @@ class ProductController extends AdminBaseController
         file_put_contents($path, $image);
                 if($data->photo != null)
                 {
-                    if (file_exists('/home/showpekl/public_html/assets/images/products/'.$data->photo)) {
-                        unlink('/home/showpekl/public_html/assets/images/products/'.$data->photo);
+                    if (file_exists('assets/images/products/'.$data->photo)) {
+                        unlink('assets/images/products/'.$data->photo);
                     }
                 }
                         $input['photo'] = $image_name;
          $data->update($input);
                 if($data->thumbnail != null)
                 {
-                    if (file_exists('/home/showpekl/public_html/assets/images/thumbnails/'.$data->thumbnail)) {
-                        unlink('/home/showpekl/public_html/assets/images/thumbnails/'.$data->thumbnail);
+                    if (file_exists('assets/images/thumbnails/'.$data->thumbnail)) {
+                        unlink('assets/images/thumbnails/'.$data->thumbnail);
                     }
                 }
 
-        $img = Image::make('/home/showpekl/public_html/assets/images/products/'.$data->photo)->resize(285, 285);
+        $img = Image::make('assets/images/products/'.$data->photo)->resize(285, 285);
         $thumbnail = time().Str::random(8).'.jpg';
-        $img->save('/home/showpekl/public_html/assets/images/thumbnails/'.$thumbnail);
+        $img->save('assets/images/thumbnails/'.$thumbnail);
         $data->thumbnail  = $thumbnail;
         $data->update();
         return response()->json(['status'=>true,'file_name' => $image_name]);
@@ -492,9 +492,9 @@ class ProductController extends AdminBaseController
         }
 
         // Set Thumbnail
-        $img = Image::make('/home/showpekl/public_html/assets/images/products/'.$prod->photo)->resize(285, 285);
+        $img = Image::make('assets/images/products/'.$prod->photo)->resize(285, 285);
         $thumbnail = $prod->photo;
-        $img->save('/home/showpekl/public_html/assets/images/thumbnails/'.$thumbnail);
+        $img->save('assets/images/thumbnails/'.$thumbnail);
         $prod->thumbnail  = $thumbnail;
         $prod->update();
 

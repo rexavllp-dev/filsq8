@@ -158,7 +158,7 @@
                                 <li class="nav-item p-1 mt-1">
                                     <a class="nav-link" data-bs-toggle="pill" href="#pills-best-selling-two">{{ __('Best Selling') }}</a>
                                 </li>
-                                <li class="nav-item p-1 mt-3">
+                                <li class="nav-item p-1 mt-1">
                                     <a class="nav-link" data-bs-toggle="pill" href="#pills-featured-two">{{ __('Hot Sale') }}</a>
                                 </li>
                             </ul>
