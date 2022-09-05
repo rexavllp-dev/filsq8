@@ -634,20 +634,20 @@ class ProductController extends AdminBaseController
                 if (strpos($contentType, 'image/') !== false) {
                     $fimg = Image::make($line[5])->resize(800, 800);
                     $fphoto = time().Str::random(8).'.jpg';
-                    $fimg->save('/home/showpekl/public_html/assets/images/products/'.$fphoto);
+                    $fimg->save('assets/images/products/'.$fphoto);
                     $input['photo']  = $fphoto;
                     $thumb_url = $line[5];
                 }else{
-                    $fimg = Image::make('/home/showpekl/public_html/assets/images/noimage.png')->resize(800, 800);
+                    $fimg = Image::make('assets/images/noimage.png')->resize(800, 800);
                     $fphoto = time().Str::random(8).'.jpg';
-                    $fimg->save('/home/showpekl/public_html/assets/images/products/'.$fphoto);
+                    $fimg->save('assets/images/products/'.$fphoto);
                     $input['photo']  = $fphoto;
-                    $thumb_url = '/home/showpekl/public_html/assets/images/noimage.png';
+                    $thumb_url = 'assets/images/noimage.png';
                 }
 
                 $timg = Image::make($thumb_url)->resize(285, 285);
                 $thumbnail = time().Str::random(8).'.jpg';
-                $timg->save('/home/showpekl/public_html/assets/images/thumbnails/'.$thumbnail);
+                $timg->save('assets/images/thumbnails/'.$thumbnail);
                 $input['thumbnail']  = $thumbnail;
 
                 // Conert Price According to Currency
@@ -720,8 +720,8 @@ class ProductController extends AdminBaseController
             else
             {
                 if($data->file!=null){
-                        if (file_exists('/home/showpekl/public_html/assets/files/'.$data->file)) {
-                        unlink('/home/showpekl/public_html/assets/files/'.$data->file);
+                        if (file_exists('assets/files/'.$data->file)) {
+                        unlink('assets/files/'.$data->file);
                     }
                 }
                 $input['file'] = null;
@@ -1061,8 +1061,8 @@ class ProductController extends AdminBaseController
         if($data->galleries->count() > 0)
         {
             foreach ($data->galleries as $gal) {
-                    if (file_exists('/home/showpekl/public_html/assets/images/galleries/'.$gal->photo)) {
-                        unlink('/home/showpekl/public_html/assets/images/galleries/'.$gal->photo);
+                    if (file_exists('assets/images/galleries/'.$gal->photo)) {
+                        unlink('assets/images/galleries/'.$gal->photo);
                     }
                 $gal->delete();
             }
@@ -1109,20 +1109,20 @@ class ProductController extends AdminBaseController
 
         if (!filter_var($data->photo,FILTER_VALIDATE_URL)){
             if($data->photo){
-                if (file_exists('/home/showpekl/public_html/assets/images/products/'.$data->photo)) {
-                    unlink('/home/showpekl/public_html/assets/images/products/'.$data->photo);
+                if (file_exists('assets/images/products/'.$data->photo)) {
+                    unlink('assets/images/products/'.$data->photo);
                 }
             }
 
         }
 
-        if (file_exists('/home/showpekl/public_html/assets/images/thumbnails/'.$data->thumbnail) && $data->thumbnail != "") {
-            unlink('/home/showpekl/public_html/assets/images/thumbnails/'.$data->thumbnail);
+        if (file_exists('assets/images/thumbnails/'.$data->thumbnail) && $data->thumbnail != "") {
+            unlink('assets/images/thumbnails/'.$data->thumbnail);
         }
 
         if($data->file != null){
-            if (file_exists('/home/showpekl/public_html/assets/files/'.$data->file)) {
-                unlink('/home/showpekl/public_html/assets/files/'.$data->file);
+            if (file_exists('assets/files/'.$data->file)) {
+                unlink('assets/files/'.$data->file);
             }
         }
         $data->delete();
