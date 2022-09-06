@@ -1,4 +1,3 @@
-
 @if($ps->service == 1)
 
 <!-- section class="info-area">
@@ -54,40 +53,42 @@
 
 <!-- Banner Area One Start -->
 <section class="banner-section mt30">
-	<div class="container">
+    <div class="container">
 
 
-		
-		<div class="row">
-			@foreach($top_small_banners as $img)
-			<div class="col-lg-4 remove-padding">
-				<div class="left d-flex justify-content-center">
-					<a class="banner-effect hover-img-zoom" href="{{ $img->link }}" target="_blank">
-						<img src="{{asset('assets/images/banners/'.$img->photo)}}" alt="" class="lazy">
-					</a>
-				</div>
-			</div>
-			@endforeach
-		</div>
-		
+
+        <div class="row">
+            @foreach($top_small_banners as $img)
+            <div class="col-lg-4 remove-padding">
+                <div class="left d-flex justify-content-center">
+                    <a class="banner-effect hover-img-zoom" href="{{ $img->link }}" target="_blank">
+                        <img src="{{asset('assets/images/banners/'.$img->photo)}}" alt="" class="lazy">
+                    </a>
+                </div>
+            </div>
+            @endforeach
+        </div>
 
 
-	</div>
+
+    </div>
 </section>
 <!-- Banner Area One Start -->
 @endif
-       
- @if($ps->category==1)
- <div class="full-row">
-     <div class="container">
-         <div class="row justify-content-center">
-             <div class="col-lg-5">
-                 <span class="text-secondary pb-2 d-table tagline mx-auto text-uppercase text-center">{{ __('Featured Products') }}</span>
-                 <h2 class="main-title mb60 text-center text-secondary mb30">{{ __('Our Featured Products') }}</h2>
-             </div>
-         </div>
-         <div class="products product-style-1">
-            <div class="row  g-4 row-cols-xl-4 row-cols-md-3 row-cols-sm-2 row-cols-1 e-title-general e-title-hover-primary e-image-bg-light e-hover-image-zoom e-info-center">
+
+@if($ps->category==1)
+<div class="full-row">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+                <span class="text-secondary pb-2 d-table tagline mx-auto text-uppercase text-center">{{ __('Featured
+                    Products') }}</span>
+                <h2 class="main-title mb60 text-center text-secondary mb30">{{ __('Our Featured Products') }}</h2>
+            </div>
+        </div>
+        <div class="products product-style-1">
+            <div
+                class="row  g-4 row-cols-xl-4 row-cols-md-3 row-cols-sm-2 row-cols-1 e-title-general e-title-hover-primary e-image-bg-light e-hover-image-zoom e-info-center">
 
                 @foreach($popular_products as $prod)
                 <div class="col col-6">
@@ -96,19 +97,20 @@
                 @endforeach
             </div>
         </div>
-     </div>
- </div>
- <!--==================== Top Products Section End ====================-->
- @endif
- 
- @if($ps->deal_of_the_day==1)
+    </div>
+</div>
+<!--==================== Top Products Section End ====================-->
+@endif
+
+@if($ps->deal_of_the_day==1)
 
 <!--==================== Deal of the day Section Start ====================-->
 <div class="full-row bg-light">
     <div class="container">
         <div class="row offer-product align-items-center">
             <div class="col-xl-5 col-lg-7">
-                <h1 class="down-line-secondary text-dark text-uppercase mb-30">{{ __('Deal') }} <br> {{ __('of the Day') }}</h1>
+                <h1 class="down-line-secondary text-dark text-uppercase mb-30">{{ __('Deal') }} <br> {{ __('of the Day')
+                    }}</h1>
                 <div class="product type-product">
                     <div class="product-wrapper">
                         <div class="product-info">
@@ -121,15 +123,19 @@
                             <div class="font-fifteen">
                                 <p>{{ $gs->deal_details }}</p>
                             </div>
-                            <div class="time-count time-box text-center my-30 flex-between w-75" data-countdown="{{ $gs->deal_time }}"></div>
-                            <a href="{{ route('front.category').'?type=flash'  }}" class="btn btn-dark text-uppercase rounded-0">{{ __('Shop Now') }}</a>
+                            <div class="time-count time-box text-center my-30 flex-between w-75"
+                                data-countdown="{{ $gs->deal_time }}"></div>
+                            <a href="{{ route('front.category').'?type=flash'  }}"
+                                class="btn btn-dark text-uppercase rounded-0">{{ __('Shop Now') }}</a>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-xl-6 col-lg-5 offset-xl-1">
-               
-                <div class="xs-mt-30"><img src="{{ $gs->deal_background ? asset('assets/images/'.$gs->deal_background):asset('assets/images/noimage.png') }}" alt=""></div>
+
+                <div class="xs-mt-30"><img
+                        src="{{ $gs->deal_background ? asset('assets/images/'.$gs->deal_background):asset('assets/images/noimage.png') }}"
+                        alt=""></div>
 
             </div>
         </div>
@@ -137,78 +143,84 @@
 </div>
 <!--==================== Deal of the day Section End ====================-->
 
- @endif
-        <!--==================== Deal of the day Section End ====================-->
+@endif
+<!--==================== Deal of the day Section End ====================-->
 
 
 @if($ps->top_big_trending==1)
-        <!--==================== Top Collection Section Start ====================-->
-        <div class="full-row bg-white">
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <div class="top-collection-tab nav-tab-active-secondary">
-                            <ul class="nav nav-pills list-color-general justify-content-center mb-5">
-                                <li class="nav-item p-1 mt-1">
-                                    <a class="nav-link active" data-bs-toggle="pill" href="#pills-new-arrival-two">{{ __('New Arrival') }}</a>
-                                </li>
-                                <li class="nav-item p-1 mt-1">
-                                    <a class="nav-link" data-bs-toggle="pill" href="#pills-Trending-two">{{ __('Trending') }}</a>
-                                </li>
-                                <li class="nav-item p-1 mt-1">
-                                    <a class="nav-link" data-bs-toggle="pill" href="#pills-best-selling-two">{{ __('Best Selling') }}</a>
-                                </li>
-                                <li class="nav-item p-1 mt-1">
-                                    <a class="nav-link" data-bs-toggle="pill" href="#pills-featured-two">{{ __('Hot Sale') }}</a>
-                                </li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane fade show active" id="pills-new-arrival-two">
-									<div class="products product-style-1">
-										<div class="row g-4 row-cols-xl-4 row-cols-md-3 row-cols-sm-2 row-cols-1 e-title-general e-title-hover-primary e-image-bg-light e-hover-image-zoom e-info-center">
+<!--==================== Top Collection Section Start ====================-->
+<div class="full-row bg-white">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="top-collection-tab nav-tab-active-secondary">
+                    <ul class="nav nav-pills list-color-general justify-content-center mb-5">
+                        <li class="nav-item p-1 mt-1">
+                            <a class="nav-link active" data-bs-toggle="pill" href="#pills-new-arrival-two">{{ __('New
+                                Arrival') }}</a>
+                        </li>
+                        <li class="nav-item p-1 mt-1">
+                            <a class="nav-link" data-bs-toggle="pill" href="#pills-Trending-two">{{ __('Trending')
+                                }}</a>
+                        </li>
+                        <li class="nav-item p-1 mt-1">
+                            <a class="nav-link" data-bs-toggle="pill" href="#pills-best-selling-two">{{ __('Best
+                                Selling') }}</a>
+                        </li>
+                        <li class="nav-item p-1 mt-1">
+                            <a class="nav-link" data-bs-toggle="pill" href="#pills-featured-two">{{ __('Hot Sale')
+                                }}</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="pills-new-arrival-two">
+                            <div class="products product-style-1">
+                                <div
+                                    class="row g-4 row-cols-xl-4 row-cols-md-3 row-cols-sm-2 row-cols-1 e-title-general e-title-hover-primary e-image-bg-light e-hover-image-zoom e-info-center">
 
-                                            @foreach($latest_products as $prod)
-											<div class="col col-6">
-                                                @include('partials.product.home-product')
-											</div>
-                                            @endforeach
-										</div>
-									</div>
-                                </div>
-                                <div class="tab-pane fade" id="pills-Trending-two">
-									<div class="products product-style-1">
-										<div class="row g-4 row-cols-xl-4 row-cols-md-3 row-cols-sm-2 row-cols-1 e-title-general e-title-hover-primary e-image-bg-light e-hover-image-zoom e-info-center">
-											@foreach($trending_products as $prod)
-											<div class="col col-6">
-                                                @include('partials.product.home-product')
-											</div>
-                                            @endforeach
-
-										</div>
-									</div>
-                                </div>
-                                <div class="tab-pane fade" id="pills-best-selling-two">
-									<div class="products product-style-1">
-										<div class="row g-4 row-cols-xl-4 row-cols-md-3 row-cols-sm-2 row-cols-1 e-title-general e-title-hover-primary e-image-bg-light e-hover-image-zoom e-info-center">
-											@foreach($sale_products as $prod)
-											<div class="col col-6">
-                                                @include('partials.product.home-product')
-											</div>
-                                            @endforeach
-
-										</div>
+                                    @foreach($latest_products as $prod)
+                                    <div class="col col-6">
+                                        @include('partials.product.home-product')
                                     </div>
+                                    @endforeach
                                 </div>
-                                <div class="tab-pane fade" id="pills-featured-two">
-									<div class="products product-style-1">
-										<div class="row g-4 row-cols-xl-4 row-cols-md-3 row-cols-sm-2 row-cols-1 e-title-general e-title-hover-primary e-image-bg-light e-hover-image-zoom e-info-center">
-                                            @foreach($hot_products as $prod)
-											<div class="col col-6">
-                                                @include('partials.product.home-product')
-											</div>
-                                            @endforeach
-										</div>
-									</div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-Trending-two">
+                            <div class="products product-style-1">
+                                <div
+                                    class="row g-4 row-cols-xl-4 row-cols-md-3 row-cols-sm-2 row-cols-1 e-title-general e-title-hover-primary e-image-bg-light e-hover-image-zoom e-info-center">
+                                    @foreach($trending_products as $prod)
+                                    <div class="col col-6">
+                                        @include('partials.product.home-product')
+                                    </div>
+                                    @endforeach
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-best-selling-two">
+                            <div class="products product-style-1">
+                                <div
+                                    class="row g-4 row-cols-xl-4 row-cols-md-3 row-cols-sm-2 row-cols-1 e-title-general e-title-hover-primary e-image-bg-light e-hover-image-zoom e-info-center">
+                                    @foreach($sale_products as $prod)
+                                    <div class="col col-6">
+                                        @include('partials.product.home-product')
+                                    </div>
+                                    @endforeach
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-featured-two">
+                            <div class="products product-style-1">
+                                <div
+                                    class="row g-4 row-cols-xl-4 row-cols-md-3 row-cols-sm-2 row-cols-1 e-title-general e-title-hover-primary e-image-bg-light e-hover-image-zoom e-info-center">
+                                    @foreach($hot_products as $prod)
+                                    <div class="col col-6">
+                                        @include('partials.product.home-product')
+                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -216,7 +228,9 @@
                 </div>
             </div>
         </div>
-        <!--==================== Top Collection Section End ====================-->
+    </div>
+</div>
+<!--==================== Top Collection Section End ====================-->
 @endif
 <!--==================== Service Section Start ====================-->
 @if ($ps->partner==1)
@@ -252,7 +266,8 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-5">
-                <span class="text-secondary pb-2 d-table tagline mx-auto text-uppercase text-center">{{ __('Top Products') }}</span>
+                <span class="text-secondary pb-2 d-table tagline mx-auto text-uppercase text-center">{{ __('Top
+                    Products') }}</span>
                 <h2 class="main-title mb-4 text-center text-secondary">{{ __('Best Selling Products') }}</h2>
 
             </div>
@@ -261,9 +276,10 @@
         <div class="row">
             <div class="col-12">
 
-                 <div class="products product-style-1 owl-mx-15">
-                    <div class="four-carousel owl-carousel dot-disable nav-arrow-middle-show e-title-general e-title-hover-primary e-image-bg-light  e-info-center e-title-general e-title-hover-primary e-image-bg-light e-hover-image-zoom e-info-center">
-                    @foreach($best_products as $prod)
+                <div class="products product-style-1 owl-mx-15">
+                    <div
+                        class="four-carousel owl-carousel dot-disable nav-arrow-middle-show e-title-general e-title-hover-primary e-image-bg-light  e-info-center e-title-general e-title-hover-primary e-image-bg-light e-hover-image-zoom e-info-center">
+                        @foreach($best_products as $prod)
                         <div class="item">
                             @include('partials.product.home-product')
                         </div>
@@ -276,9 +292,9 @@
 </div>
 <!--==================== Top Products Section End ====================-->
 @endif
- <!--==================== Our Blog Section Start ====================-->
+<!--==================== Our Blog Section Start ====================-->
 @if($ps->blog==1)
-    <!-- <div class="full-row pt-0">
+<!-- <div class="full-row pt-0">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
@@ -312,11 +328,11 @@
                 </div>
             </div>
         </div> -->
-        <!--==================== Our Blog Section End ====================-->
+<!--==================== Our Blog Section End ====================-->
 @endif
 @if($ps->third_left_banner==1)
-    <!--==================== Newsleter Section Start ====================-->
-    <!-- <div class="full-row bg-dark py-30">
+<!--==================== Newsleter Section Start ====================-->
+<!-- <div class="full-row bg-dark py-30">
         <div class="container">
             <div class="row mx-auto">
                 <div class="col-lg-5 col-md-6 mx-auto">
@@ -335,100 +351,105 @@
             </div>
         </div>
     </div> -->
-    <!--==================== Newsleter Section End ====================-->
+<!--==================== Newsleter Section End ====================-->
 @endif
-    <!--==================== Footer Section Start ====================-->
-    <footer class="full-row bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="footer-widget mb-5">
-                        <div class="footer-logo mb-4">
-                            <a href="{{ route('front.index') }}"><img class="lazy" data-src="{{ asset('assets/images/'.$gs->footer_logo) }}" alt="Image not found!" /></a>
-                        </div>
-                        <div class="widget-ecommerce-contact">
-                            @if($ps->phone != null)
-                            <span class="font-medium font-500 text-dark">{{ __('Got Questions ? ') }}</span>
-                            {{-- <div class="text-dark h4 font-400 ">{{ $ps->phone }}</div> --}}
-                            @endif
-                            {{-- @if($ps->street != null)
-                            <span class="h6 text-secondary mt-2">{{ __('Address :') }}</span>
-                            <div class="text-general">{{ $ps->street }}</div>
-                            @endif --}}
-                            @if($ps->email != null)
-                            <span class="h6 text-secondary mt-2">{{ __('Email :') }}</span>
-                            <div class="text-general">{{ $ps->email }}</div>
-                            @endif
-                        </div>
+<!--==================== Footer Section Start ====================-->
+<footer class="full-row bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="footer-widget mb-5">
+                    <div class="footer-logo mb-4">
+                        <a href="{{ route('front.index') }}"><img class="lazy"
+                                data-src="{{ asset('assets/images/'.$gs->footer_logo) }}" alt="Image not found!" /></a>
                     </div>
-                    {{-- <div class="footer-widget media-widget mb-5">
-                        @foreach(DB::table('social_links')->where('user_id',0)->where('status',1)->get() as $link)
-                        <a href="{{ $link->link }}"><i class="{{ $link->icon }}"></i></a>
-                        @endforeach
-                    </div> --}}
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-widget category-widget mb-5">
-                        <h3 class="widget-title mb-4">{{ __('Product Category') }}</h3>
-                        <ul>
-                            @foreach (DB::table('categories')->where('language_id',$langg->id)->get()->take(6) as $cate)
-                            <li><a href="{{route('front.category', $cate->slug)}}{{!empty(request()->input('search')) ? '?search='.request()->input('search') : ''}}">{{ $cate->name }}</a></li>
-                            @endforeach
-                        </ul>
+                    <div class="widget-ecommerce-contact">
+                        @if($ps->phone != null)
+                        <span class="font-medium font-500 text-dark">{{ __('Got Questions ? ') }}</span>
+                        {{-- <div class="text-dark h4 font-400 ">{{ $ps->phone }}</div> --}}
+                        @endif
+                        {{-- @if($ps->street != null)
+                        <span class="h6 text-secondary mt-2">{{ __('Address :') }}</span>
+                        <div class="text-general">{{ $ps->street }}</div>
+                        @endif --}}
+                        @if($ps->email != null)
+                        <span class="h6 text-secondary mt-2">{{ __('Email :') }}</span>
+                        <div class="text-general">{{ $ps->email }}</div>
+                        @endif
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-6">
-                    {{-- <div class="footer-widget category-widget mb-5">
-                        <h3 class="widget-title mb-4 xs-mx-none">{{ __('Footer Links') }}</h3>
-                        <ul>
-                            @if($ps->home == 1)
-                            <li>
-                                <a href="{{ route('front.index') }}">{{ __('Home') }}</a>
-                            </li>
-                            @endif
-                            @if($ps->blog == 1)
-                            <li>
-                                <a href="{{ route('front.blog') }}">{{ __('Blog') }}</a>
-                            </li>
-                                @endif
-                                @if($ps->faq == 1)
-                            <li>
-                                <a href="{{ route('front.faq') }}">{{ __('Faq') }}</a>
-                            </li>
-                            @endif
-                            @foreach(DB::table('pages')->where('language_id',$langg->id)->where('footer','=',1)->get() as $data)
-                            <li><a href="{{ route('front.vendor',$data->slug) }}">{{ $data->title }}</a></li>
-                            @endforeach
-                            @if($ps->contact == 1)
-                                <li>
-                                <a href="{{ route('front.contact') }}">{{ __('Contact Us') }}</a>
-                            </li>
-                                @endif
-
-                        </ul>
-                    </div> --}}
-                    <div class="footer-widget media-widget mb-5">
-                        @foreach(DB::table('social_links')->where('user_id',0)->where('status',1)->get() as $link)
-                        <a href="{{ $link->link }}"><i class="{{ $link->icon }}"></i></a>
-                        @endforeach
-                    </div>
-                </div>
-                
+                {{-- <div class="footer-widget media-widget mb-5">
+                    @foreach(DB::table('social_links')->where('user_id',0)->where('status',1)->get() as $link)
+                    <a href="{{ $link->link }}"><i class="{{ $link->icon }}"></i></a>
+                    @endforeach
+                </div> --}}
             </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-widget category-widget mb-5">
+                    <h3 class="widget-title mb-4">{{ __('Product Category') }}</h3>
+                    <ul>
+                        @foreach (DB::table('categories')->where('language_id',$langg->id)->get()->take(6) as $cate)
+                        <li><a
+                                href="{{route('front.category', $cate->slug)}}{{!empty(request()->input('search')) ? '?search='.request()->input('search') : ''}}">{{
+                                $cate->name }}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-6">
+                {{-- <div class="footer-widget category-widget mb-5">
+                    <h3 class="widget-title mb-4 xs-mx-none">{{ __('Footer Links') }}</h3>
+                    <ul>
+                        @if($ps->home == 1)
+                        <li>
+                            <a href="{{ route('front.index') }}">{{ __('Home') }}</a>
+                        </li>
+                        @endif
+                        @if($ps->blog == 1)
+                        <li>
+                            <a href="{{ route('front.blog') }}">{{ __('Blog') }}</a>
+                        </li>
+                        @endif
+                        @if($ps->faq == 1)
+                        <li>
+                            <a href="{{ route('front.faq') }}">{{ __('Faq') }}</a>
+                        </li>
+                        @endif
+                        @foreach(DB::table('pages')->where('language_id',$langg->id)->where('footer','=',1)->get() as
+                        $data)
+                        <li><a href="{{ route('front.vendor',$data->slug) }}">{{ $data->title }}</a></li>
+                        @endforeach
+                        @if($ps->contact == 1)
+                        <li>
+                            <a href="{{ route('front.contact') }}">{{ __('Contact Us') }}</a>
+                        </li>
+                        @endif
+
+                    </ul>
+                </div> --}}
+                <div class="footer-widget media-widget mb-5">
+                    @foreach(DB::table('social_links')->where('user_id',0)->where('status',1)->get() as $link)
+                    <a href="{{ $link->link }}"><i class="{{ $link->icon }}"></i></a>
+                    @endforeach
+                </div>
+            </div>
+
         </div>
-    </footer>
-    <!--==================== Footer Section End ====================-->
+    </div>
+</footer>
+<!--==================== Footer Section End ====================-->
 
 <!--==================== Copyright Section Start ====================-->
 
-        <div class="container">
+<div class="container">
 
-                <div class="mx-auto text-center py-3">
-                    <span class="sm-mb-10 d-block">{{ $gs->copyright }}</span>
-                </div>
+    <div class="mx-auto text-center py-3">
+        {{-- <span class="sm-mb-10 d-block">{{ $gs->copyright }}</span> --}}
+        <span class="sm-mb-10 d-block" id="copyright-text"></span>
+    </div>
 
 
-        </div>
+</div>
 <!--==================== Copyright Section End ====================-->
 
 
@@ -436,7 +457,8 @@
 <script src="{{ asset('assets/front/js/extraindex.js') }}"></script>
 
 <script>
-
     $(".lazy").Lazy();
+    const date = new Date();
+    const year = date.getFullYear();
+    document.getElementById('copyright-text').innerHTML = `COPYRIGHT © ${year}. All Rights Reserved By Filsq8`;
 </script>
-

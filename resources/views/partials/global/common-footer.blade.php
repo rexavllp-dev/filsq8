@@ -169,7 +169,8 @@
 <!--==================== Copyright Section Start ====================-->
 <div class="container">
     <div class="mx-auto text-center py-3">
-        <span class="sm-mb-10 d-block">{{ $gs->copyright }}</span>
+        {{-- <span class="sm-mb-10 d-block">{{ $gs->copyright }}</span> --}}
+        <span class="sm-mb-10 d-block" id="copyright-text"></span>
     </div>
 </div>
 
@@ -202,3 +203,9 @@
 
 <!-- Scroll to top -->
 <a href="#" class="scroller text-white" id="scroll"><i class="fa fa-angle-up"></i></a>
+
+<script type="text/javascript">
+    const date = new Date();
+    const year = date.getFullYear();
+    document.getElementById('copyright-text').innerHTML = `COPYRIGHT © ${year}. All Rights Reserved By Filsq8'
+</script>
