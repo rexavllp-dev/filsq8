@@ -4,9 +4,9 @@
     Homepage   : http://www.dragar.net
 */
 
-(function($) {
+(function ($) {
 
-  $.fn.simpleCropper = function() {
+  $.fn.simpleCropper = function (ax = 800, ay = 800) {
 
     var image_dimension_x = 569;
     var image_dimension_y = 1136;
@@ -26,23 +26,23 @@
     $('body').append(bottom_html);
 
     //add click to element
-    this.click(function() {
-      aspX = 800;
-      aspY = 800;
+    this.click(function () {
+      aspX = ax;
+      aspY = ay;
       file_display_area = $(this);
       $('#fileInput').click();
     });
 
-    $(document).ready(function() {
+    $(document).ready(function () {
       //capture selected filename
-      $('#fileInput').change(function(click) {
+      $('#fileInput').change(function (click) {
         imageUpload($('#preview').get(0));
         // Reset input value
         $(this).val("");
       });
 
       //ok listener
-      $('.ok').click(function() {
+      $('.ok').click(function () {
         preview();
         $('#preview').delay(100).hide();
         $('#modal').hide();
@@ -51,7 +51,7 @@
       });
 
       //cancel listener
-      $('.cancel').click(function(event) {
+      $('.cancel').click(function (event) {
         $('#preview').delay(100).hide();
         $('#modal').hide();
         jcrop_api.destroy();
@@ -80,7 +80,7 @@
       if (file.type.match(imageType)) {
         var reader = new FileReader();
 
-        reader.onload = function(e) {
+        reader.onload = function (e) {
           // Clear the current image.
           $('#photo').remove();
 
@@ -90,7 +90,7 @@
           current_image.id = "photo";
           current_image.style['maxWidth'] = image_dimension_x + 'px';
           current_image.style['maxHeight'] = image_dimension_y + 'px';
-          current_image.onload = function() {
+          current_image.onload = function () {
             // Calculate scaled image dimensions
             if (current_image.width > image_dimension_x || current_image.height > image_dimension_y) {
               if (current_image.width > current_image.height) {
@@ -147,7 +147,7 @@
               bgOpacity: .4,
               aspectRatio: aspX / aspY,
               setSelect: [0, 0, selection_width, selection_height]
-            }, function() {
+            }, function () {
               jcrop_api = this;
             });
           }
@@ -181,7 +181,7 @@
       var sw = x2 - x1;
       var sh = y2 - y1;
 
-      
+
       // Set image original width and height
       var imgWidth = current_image.naturalWidth;
       var imgHeight = current_image.naturalHeight;
@@ -208,7 +208,7 @@
 
     }
 
-    $(window).resize(function() {
+    $(window).resize(function () {
       // Position the modal div to the center of the screen
       var window_width = $(window).width() / 2 - scaled_width / 2 + "px";
       var window_height = $(window).height() / 2 - scaled_height / 2 + "px";

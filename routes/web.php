@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\Route;
 
 
 // ************************************ ADMIN SECTION **********************************************
@@ -298,8 +299,16 @@ Route::delete('/state/delete/{id}', 'Admin\StateController@delete')->name('admin
     Route::post('/products/import/store', 'Admin\ImportController@store')->name('admin-import-store');
     Route::post('/products/import/update/{id}', 'Admin\ImportController@update')->name('admin-import-update');
 
+    Route::get('/products/import/create-affiliate', 'Admin\ImportController@createAffiliate')->name('admin-import-create-affiliate');
+    Route::post('/products/import/store-affiliate', 'Admin\ImportController@storeAffiliate')->name('admin-import-store-affiliate');
+    Route::get('/products/import/affiliate-index', 'Admin\ImportController@affiliateIndex')->name('admin-import-affiliate-index');
+    Route::get('/products/import/affiliate-datatables' , 'Admin\ImportController@affiliateDatatables')->name('admin-import-affiliate-datatables');
+    Route::get('/products/import/affiliate-edit/{id}' , 'Admin\ImportController@affiliateEdit')->name('admin-import-affiliate-edit');
+    Route::post('/products/import/affiliate-update/{id}' , 'Admin\ImportController@affiliateUpdate')->name('admin-import-affiliate-update');
+
     // DELETE SECTION
     Route::delete('/affiliate/products/delete/{id}', 'Admin\ProductController@destroy')->name('admin-affiliate-prod-delete');
+    Route::delete('/affiliate/products/delete-affiliate/{id}', 'Admin\ProductController@destroyAffiliate')->name('admin-affiliate-delete');
     // DELETE SECTION ENDS
 
   });

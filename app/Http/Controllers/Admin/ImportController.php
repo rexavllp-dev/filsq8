@@ -69,7 +69,7 @@ class ImportController extends AdminBaseController
     public function createImport()
     {
         $cats = Category::all();
-        $affiliates_from = AffilateFrom::all();
+        $affiliates_from = AffilateFrom::where('byAdmin', 1)->get();
         $sign = $this->curr;
         return view('admin.productimport.createone',compact('cats','sign','affiliates_from'));
     }
@@ -634,6 +634,149 @@ class ImportController extends AdminBaseController
         //--- Redirect Section Ends    
     }
 
+    // View AffilateFrom form
+    public function createAffiliate()
+    {
+        return view('admin.affiliatefroms.createone');
+    }
 
-   
+    // Create affiliates from 
+    public function storeAffiliate(Request $request)
+    {
+
+        if($request->image_source == 'file')
+        {
+            //--- Validation Section
+            $rules = [
+                   'photo'      => 'required',
+                   'file'       => 'mimes:zip'
+                    ];  
+
+        $validator = Validator::make($request->all(), $rules);
+        
+        if ($validator->fails()) {
+          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+        }
+        //--- Validation Section Ends
+
+        }
+
+        //--- Logic Section        
+            $data = new AffilateFrom;
+            $input = $request->all();
+
+
+            if($request->photo != null){
+                $image = $request->photo;
+                list($type, $image) = explode(';', $image);
+                list(, $image)      = explode(',', $image);
+                $image = base64_decode($image);
+                $image_name = time().Str::random(8).'.png';
+                $path = 'assets/logos/'.$image_name;
+                file_put_contents($path, $image);
+                $input['logo'] = $image_name;
+            }else{
+                $input['logo'] = "noimage.png";
+            }
+
+  
+             $input['byAdmin'] = 1;
+
+    
+            // Save Data 
+                $data->fill($input)->save();
+
+            
+
+        //--- Redirect Section        
+        $msg = __("New Affiliate Added Successfully.").'<a href="'.route('admin-import-affiliate-index').'">'.__("View Affiliates Lists.").'</a>';
+        return response()->json($msg);      
+        //--- Redirect Section Ends    
+    }
+
+    // List all affiliates
+    public function affiliateIndex(){
+        return view('admin.affiliatefroms.index');
+    }
+
+    // Datatable to return affiliates 
+    public function affiliateDatatables()
+    {
+         $datas = AffilateFrom::where('byAdmin', 1)->get();
+         
+         //--- Integrating This Collection Into Datatables
+         return Datatables::of($datas)
+                            ->editColumn('name', function(AffilateFrom $data) {
+                                $name = mb_strlen(strip_tags($data->name),'utf-8') > 50 ? mb_substr(strip_tags($data->name),0,50,'utf-8').'...' : strip_tags($data->name);
+                                return  $name;
+                            })                            
+                            ->addColumn('action', function(AffilateFrom $data) {
+                                return '<div class="godropdown"><button class="go-dropdown-toggle">'.__('Actions').'<i class="fas fa-chevron-down"></i></button><div class="action-list"><a href="' . route('admin-import-affiliate-edit',$data->id) . '"> <i class="fas fa-edit"></i> '.__("Edit").'</a><a href="javascript:;" data-href="' . route('admin-affiliate-delete',$data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i> '.__("Delete").'</a></div></div>';
+                            }) 
+                            ->rawColumns(['name', 'status', 'action'])
+                            ->toJson(); //--- Returning Json Data To Client Side
+    }
+
+    // View Edit Page
+
+    public function affiliateEdit($id)
+    {
+        $data = AffilateFrom::findOrFail($id);
+        return view('admin.affiliatefroms.editone',compact('data'));
+    }
+
+    // Update data in affiliate froms
+    public function affiliateUpdate(Request $request , $id)
+    {
+
+        if($request->image_source == 'file')
+        {
+            //--- Validation Section
+            $rules = [
+                   'photo'      => 'required',
+                   'file'       => 'mimes:zip'
+                    ];  
+
+        $validator = Validator::make($request->all(), $rules);
+        
+        if ($validator->fails()) {
+          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+        }
+        //--- Validation Section Ends
+
+        }
+
+        //--- Logic Section        
+            $data = AffilateFrom::findOrFail($id);
+            $input = $request->all();
+            // dd($input);
+
+
+            if($request->photo != null){
+                $image = $request->photo;
+                list($type, $image) = explode(';', $image);
+                list(, $image)      = explode(',', $image);
+                $image = base64_decode($image);
+                $image_name = time().Str::random(8).'.png';
+                $path = 'assets/logos/'.$image_name;
+                file_put_contents($path, $image);
+                $input['logo'] = $image_name;
+            }else{
+                $input['logo'] = "noimage.png";
+            }
+
+  
+             $input['byAdmin'] = 1;
+
+    
+            // Save Data 
+                $data->update($input);
+
+            
+
+        //--- Redirect Section        
+        $msg = __("New Affiliate Updated Successfully.").'<a href="'.route('admin-import-affiliate-index').'">'.__("View Affiliates Lists.").'</a>';
+        return response()->json($msg);      
+        //--- Redirect Section Ends    
+    }
 }

@@ -119,6 +119,20 @@
     </li>
 
     <li>
+        <a href="#affiliatefrom" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false">
+            <i class="icofont-opencart"></i>{{ __('Affiliate From') }}
+        </a>
+        <ul class="collapse list-unstyled" id="affiliatefrom" data-parent="#accordion">
+            <li>
+                <a href="{{ route('admin-import-create-affiliate') }}"><span>{{ __('Add Affiliates') }}</span></a>
+            </li>
+            <li>
+                <a href="{{ route('admin-import-affiliate-index') }}"><span>{{ __('All Affiliates') }}</span></a>
+            </li>
+        </ul>
+    </li>
+
+    <li>
         <a href="{{ route('admin-prod-import') }}"><i class="fas fa-upload"></i>{{ __('Bulk Product Upload') }}</a>
     </li>
 

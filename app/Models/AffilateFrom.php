@@ -9,7 +9,7 @@ class AffilateFrom extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name' , 'logo'];
+    protected $fillable = ['name' , 'logo' , 'byAdmin'];
 
     public function products()
     {
