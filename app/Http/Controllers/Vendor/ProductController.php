@@ -680,7 +680,7 @@ class ProductController extends VendorBaseController
                 $thumbnail = time().Str::random(8).'.jpg';
                 $img->save('assets/images/thumbnails/'.$thumbnail);
                 $prod->thumbnail  = $thumbnail;
-                $prod->affilate_from_id = 9;
+                $prod->affilate_from_id = $user->affilate_from_id;
                 $prod->update();
 
 

@@ -43,7 +43,7 @@
             <div class="gocover"
               style="background: url({{asset('assets/images/'.$gs->admin_loader)}}) no-repeat scroll center center rgba(45, 45, 45, 0.5);">
             </div>
-            <form id="verifyform" action="{{route('vendor-verify-submit')}}" method="POST"
+            <form id="verifyform" class="p-4" action="{{route('vendor-verify-submit')}}" method="POST"
               enctype="multipart/form-data">
               {{csrf_field()}}
 

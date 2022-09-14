@@ -143,7 +143,7 @@
             ias = $(this).Jcrop({
               onSelect: showCoords,
               onChange: showCoords,
-              bgColor: '#747474',
+              bgColor: '',
               bgOpacity: .4,
               aspectRatio: aspX / aspY,
               setSelect: [0, 0, selection_width, selection_height]

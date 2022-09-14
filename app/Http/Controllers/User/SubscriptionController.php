@@ -10,6 +10,7 @@ use App\{
 };
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\AffilateFrom;
 
 class SubscriptionController extends UserBaseController
 {
@@ -47,6 +48,8 @@ class SubscriptionController extends UserBaseController
     public function vendorrequestsub(Request $request)
     {
         $input = $request->all();
+        // $user = $this->user;
+        // dd($user->shop_name);
         if(isset($input['method'])){
             return redirect()->back();
         }
@@ -63,12 +66,30 @@ class SubscriptionController extends UserBaseController
 
             $success_url = route('user.payment.return');
             $user = $this->user;
+
+            // create a new affiliate from each time a vendor starts selling and save it in user db
+            // only if user not already have an affiliate_from_id
+            if($user->affiliate_from_id != null)
+            {
+                $aff_from = new AffilateFrom;
+                $aff['name'] = $user->shop_name;
+                $aff['logo'] = 'noimage.png';
+                $aff['byAdmin'] = 0;
+    
+                $aff_from->fill($aff)->save();
+
+                $user->affilate_from_id = $aff_from->id;
+                $user->save();
+            }
+
             $subs = Subscription::findOrFail($request->subs_id);
 
             $user->is_vendor = 2;
             $user->date = date('Y-m-d', strtotime(Carbon::now()->format('Y-m-d').' + '.$subs->days.' days'));
             $user->mail_sent = 1;
             $user->update($input);
+
+
 
             $sub = new UserSubscription;
             $data = json_decode(json_encode($subs), true);

@@ -1121,6 +1121,7 @@ Route::prefix('vendor')->group(function() {
     // Vendor Profile
     Route::get('/profile', 'Vendor\VendorController@profile')->name('vendor-profile');
     Route::post('/profile', 'Vendor\VendorController@profileupdate')->name('vendor-profile-update');
+    Route::get('/profile/logo', 'Vendor\VendorController@profilelogo')->name('vendor-profile-logo');
     // Vendor Profile Ends
 
     // Vendor Shipping Cost
@@ -1159,6 +1160,7 @@ Route::prefix('vendor')->group(function() {
     Route::get('/social-link/status/{id1}/{id2}', 'Vendor\SocialLinkController@status')->name('vendor-sociallink-status');
 
     //------------ VENDOR SOCIAL LINK ENDS ------------
+
   // -------------------------- Vendor Income ------------------------------------//
     Route::get('earning/datatables',"Vendor\IncomeController@datatables")->name('vendor.income.datatables');
     Route::get('total/earning',"Vendor\IncomeController@index")->name('vendor.income');

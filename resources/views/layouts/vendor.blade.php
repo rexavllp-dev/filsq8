@@ -84,6 +84,8 @@
 									<li class="login-profile-area">
 										<a class="dropdown-toggle-1" href="javascript:;">
 											<div class="user-img">
+												{{-- {{dd($data)}} --}}
+												{{-- <img src="{{ $data->logo ? asset('assets/logos/'.$data->logo ):asset('assets/images/noimage.png') }}" alt=""> --}}
 												@if(Auth::user()->is_provider == 1)
 												<img src="{{ Auth::user()->photo ? asset(Auth::user()->photo):asset('assets/images/noimage.png') }}" alt="">
 												@else
@@ -207,6 +209,9 @@
 	                                @endif
                                     <li>
                                     	<a href="{{ route('vendor-sociallink-index') }}"><span>{{ __('Social Links') }}</span></a>
+                                    </li>
+                                    <li>
+                                    	<a href="{{ route('vendor-profile-logo') }}"><span>{{ __('Add Logo') }}</span></a>
                                     </li>
 									
 								</ul>

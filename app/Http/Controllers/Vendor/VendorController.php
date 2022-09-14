@@ -13,6 +13,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 
 use Validator;
+use App\Models\AffilateFrom;
+use Illuminate\Support\Str;
 
 class VendorController extends VendorBaseController
 {
@@ -65,6 +67,26 @@ class VendorController extends VendorBaseController
         }
 
         $data->update($input);
+
+        if($input['logo'] != null) {
+            $affiliateFrom = AffilateFrom::where(['id' => $data->affilate_from_id])->first();
+            $image = $request->logo;
+            list($type, $image) = explode(';', $image);
+            list(, $image)      = explode(',', $image);
+            $image = base64_decode($image);
+            $image_name = time().Str::random(8).'.png';
+            $path = 'assets/logos/'.$image_name;
+            if($affiliateFrom->logo != 'noimage.png')
+                {
+                    if (file_exists('assets/logos/'.$affiliateFrom->logo)) {
+                        unlink('assets/logos/'.$affiliateFrom->logo);
+                    }
+                }
+            file_put_contents($path, $image);
+            $affiliateFrom->logo = $image_name;
+            $affiliateFrom->save();
+        }
+
         $msg = __('Successfully updated your profile');
         return response()->json($msg); 
     }
@@ -102,7 +124,8 @@ class VendorController extends VendorBaseController
     public function profile()
     {
         $data = $this->user;  
-        return view('vendor.profile',compact('data'));
+        $aff_from = AffilateFrom::where(['id' => $data->affilate_from_id])->first();
+        return view('vendor.profile',compact('data', 'aff_from'));
     }
 
     //*** GET Request
