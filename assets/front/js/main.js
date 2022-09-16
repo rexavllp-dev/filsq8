@@ -260,6 +260,13 @@
 			);
 		});
 
+		$("#prod_name").on("click", function() {
+			$("#searchForm").attr(
+				"action",
+				mainurl + "/category/"
+			);
+		});
+
 		// Catalog Search Options Ends
 
 		// Auto Complete Section
@@ -1194,6 +1201,8 @@
 				mainurl + "/category/" + $(this).val()
 			);
 		});
+
+
 
 		// REPLY FORM
 
