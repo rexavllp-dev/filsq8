@@ -76,7 +76,7 @@
 
 									<div class="row">
 										<div class="col-lg-12 text-center">
-											<button class="addProductSubmit-btn" type="submit">{{ __("Edit Affiliate")}}</button>
+											<button class="addProductSubmit-btn" type="submit">{{ __("Update Affiliate")}}</button>
 										</div>
 									</div>
 								</div>	

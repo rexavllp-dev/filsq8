@@ -759,10 +759,14 @@ class ImportController extends AdminBaseController
                 $image = base64_decode($image);
                 $image_name = time().Str::random(8).'.png';
                 $path = 'assets/logos/'.$image_name;
+                if($data->logo != 'noimage.png')
+                {
+                    if (file_exists('assets/logos/'.$data->logo)) {
+                        unlink('assets/logos/'.$data->logo);
+                    }
+                }
                 file_put_contents($path, $image);
                 $input['logo'] = $image_name;
-            }else{
-                $input['logo'] = "noimage.png";
             }
 
   
