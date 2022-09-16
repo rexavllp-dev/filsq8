@@ -47,7 +47,8 @@
                     <div class="sign-in my-account-dropdown position-relative">
                         <a href="my-account.html" class="has-dropdown d-flex align-items-center text-white text-decoration-none">
                             @if (Auth::check())
-                            <img class="img-fluid user lazy" data-src="{{ asset('assets/images/users/'.Auth::user()->photo) }}" alt="">
+                            <i class="flaticon-user-3 flat-mini mx-auto text-dark"></i>
+                            {{-- <img class="img-fluid user lazy" data-src="{{ asset('assets/images/users/'.Auth::user()->photo) }}" alt=""> --}}
                             @else
                             <i class="flaticon-user-3 flat-mini mx-auto text-dark"></i>
                             @endif
@@ -235,7 +236,8 @@
                     <div class="sign-in position-relative font-general my-account-dropdown">
                         <a href="my-account.html" class="has-dropdown d-flex align-items-center text-dark text-decoration-none" title="My Account">
                             @if (Auth::check())
-                            <img class="img-fluid user lazy" data-src="{{ Auth::user()->photo? asset('assets/images/users/'.Auth::user()->photo) : '<i class="flaticon-user-3 flat-mini mx-auto text-dark"></i>' }}" alt="">
+                            <i class="flaticon-user-3 flat-mini mx-auto text-dark"></i>
+                            {{-- <img class="img-fluid user lazy" data-src="{{ Auth::user()->photo? asset('assets/images/users/'.Auth::user()->photo) : '<i class="flaticon-user-3 flat-mini mx-auto text-dark"></i>' }}" alt=""> --}}
                             @else
                             <i class="flaticon-user-3 flat-mini mx-auto text-dark"></i>
                             @endif
