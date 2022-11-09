@@ -24,8 +24,7 @@
 }
 
 .border_black {
-
-   border: 1px solid #000 !important;
+   border: 0px solid #000 !important;
 }
 
 ::-webkit-input-placeholder {
@@ -102,9 +101,9 @@
 }
 
 .product-search-one {
-   border: 1px solid grey;
+   border: 2px solid grey;
    border-radius: 50px;
-   margin-top: 20px;
+   margin-top: 0px;
 }
 
 .info-area {
@@ -162,7 +161,7 @@
    margin: auto;
    padding: 20px;
    border: 1px solid #888;
-   width: auto;
+   width: 500px;
    display: flex;
    justify-content: center;
 }
@@ -187,14 +186,14 @@
    width: 300px;
 }
 
-#myBtn{
+#myBtn {
    display: flex;
    justify-content: center;
    margin-top: 20px;
    margin-bottom: 20px;
 }
 
-#gallery_09 .owl-item{
+#gallery_09 .owl-item {
    width: 100px !important;
 }
 
@@ -206,7 +205,8 @@
    .wp-gallery {
       display: none;
    }
-   .banner-content{
+
+   .banner-content {
       max-width: 50% !important;
    }
 }
@@ -222,7 +222,7 @@
 @media only screen and (min-width : 670px) {
    .img-product {
       position: inherit !important;
-      width: 500px;
+      /* width: 500px; */
    }
 }
 
@@ -230,5 +230,178 @@
 @media (max-width:991px) and (min-width:420px) {
    [class*="product-search-"] .select-appearance-none {
       display: none;
-  }
+   }
 }
+
+/* Rating Star Widgets Style */
+.rating-stars ul {
+   list-style-type: none;
+   padding: 0;
+   -moz-user-select: none;
+   -webkit-user-select: none;
+}
+
+.rating-stars ul>li.star {
+   display: inline-block;
+
+}
+
+/* Idle State of the stars */
+.rating-stars ul>li.star>i.fa {
+   font-size: 1.5em;
+   /* Change the size of the stars */
+   color: #ccc;
+   /* Color on idle state */
+}
+
+/* Hover state of the stars */
+.rating-stars ul>li.star.hover>i.fa {
+   color: #FFCC36;
+}
+
+/* Selected state of the stars */
+.rating-stars ul>li.star.selected>i.fa {
+   color: #FF912C;
+}
+
+.review_image {
+   width: 10%;
+   border-radius: 50px;
+}
+
+.left-area {
+   display: flex;
+   align-items: flex-start;
+   gap: 20px;
+}
+
+.namerating .name {
+   font-size: 0.8rem;
+   margin-bottom: 0;
+}
+
+.ratingstar .fa {
+   font-size: 0.7rem;
+}
+
+.single-comment {
+   padding: 15px;
+   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+   margin-top: 10px;
+   border-radius: 10px;
+}
+
+.single-comment .date {
+   margin-left: auto;
+}
+
+.thumbimg .owl-stage{
+   width: 100px !important;
+} 
+
+.thumbimg .owl-stage-outer{
+   display: flex;
+   justify-content: center;
+}
+
+.dealimg {
+   width: 60% !important;
+}
+
+.dealimgcont {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.down-line-secondary{
+   font-size: 1.6rem;
+}
+
+li.cat-item.cat-parent img {
+   width: 20px;
+   object-fit: cover;
+}
+
+.categorylogo{
+   display: flex;
+   gap: 10px;
+}
+
+.categorylogo img {
+   width: 15px;
+   height: 15px;
+}
+
+.select {
+   position: relative;
+   margin-bottom: 15px;
+   width: 200px;
+   /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
+ }
+ .select .selectBtn {
+   background: var(--bg1);
+   padding: 13px;
+   box-sizing: border-box;
+   color: white;
+   border-radius: 3px;
+   width: 100%;
+   cursor: pointer;
+   position: relative;
+   -webkit-user-select: none;
+      -moz-user-select: none;
+       -ms-user-select: none;
+           user-select: none;
+   background: rgba(255, 255, 255, 0);
+ }
+ .select .selectBtn:after {
+   content: "";
+   position: absolute;
+   top: 45%;
+   right: 15px;
+   width: 6px;
+   height: 6px;
+   -webkit-transform: translateY(-50%) rotate(45deg);
+           transform: translateY(-50%) rotate(45deg);
+   border-right: 2px solid rgb(255, 255, 255);
+   border-bottom: 2px solid rgb(255, 255, 255);
+   transition: 0.2s ease;
+ }
+ .select .selectBtn.toggle {
+   border-radius: 3px 3px 0 0;
+ }
+ .select .selectBtn.toggle:after {
+   -webkit-transform: translateY(-50%) rotate(-135deg);
+           transform: translateY(-50%) rotate(-135deg);
+ }
+ .select .selectDropdown {
+   position: absolute;
+   top: 100%;
+   width: 100%;
+   border-radius: 0 0 3px 3px;
+   overflow: hidden;
+   background: var(--bg1);
+   border-top: 1px solid #eee;
+   z-index: 1;
+   background: #fff;
+   -webkit-transform: scale(1, 0);
+           transform: scale(1, 0);
+   -webkit-transform-origin: top center;
+           transform-origin: top center;
+   visibility: hidden;
+   transition: 0.2s ease;
+   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+ }
+ .select .selectDropdown .option {
+   padding: 10px;
+   box-sizing: border-box;
+   cursor: pointer;
+ }
+ .select .selectDropdown .option:hover {
+   background: #f8f8f8;
+ }
+ .select .selectDropdown.toggle {
+   visibility: visible;
+   -webkit-transform: scale(1, 1);
+           transform: scale(1, 1);
+ }

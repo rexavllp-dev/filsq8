@@ -11,7 +11,10 @@
                 @foreach (App\Models\Category::where('language_id',$langg->id)->where('status',1)->get() as $category)
 
                 <li class="cat-item cat-parent">
-                    <a href="{{route('front.category', $category->slug)}}{{!empty(request()->input('search')) ? '?search='.request()->input('search') : ''}}" class="category-link" id="cat">{{ $category->name }} <span class="count"></span></a>
+                    <div class="categorylogo">
+                        <img src="{{ asset('assets/images/categories/'.$category->photo)}}"/>
+                        <a href="{{route('front.category', $category->slug)}}{{!empty(request()->input('search')) ? '?search='.request()->input('search') : ''}}" class="category-link" id="cat">{{ $category->name }} <span class="count"></span></a>
+                    </div>
 
                     @if($category->subs->count() > 0)
                         <span class="has-child"></span>

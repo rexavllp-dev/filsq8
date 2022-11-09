@@ -460,3 +460,7 @@
             <li><a href="{{route('admin-generate-backup')}}"> {{ __('Generate Backup') }}</a></li>
         </ul>
     </li>
+
+    <li>
+        <a href="{{ route('admin.logout') }}"><i class="fas fa-power-off"></i> {{ __('Logout') }}</a>
+    </li>

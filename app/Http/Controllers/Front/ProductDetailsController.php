@@ -301,7 +301,8 @@ class ProductDetailsController extends FrontBaseController
                 }
             }
         }
-        if ($ck == 1) {
+
+        if ($ck == 0) {
             $user = Auth::user();
             $prev_reviewer = Rating::where('product_id', '=', $request->product_id)->where('user_id', '=', $user->id)->first();
             if (isset($prev_reviewer)) {

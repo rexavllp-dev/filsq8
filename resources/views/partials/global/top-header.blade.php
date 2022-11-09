@@ -4,7 +4,7 @@
           <div class="col-lg-4 sm-mx-none">
              <div class="d-flex align-items-center text-general">
                 <i class="flaticon-phone-call flat-mini me-2 text-general"></i>
-                <span class="text-dark"> {{ $ps->phone }}</span>
+                {{-- <span class="text-dark"> {{ $ps->phone }}</span> --}}
              </div>
           </div>
           <div class="col-lg-8 ">

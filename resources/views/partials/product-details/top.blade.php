@@ -54,14 +54,14 @@
           {{-- <img
             src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}"
             alt="Thumb Image" /> --}}
-          <img id="single-image-zoom" class="border border-grey img-product text-center" <img id=""
+          <img id="single-image-zoom" class=" border-grey img-product text-center" <img id=""
             src="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}"
             alt="Thumb Image"
             data-zoom-image="{{filter_var($productt->photo, FILTER_VALIDATE_URL) ?$productt->photo:asset('assets/images/products/'.$productt->photo)}}" />
          
         </div>
         <div id="gallery_09" class="product-slide-thumb">
-          <div class="owl-carousel four-carousel dot-disable nav-arrow-middle owl-mx-5">
+          <div class="owl-carousel thumbimg four-carousel dot-disable nav-arrow-middle owl-mx-5 text-center">
             @foreach($productt->galleries as $gal)
             <div class="item border border-grey p-1">
               <a class="active" href="{{asset('assets/images/galleries/'.$gal->photo)}}"
@@ -386,11 +386,11 @@
                     <i class="fab fa-twitter"></i>
                   </a>
                 </li>
-                <li>
+                {{-- <li>
                   <a class="linkedin a2a_button_linkedin" href="">
                     <i class="fab fa-linkedin-in"></i>
                   </a>
-                </li>
+                </li> --}}
                 <li>
                   <a class="pinterest a2a_button_pinterest" href="">
                     <i class="fab fa-pinterest-p"></i>
@@ -399,6 +399,11 @@
                 <li>
                   <a class="instagram a2a_button_whatsapp" href="">
                     <i class="fab fa-whatsapp"></i>
+                  </a>
+                </li>
+                <li>
+                  <a class="a2a_button_snapchat">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAAEAklEQVRIibWXa2wUVRTH/+fOYzdtaluNVFsIxGjBom0KBbRNExGjCWnEpNYXiY8CPmOKwQ8mJZiAksbE8EFrCAblAwE0thGNxpZH2kKh9A2ypS+VGKPFVvru7s7MvccPBZJld5nZhv4/Tv5zf3POPefkDPFo4WI42A9QMQAT8ysLQBM02kQ8XHgcoHXzDIwU4xjxcFEY8x/pzbL0uUCDYWBklOE4hIUZgGEkDDb1RNyNbYy9h5TV3QtdKQgAEAJq5XI45aXCfPxR8nwW8XARu5mkBCr3sPz+hIIgfC0dOmKb6iIAmA5yhMCLzKK8ZC1QtU1omnabwDurWX77s5y0Le3J/u4zbbE89698ZIVPQ/0LJZS6/S3hmknhZggMMA7/IIXjcGk8KAAMdrR0OgobDh5lLTDoGos7+LtfwLpJTX2drSfdvH3tLc0+g7qPHr8N4Eu/c9gKc6PrSdcUCqOu7w+E3HyudxEMMkNgwiuYwGOjHtyuYNMkgOHzCgYAQyfXXMcEj00AO6uVc2UE6t//2ARTilcog1OvjJBZ9q60Fi8SWuWb0NLviO7vmOCvahTqT/GII+mg30drAHXeO1j8OjGF08NX0dzzm3p1UYbIrHgl2hezuPKWEqTiDENXD87Yald/17kjXsEDXWcPB2212zCQrxTf+3B2bF/cAdLVAxyoVbLutCJmfqy/s/WUF3D2itXFRNTwRKGQW54jI29Z7DEat7jyc4C70oVW38yKpJBeoAAghNCYgYqXyXhgSfzZHbePpQS271G2Rmjv7T57xiu4t72l0dD53Iefse04t/jAWA8np4GKj1l2BtR0SNJGr9BrYidML124xDNbd7OcnI5tirjjP/8BDv2ouLaO7WAIQ6GwXD94vi2QIBgAkJ2/Os8wxU/Jftxd+pQwNj5NlJURB/zM29IauExDtuJP7RT/vssNDa6j71bKzc1NDmlJb+g6ti67jxbUfC5uDKKIVBcXkC6VWujXeYMxHnp/aX5R5lyhy1etuieoJb3n96FEKs4qLkDEnhLVTq0XGCdbGLV1bI9P00eA9YVwtDsndPnX3x0dM24RWuTPUtCmWfBraSnYUbaejLVrCAUPRVZ43D7eX6P4k30MAAQAmoClGHv1kL8yEGiYigKaSVUE2iIV30jntnLC68/Hbpy4YKmAi/2MJD+Qnkbo7mHsqubw1XEeC9v4QGnyBAAIqa3zG6hKT6W0He+QLy+HMDbOcCSQvYQg4jSsp9XnukIW8OU3ig/Usj01M7udpiSzVf6sMDaVCfIlsG0mBL4uKYGhEUAxI3MBQXNdJ6KlY/a3IqHdWtOA2Z70vs7epLAA0DTXt+csRpOAzpvBOIbZyOdbFhj10Gnz/y6pxa4SH0agAAAAAElFTkSuQmCC">
                   </a>
                 </li>
               </ul>

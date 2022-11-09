@@ -71,7 +71,8 @@
                 <div class="left">
                     <h5 class="title">{{ __('Total Products!') }}</h5>
                     <span class="number">{{count($products)}}</span>
-                    <a href="{{route('admin-prod-index')}}" class="link">{{ __('View All') }}</a>
+                    <a href="{{route('admin-prod-index')}}" class="link pr-link">{{ __('View Products') }}</a>
+                    <a href="{{route('admin-import-index')}}" class="link pr-link">{{ __('View Affiliate Products') }}</a>
                 </div>
                 <div class="right d-flex align-self-center">
                     <div class="icon">

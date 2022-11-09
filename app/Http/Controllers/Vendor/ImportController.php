@@ -20,53 +20,65 @@ class ImportController extends VendorBaseController
     //*** JSON Request
     public function datatables()
     {
-         $user = $this->user;
-         $datas = $user->products()->where('product_type','affiliate')->latest('id')->get();
-         
-         //--- Integrating This Collection Into Datatables
-         return Datatables::of($datas)
-                            ->editColumn('name', function(Product $data) {
-                                $name = mb_strlen(strip_tags($data->name),'UTF-8') > 50 ? mb_substr(strip_tags($data->name),0,50,'UTF-8').'...' : strip_tags($data->name);
-                                $id = '<small>'.__('Product ID').': <a href="'.route('front.product', $data->slug).'" target="_blank">'.sprintf("%'.08d",$data->id).'</a></small>';
-                                return  $name.'<br>'.$id;
-                            })
-                            ->editColumn('price', function(Product $data) {
-                                $price = round($data->price * $this->curr->value , 2);
-                                return  \PriceHelper::showAdminCurrencyPrice($price);
-                            })
-                            ->addColumn('status', function(Product $data) {
-                                $class = $data->status == 1 ? 'drop-success' : 'drop-danger';
-                                $s = $data->status == 1 ? 'selected' : '';
-                                $ns = $data->status == 0 ? 'selected' : '';
-                                return '<div class="action-list"><select class="process select droplinks '.$class.'"><option data-val="1" value="'. route('vendor-prod-status',['id1' => $data->id, 'id2' => 1]).'" '.$s.'>'.__('Activated').'</option><<option data-val="0" value="'. route('vendor-prod-status',['id1' => $data->id, 'id2' => 0]).'" '.$ns.'>'.__('Deactivated').'</option></select></div>';
-                            })                             
-                            ->addColumn('action', function(Product $data) {
-                                return '<div class="action-list"><a href="' . route('vendor-import-edit',$data->id) . '"> <i class="fas fa-edit"></i>'.__('Edit').'</a><a href="javascript" class="set-gallery" data-toggle="modal" data-target="#setgallery"><input type="hidden" value="'.$data->id.'"><i class="fas fa-eye"></i> '.__('View Gallery').'</a><a href="javascript:;" data-href="' . route('vendor-prod-delete',$data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i></a></div>';
-                            }) 
-                            ->rawColumns(['name', 'status', 'action'])
-                            ->toJson(); //--- Returning Json Data To Client Side
+        $user = $this->user;
+        $datas = $user->products()->where('product_type', 'affiliate')->latest('id')->get();
+
+        //--- Integrating This Collection Into Datatables
+        return Datatables::of($datas)
+            ->editColumn(
+                'name', function (Product $data) {
+                    $name = mb_strlen(strip_tags($data->name), 'UTF-8') > 50 ? mb_substr(strip_tags($data->name), 0, 50, 'UTF-8') . '...' : strip_tags($data->name);
+                    $id = '<small>' . __('Product ID') . ': <a href="' . route('front.product', $data->slug) . '" target="_blank">' . sprintf("%'.08d", $data->id) . '</a></small>';
+                    return $name . '<br>' . $id;
+                }
+            )
+            ->editColumn(
+                'price', function (Product $data) {
+                $price = round($data->price * $this->curr->value, 2);
+                return \PriceHelper::showAdminCurrencyPrice($price);
+            }
+            )
+            ->addColumn(
+                'status', function (Product $data) {
+                $class = $data->status == 1 ? 'drop-success' : 'drop-danger';
+                $s = $data->status == 1 ? 'selected' : '';
+                $ns = $data->status == 0 ? 'selected' : '';
+                return '<div class="action-list"><select class="process select droplinks ' . $class . '"><option data-val="1" value="' . route('vendor-prod-status', ['id1' => $data->id, 'id2' => 1]) . '" ' . $s . '>' . __('Activated') . '</option><<option data-val="0" value="' . route('vendor-prod-status', ['id1' => $data->id, 'id2' => 0]) . '" ' . $ns . '>' . __('Deactivated') . '</option></select></div>';
+            }
+            )
+            ->addColumn(
+                'action', function (Product $data) {
+                return '<div class="action-list"><a href="' . route('vendor-import-edit', $data->id) . '"> <i class="fas fa-edit"></i>' . __('Edit') . '</a><a href="javascript" class="set-gallery" data-toggle="modal" data-target="#setgallery"><input type="hidden" value="' . $data->id . '"><i class="fas fa-eye"></i> ' . __('View Gallery') . '</a><a href="javascript:;" data-href="' . route('vendor-prod-delete', $data->id) . '" data-toggle="modal" data-target="#confirm-delete" class="delete"><i class="fas fa-trash-alt"></i></a></div>';
+            }
+            )
+            ->rawColumns(
+                ['name', 'status', 'action']
+            )
+            ->toJson(
+            ); //--- Returning Json Data To Client Side
     }
 
-    public function index(){
-        if($this->gs->affilite == 1){
+    public function index()
+    {
+        if ($this->gs->affilite == 1) {
             return view('vendor.productimport.index');
-        }else{
+        } else {
             return back();
-        } 
+        }
     }
-    
+
 
     //*** GET Request
     public function createImport()
     {
         $cats = Category::all();
         $sign = $this->curr;
-        if($this->gs->affilite == 1){
-            return view('vendor.productimport.createone',compact('cats','sign'));
-        }else{
+        if ($this->gs->affilite == 1) {
+            return view('vendor.productimport.createone', compact('cats', 'sign'));
+        } else {
             return back();
         }
-        
+
     }
 
     //*** GET Request
@@ -74,19 +86,19 @@ class ImportController extends VendorBaseController
     {
         $cats = Category::all();
         $sign = $this->curr;
-        return view('vendor.productimport.importcsv',compact('cats','sign'));
+        return view('vendor.productimport.importcsv', compact('cats', 'sign'));
     }
 
     //*** POST Request
-    public function uploadUpdate(Request $request,$id)
+    public function uploadUpdate(Request $request, $id)
     {
         //--- Validation Section
         $rules = [
-          'image' => 'required',
+            'image' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
-          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+            return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
 
         $data = Product::findOrFail($id);
@@ -94,22 +106,21 @@ class ImportController extends VendorBaseController
         //--- Validation Section Ends
         $image = $request->image;
         list($type, $image) = explode(';', $image);
-        list(, $image)      = explode(',', $image);
+        list(, $image) = explode(',', $image);
         $image = base64_decode($image);
-        $image_name = time().Str::random(8).'.png';
-        $path = 'assets/images/products/'.$image_name;
+        $image_name = time() . Str::random(8) . '.png';
+        $path = 'assets/images/products/' . $image_name;
         file_put_contents($path, $image);
-                if($data->photo != null)
-                {
-                    if (file_exists(public_path().'/assets/images/products/'.$data->photo)) {
-                        unlink(public_path().'/assets/images/products/'.$data->photo);
-                    }
-                } 
-                        $input['photo'] = $image_name;
-         $data->update($input);
+        if ($data->photo != null) {
+            if (file_exists(public_path() . '/assets/images/products/' . $data->photo)) {
+                unlink(public_path() . '/assets/images/products/' . $data->photo);
+            }
+        }
+        $input['photo'] = $image_name;
+        $data->update($input);
 
-                        
-        return response()->json(['status'=>true,'file_name' => $image_name]);
+
+        return response()->json(['status' => true, 'file_name' => $image_name]);
     }
 
     //*** POST Request
@@ -119,256 +130,227 @@ class ImportController extends VendorBaseController
         $package = $user->subscribes()->latest('id')->first();
         $prods = $user->products()->latest('id')->get()->count();
 
-        if(Generalsetting::find(1)->verify_product == 1)
-        {
-            if(!$user->checkStatus())
-            {
-                return response()->json(array('errors' => [ 0 => __('You must complete your verfication first.')]));
+        if (Generalsetting::find(1)->verify_product == 1) {
+            if (!$user->checkStatus()) {
+                return response()->json(array('errors' => [0 => __('You must complete your verfication first.')]));
             }
         }
 
-        if($prods < $package->allowed_products)
-        {
+        // dd($package);
 
-        if($request->image_source == 'file')
-        {
-            //--- Validation Section
-            $rules = [
-                   'photo'      => 'required',
-                   'file'       => 'mimes:zip'
-                    ];  
+        if ($prods < $package->allowed_products) {
 
-        $validator = Validator::make($request->all(), $rules);
-        
-        if ($validator->fails()) {
-          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
-        }
-        //--- Validation Section Ends
+            if ($request->image_source == 'file') {
+                //--- Validation Section
+                $rules = [
+                    'photo' => 'required',
+                    'file' => 'mimes:zip'
+                ];
 
-        }
+                $validator = Validator::make($request->all(), $rules);
 
-        //--- Logic Section        
+                if ($validator->fails()) {
+                    return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+                }
+                //--- Validation Section Ends
+
+            }
+
+            //--- Logic Section        
             $data = new Product;
             $sign = $this->curr;
             $input = $request->all();
 
             // Check File
-            if ($file = $request->file('file')) 
-            {              
+            if ($file = $request->file('file')) {
                 $name = \PriceHelper::ImageCreateName($file);
-                $file->move('assets/files',$name);           
+                $file->move('assets/files', $name);
                 $input['file'] = $name;
             }
 
             $input['photo'] = "";
-            if($request->photo != ""){
+            if ($request->photo != "") {
                 $image = $request->photo;
                 list($type, $image) = explode(';', $image);
-                list(, $image)      = explode(',', $image);
+                list(, $image) = explode(',', $image);
                 $image = base64_decode($image);
-                $image_name = time().Str::random(8).'.png';
-                $path = 'assets/images/products/'.$image_name;
+                $image_name = time() . Str::random(8) . '.png';
+                $path = 'assets/images/products/' . $image_name;
                 file_put_contents($path, $image);
                 $input['photo'] = $image_name;
-            }else{
+            } else {
                 $input['photo'] = $request->photolink;
             }
 
             // Check Physical
-            if($request->type == "Physical")
-            {
-                    //--- Validation Section
-                    $rules = ['sku'      => 'min:8|unique:products'];
+            if ($request->type == "Physical") {
+                //--- Validation Section
+                $rules = ['sku' => 'min:8|unique:products'];
 
-                    $validator = Validator::make($request->all(), $rules);
+                $validator = Validator::make($request->all(), $rules);
 
-                    if ($validator->fails()) {
-                        return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
-                    }
-                    //--- Validation Section Ends
-
-                
-            // Check Condition
-            if ($request->product_condition_check == ""){
-                $input['product_condition'] = 0;
-            }
-
-                        // Check Preorderd
-                        if ($request->preordered_check == ""){
-                            $input['preordered'] = 0;
-                        }
+                if ($validator->fails()) {
+                    return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+                }
+                //--- Validation Section Ends
 
 
-            // Check Shipping Time
-            if ($request->shipping_time_check == ""){
-                $input['ship'] = null;
-            } 
+                // Check Condition
+                if ($request->product_condition_check == "") {
+                    $input['product_condition'] = 0;
+                }
 
-            // Check Size
-            if(empty($request->stock_check ))
-            {
-                $input['stock_check'] = 0;
-                $input['size'] = null;
-                $input['size_qty'] = null;
-                $input['size_price'] = null;
-                $input['color'] = null;
-            }
-            else{
-                    if(in_array(null, $request->size) || in_array(null, $request->size_qty) || in_array(null, $request->size_price))
-                    {
+                // Check Preorderd
+                if ($request->preordered_check == "") {
+                    $input['preordered'] = 0;
+                }
+
+
+                // Check Shipping Time
+                if ($request->shipping_time_check == "") {
+                    $input['ship'] = null;
+                }
+
+                // Check Size
+                if (empty($request->stock_check)) {
+                    $input['stock_check'] = 0;
+                    $input['size'] = null;
+                    $input['size_qty'] = null;
+                    $input['size_price'] = null;
+                    $input['color'] = null;
+                } else {
+                    if (in_array(null, $request->size) || in_array(null, $request->size_qty) || in_array(null, $request->size_price)) {
                         $input['stock_check'] = 0;
                         $input['size'] = null;
                         $input['size_qty'] = null;
                         $input['size_price'] = null;
                         $input['color'] = null;
-                    }
-                    else
-                    {
+                    } else {
                         $input['stock_check'] = 1;
                         $input['color'] = implode(',', $request->color);
                         $input['size'] = implode(',', $request->size);
                         $input['size_qty'] = implode(',', $request->size_qty);
                         $size_prices = $request->size_price;
                         $s_price = array();
-                        foreach($size_prices as $key => $sPrice){
+                        foreach ($size_prices as $key => $sPrice) {
                             $s_price[$key] = $sPrice / $sign->value;
                         }
-                        
+
                         $input['size_price'] = implode(',', $s_price);
                     }
-            }
+                }
 
-            // Check Color
-            if(empty($request->color_check))
-            {
-                $input['color_all'] = null;
-            }
-            else{
-                $input['color_all'] = implode(',', $request->color_all);
-            }
-            // Check Size
-            if(empty($request->size_check))
-            {
-                $input['size_all'] = null;
-            }
-            else{
-                $input['size_all'] = implode(',', $request->size_all);
-            }  
+                // Check Color
+                if (empty($request->color_check)) {
+                    $input['color_all'] = null;
+                } else {
+                    $input['color_all'] = implode(',', $request->color_all);
+                }
+                // Check Size
+                if (empty($request->size_check)) {
+                    $input['size_all'] = null;
+                } else {
+                    $input['size_all'] = implode(',', $request->size_all);
+                }
 
-            // Check Measurement
-            if ($request->mesasure_check == "") 
-             {
-                $input['measure'] = null;    
-             } 
+                // Check Measurement
+                if ($request->mesasure_check == "") {
+                    $input['measure'] = null;
+                }
 
             }
 
             // Check Seo
-        if (empty($request->seo_check)) 
-         {
-            $input['meta_tag'] = null;
-            $input['meta_description'] = null;         
-         }  
-         else {
-        if (!empty($request->meta_tag)) 
-         {
-            $input['meta_tag'] = implode(',', $request->meta_tag);       
-         }              
-         } 
+            if (empty($request->seo_check)) {
+                $input['meta_tag'] = null;
+                $input['meta_description'] = null;
+            } else {
+                if (!empty($request->meta_tag)) {
+                    $input['meta_tag'] = implode(',', $request->meta_tag);
+                }
+            }
 
-             // Check License
+            // Check License
 
-            if($request->type == "License")
-            {
+            if ($request->type == "License") {
 
-                if(in_array(null, $request->license) || in_array(null, $request->license_qty))
-                {
-                    $input['license'] = null;  
+                if (in_array(null, $request->license) || in_array(null, $request->license_qty)) {
+                    $input['license'] = null;
                     $input['license_qty'] = null;
-                }
-                else 
-                {             
-                    $input['license'] = implode(',,', $request->license);  
-                    $input['license_qty'] = implode(',', $request->license_qty);                 
+                } else {
+                    $input['license'] = implode(',,', $request->license);
+                    $input['license_qty'] = implode(',', $request->license_qty);
                 }
 
             }
 
-             // Check Features
-            if(in_array(null, $request->features) || in_array(null, $request->colors))
-            {
-                $input['features'] = null;  
+            // Check Features
+            if (in_array(null, $request->features) || in_array(null, $request->colors)) {
+                $input['features'] = null;
                 $input['colors'] = null;
-            }
-            else 
-            {             
-                $input['features'] = implode(',', str_replace(',',' ',$request->features));  
-                $input['colors'] = implode(',', str_replace(',',' ',$request->colors));                 
+            } else {
+                $input['features'] = implode(',', str_replace(',', ' ', $request->features));
+                $input['colors'] = implode(',', str_replace(',', ' ', $request->colors));
             }
 
             //tags 
-            if (!empty($request->tags)) 
-             {
-                $input['tags'] = implode(',', $request->tags);       
-             }  
+            if (!empty($request->tags)) {
+                $input['tags'] = implode(',', $request->tags);
+            }
 
             // Conert Price According to Currency
-             $input['price'] = ($input['price'] / $sign->value);
-             $input['previous_price'] = ($input['previous_price'] / $sign->value);    
-             $input['product_type'] = "affiliate";
-             $input['user_id'] = $this->user->id;
+            $input['price'] = ($input['price'] / $sign->value);
+            $input['previous_price'] = ($input['previous_price'] / $sign->value);
+            $input['product_type'] = "affiliate";
+            $input['user_id'] = $this->user->id;
             // Save Data 
-                $data->fill($input)->save();
+            $data->fill($input)->save();
 
             // Set SLug
-                $prod = Product::find($data->id);
-                if($prod->type != 'Physical'){
-                    $prod->slug = Str::slug($data->name,'-').'-'.strtolower(Str::random(3).$data->id.Str::random(3));
-                }
-                else {
-                    $prod->slug = Str::slug($data->name,'-').'-'.strtolower($data->sku);               
-                }
-                
-                $fimageData = public_path().'/assets/images/products/'.$prod->photo;
+            $prod = Product::find($data->id);
+            if ($prod->type != 'Physical') {
+                $prod->slug = Str::slug($data->name, '-') . '-' . strtolower(Str::random(3) . $data->id . Str::random(3));
+            } else {
+                $prod->slug = Str::slug($data->name, '-') . '-' . strtolower($data->sku);
+            }
 
-                if(filter_var($prod->photo,FILTER_VALIDATE_URL)){
-                    $fimageData = $prod->photo;
-                }
+            $fimageData = public_path() . '/assets/images/products/' . $prod->photo;
 
-                $img = Image::make($fimageData)->resize(285, 285);
-                $thumbnail = time().Str::random(8).'.jpg';
-                $img->save(public_path().'/assets/images/thumbnails/'.$thumbnail);
-                $prod->thumbnail  = $thumbnail;
-                $prod->update();
+            if (filter_var($prod->photo, FILTER_VALIDATE_URL)) {
+                $fimageData = $prod->photo;
+            }
+
+            $img = Image::make($fimageData)->resize(285, 285);
+            $thumbnail = time() . Str::random(8) . '.jpg';
+            $img->save(public_path() . '/assets/images/thumbnails/' . $thumbnail);
+            $prod->thumbnail = $thumbnail;
+            $prod->update();
 
             // Add To Gallery If any
-                $lastid = $data->id;
-                if ($files = $request->file('gallery')){
-                    foreach ($files as  $key => $file){
-                        if(in_array($key, $request->galval))
-                        {
-                            $gallery = new Gallery;
-                            $name = \PriceHelper::ImageCreateName($file);
-                            $file->move('assets/images/galleries',$name);
-                            $gallery['photo'] = $name;
-                            $gallery['product_id'] = $lastid;
-                            $gallery->save();
-                        }
+            $lastid = $data->id;
+            if ($files = $request->file('gallery')) {
+                foreach ($files as $key => $file) {
+                    if (in_array($key, $request->galval)) {
+                        $gallery = new Gallery;
+                        $name = \PriceHelper::ImageCreateName($file);
+                        $file->move('assets/images/galleries', $name);
+                        $gallery['photo'] = $name;
+                        $gallery['product_id'] = $lastid;
+                        $gallery->save();
                     }
                 }
-        //logic Section Ends
+            }
+            //logic Section Ends
 
-        //--- Redirect Section        
-        $msg = __('New Affiliate Product Added Successfully.').'<a href="'.route('vendor-import-index').'">'.__('View Product Lists.').'</a>';
-        return response()->json($msg);      
-        //--- Redirect Section Ends   
-        }
-        else
-        {
-        //--- Redirect Section        
-        return response()->json(array('errors' => [ 0 => __('You Can\'t Add More Product.')]));       
+            //--- Redirect Section        
+            $msg = __('New Affiliate Product Added Successfully.') . '<a href="' . route('vendor-import-index') . '">' . __('View Product Lists.') . '</a>';
+            return response()->json($msg);
+            //--- Redirect Section Ends   
+        } else {
+            //--- Redirect Section        
+            return response()->json(array('errors' => [0 => __('You Can\'t Add More Product.')]));
 
-        //--- Redirect Section Ends    
+            //--- Redirect Section Ends    
         }
 
     }
@@ -379,7 +361,7 @@ class ImportController extends VendorBaseController
         $cats = Category::all();
         $data = Product::findOrFail($id);
         $sign = $this->curr;
-        return view('vendor.productimport.editone',compact('cats','data','sign'));
+        return view('vendor.productimport.editone', compact('cats', 'data', 'sign'));
     }
 
     //*** POST Request
@@ -389,13 +371,13 @@ class ImportController extends VendorBaseController
         $prod = Product::find($id);
         //--- Validation Section
         $rules = [
-               'file'       => 'mimes:zip'
-                ];
+            'file' => 'mimes:zip'
+        ];
 
         $validator = Validator::make($request->all(), $rules);
-        
+
         if ($validator->fails()) {
-          return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+            return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
         }
         //--- Validation Section Ends
 
@@ -405,216 +387,183 @@ class ImportController extends VendorBaseController
         $sign = $this->curr;
         $input = $request->all();
 
-            //Check Types 
-            if($request->type_check == 1)
-            {
-                $input['link'] = null;           
-            }
-            else
-            {
-                if($data->file!=null){
-                        if (file_exists(public_path().'/assets/files/'.$data->file)) {
-                        unlink(public_path().'/assets/files/'.$data->file);
-                    }
+        //Check Types 
+        if ($request->type_check == 1) {
+            $input['link'] = null;
+        } else {
+            if ($data->file != null) {
+                if (file_exists(public_path() . '/assets/files/' . $data->file)) {
+                    unlink(public_path() . '/assets/files/' . $data->file);
                 }
-                $input['file'] = null;            
+            }
+            $input['file'] = null;
+        }
+
+        if ($request->image_source == 'file') {
+            $input['photo'] = $request->photo;
+        } else {
+            $input['photo'] = $request->photolink;
+        }
+
+
+        // Check Physical
+        if ($data->type == "Physical") {
+            //--- Validation Section
+            $rules = ['sku' => 'min:8|unique:products,sku,' . $id];
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if ($validator->fails()) {
+                return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+            }
+            //--- Validation Section Ends
+
+            // Check Condition
+            if ($request->product_condition_check == "") {
+                $input['product_condition'] = 0;
             }
 
-        if($request->image_source == 'file'){
-                $input['photo'] = $request->photo;
-            }else{
-                $input['photo'] = $request->photolink;
+            // Check Preorderd
+            if ($request->preordered_check == "") {
+                $input['preordered'] = 0;
             }
 
- 
-            // Check Physical
-            if($data->type == "Physical")
-            {
-                    //--- Validation Section
-                    $rules = ['sku' => 'min:8|unique:products,sku,'.$id];
+            // Check Shipping Time
+            if ($request->shipping_time_check == "") {
+                $input['ship'] = null;
+            }
 
-                    $validator = Validator::make($request->all(), $rules);
+            // Check Size
 
-                    if ($validator->fails()) {
-                        return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+            if (empty($request->stock_check)) {
+                $input['stock_check'] = 0;
+                $input['size'] = null;
+                $input['size_qty'] = null;
+                $input['size_price'] = null;
+                $input['color'] = null;
+            } else {
+                if (in_array(null, $request->size) || in_array(null, $request->size_qty) || in_array(null, $request->size_price)) {
+                    $input['stock_check'] = 0;
+                    $input['size'] = null;
+                    $input['size_qty'] = null;
+                    $input['size_price'] = null;
+                    $input['color'] = null;
+                } else {
+                    $input['stock_check'] = 1;
+                    $input['color'] = implode(',', $request->color);
+                    $input['size'] = implode(',', $request->size);
+                    $input['size_qty'] = implode(',', $request->size_qty);
+                    $size_prices = $request->size_price;
+                    $s_price = array();
+                    foreach ($size_prices as $key => $sPrice) {
+                        $s_price[$key] = $sPrice / $sign->value;
                     }
-                    //--- Validation Section Ends
 
-                        // Check Condition
-                        if ($request->product_condition_check == ""){
-                            $input['product_condition'] = 0;
-                        }
-
-                        // Check Preorderd
-                        if ($request->preordered_check == ""){
-                            $input['preordered'] = 0;
-                        }
-
-                        // Check Shipping Time
-                        if ($request->shipping_time_check == ""){
-                            $input['ship'] = null;
-                        } 
-
-                        // Check Size
-
-                        if(empty($request->stock_check ))
-                        {
-                            $input['stock_check'] = 0;
-                            $input['size'] = null;
-                            $input['size_qty'] = null;
-                            $input['size_price'] = null;
-                            $input['color'] = null;
-                        }
-                        else{
-                                if(in_array(null, $request->size) || in_array(null, $request->size_qty) || in_array(null, $request->size_price))
-                                {
-                                    $input['stock_check'] = 0;
-                                    $input['size'] = null;
-                                    $input['size_qty'] = null;
-                                    $input['size_price'] = null;
-                                    $input['color'] = null;
-                                }
-                                else
-                                {
-                                    $input['stock_check'] = 1;
-                                    $input['color'] = implode(',', $request->color);
-                                    $input['size'] = implode(',', $request->size);
-                                    $input['size_qty'] = implode(',', $request->size_qty);
-                                    $size_prices = $request->size_price;
-                                    $s_price = array();
-                                    foreach($size_prices as $key => $sPrice){
-                                        $s_price[$key] = $sPrice / $sign->value;
-                                    }
-                                    
-                                    $input['size_price'] = implode(',', $s_price);
-                                }
-                        }
-            
-                        // Check Color
-                        if(empty($request->color_check))
-                        {
-                            $input['color_all'] = null;
-                        }
-                        else{
-                            $input['color_all'] = implode(',', $request->color_all);
-                        }
-                        // Check Size
-                        if(empty($request->size_check))
-                        {
-                            $input['size_all'] = null;
-                        }
-                        else{
-                            $input['size_all'] = implode(',', $request->size_all);
-                        }
-
-                        // Check Measure
-                    if ($request->measure_check == "") 
-                     {
-                        $input['measure'] = null;    
-                     } 
+                    $input['size_price'] = implode(',', $s_price);
+                }
             }
 
-            // Check Seo
-        if (empty($request->seo_check)) 
-         {
+            // Check Color
+            if (empty($request->color_check)) {
+                $input['color_all'] = null;
+            } else {
+                $input['color_all'] = implode(',', $request->color_all);
+            }
+            // Check Size
+            if (empty($request->size_check)) {
+                $input['size_all'] = null;
+            } else {
+                $input['size_all'] = implode(',', $request->size_all);
+            }
+
+            // Check Measure
+            if ($request->measure_check == "") {
+                $input['measure'] = null;
+            }
+        }
+
+        // Check Seo
+        if (empty($request->seo_check)) {
             $input['meta_tag'] = null;
-            $input['meta_description'] = null;         
-         }  
-         else {
-        if (!empty($request->meta_tag)) 
-         {
-            $input['meta_tag'] = implode(',', $request->meta_tag);       
-         }              
-         }
+            $input['meta_description'] = null;
+        } else {
+            if (!empty($request->meta_tag)) {
+                $input['meta_tag'] = implode(',', $request->meta_tag);
+            }
+        }
 
         // Check License
-        if($data->type == "License")
-        {
+        if ($data->type == "License") {
 
-        if(!in_array(null, $request->license) && !in_array(null, $request->license_qty))
-        {             
-            $input['license'] = implode(',,', $request->license);  
-            $input['license_qty'] = implode(',', $request->license_qty);                 
-        }
-        else
-        {
-            if(in_array(null, $request->license) || in_array(null, $request->license_qty))
-            {
-                $input['license'] = null;  
-                $input['license_qty'] = null;
+            if (!in_array(null, $request->license) && !in_array(null, $request->license_qty)) {
+                $input['license'] = implode(',,', $request->license);
+                $input['license_qty'] = implode(',', $request->license_qty);
+            } else {
+                if (in_array(null, $request->license) || in_array(null, $request->license_qty)) {
+                    $input['license'] = null;
+                    $input['license_qty'] = null;
+                } else {
+                    $license = explode(',,', $prod->license);
+                    $license_qty = explode(',', $prod->license_qty);
+                    $input['license'] = implode(',,', $license);
+                    $input['license_qty'] = implode(',', $license_qty);
+                }
             }
-            else
-            {
-                $license = explode(',,', $prod->license);
-                $license_qty = explode(',', $prod->license_qty);
-                $input['license'] = implode(',,', $license);  
-                $input['license_qty'] = implode(',', $license_qty);
-            }
-        }  
 
         }
-            // Check Features
-            if(!in_array(null, $request->features) && !in_array(null, $request->colors))
-            {             
-                    $input['features'] = implode(',', str_replace(',',' ',$request->features));  
-                    $input['colors'] = implode(',', str_replace(',',' ',$request->colors));                 
+        // Check Features
+        if (!in_array(null, $request->features) && !in_array(null, $request->colors)) {
+            $input['features'] = implode(',', str_replace(',', ' ', $request->features));
+            $input['colors'] = implode(',', str_replace(',', ' ', $request->colors));
+        } else {
+            if (in_array(null, $request->features) || in_array(null, $request->colors)) {
+                $input['features'] = null;
+                $input['colors'] = null;
+            } else {
+                $features = explode(',', $data->features);
+                $colors = explode(',', $data->colors);
+                $input['features'] = implode(',', $features);
+                $input['colors'] = implode(',', $colors);
             }
-            else
-            {
-                if(in_array(null, $request->features) || in_array(null, $request->colors))
-                {
-                    $input['features'] = null;  
-                    $input['colors'] = null;
-                }
-                else
-                {
-                    $features = explode(',', $data->features);
-                    $colors = explode(',', $data->colors);
-                    $input['features'] = implode(',', $features);  
-                    $input['colors'] = implode(',', $colors);
-                }
-            }  
+        }
 
         //Product Tags 
-        if (!empty($request->tags)) 
-         {
-            $input['tags'] = implode(',', $request->tags);       
-         }  
-        if (empty($request->tags)) 
-         {
-            $input['tags'] = null;       
-         }
+        if (!empty($request->tags)) {
+            $input['tags'] = implode(',', $request->tags);
+        }
+        if (empty($request->tags)) {
+            $input['tags'] = null;
+        }
 
-         $input['price'] = $input['price'] / $sign->value;
-         $input['previous_price'] = $input['previous_price'] / $sign->value; 
+        $input['price'] = $input['price'] / $sign->value;
+        $input['previous_price'] = $input['previous_price'] / $sign->value;
 
-         $data->slug = Str::slug($data->name,'-').'-'.strtolower($data->sku);    
-         $data->update($input);
+        $data->slug = Str::slug($data->name, '-') . '-' . strtolower($data->sku);
+        $data->update($input);
 
         //-- Logic Section Ends
 
-                if($data->photo != null)
-                {
-                    if (file_exists(public_path().'/assets/images/thumbnails/'.$data->thumbnail)) {
-                        unlink(public_path().'/assets/images/thumbnails/'.$data->thumbnail);
-                    }
-                } 
+        if ($data->photo != null) {
+            if (file_exists(public_path() . '/assets/images/thumbnails/' . $data->thumbnail)) {
+                unlink(public_path() . '/assets/images/thumbnails/' . $data->thumbnail);
+            }
+        }
 
-        $fimageData = public_path().'/assets/images/products/'.$prod->photo;
+        $fimageData = public_path() . '/assets/images/products/' . $prod->photo;
 
-        if(filter_var($prod->photo,FILTER_VALIDATE_URL)){
+        if (filter_var($prod->photo, FILTER_VALIDATE_URL)) {
             $fimageData = $prod->photo;
         }
 
         $img = Image::make($fimageData)->resize(285, 285);
-        $thumbnail = time().Str::random(8).'.jpg';
-        $img->save(public_path().'/assets/images/thumbnails/'.$thumbnail);
-        $prod->thumbnail  = $thumbnail;
+        $thumbnail = time() . Str::random(8) . '.jpg';
+        $img->save(public_path() . '/assets/images/thumbnails/' . $thumbnail);
+        $prod->thumbnail = $thumbnail;
         $prod->update();
 
         //--- Redirect Section        
-        $msg = __('Product Updated Successfully.').'<a href="'.route('vendor-import-index').'">'.__('View Product Lists.').'</a>';
-        return response()->json($msg);      
+        $msg = __('Product Updated Successfully.') . '<a href="' . route('vendor-import-index') . '">' . __('View Product Lists.') . '</a>';
+        return response()->json($msg);
         //--- Redirect Section Ends    
     }
 }

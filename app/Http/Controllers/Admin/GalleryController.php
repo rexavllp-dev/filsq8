@@ -31,23 +31,43 @@ class GalleryController extends Controller
     { 
         $data = null;
         $lastid = $request->product_id;
-        if ($files = $request->file('gallery')){
-            foreach ($files as  $key => $file){
-                $val = $file->getClientOriginalExtension();
-                if($val == 'jpeg'|| $val == 'jpg'|| $val == 'png'|| $val == 'svg')
-                  {
-                    $gallery = new Gallery;
+        $galleryCount = Gallery::where('product_id', '=', $lastid)->count();
+        // dd($galleryCount);
+        if($galleryCount > 4)
+        {
+            $error = array('You can only upload maximum of four images.');
+            return response()->json(array('errors' => $error));
+        }
+        else
+        {
+            if ($files = $request->file('gallery')){
 
+                $totalImages = count($files) + $galleryCount;
 
-        $img = Image::make($file->getRealPath())->resize(800, 800);
-        $thumbnail = time().Str::random(8).'.jpg';
-        $img->save('assets/images/galleries/'.$thumbnail);
-
-                    $gallery['photo'] = $thumbnail;
-                    $gallery['product_id'] = $lastid;
-                    $gallery->save();
-                    $data[] = $gallery;                        
-                  }
+                if($totalImages > 4)
+                {
+                    $error = array('You can only upload maximum of four images.');
+                    return response()->json(array('errors' => $error));
+                }
+                else 
+                {
+                    foreach ($files as  $key => $file){
+                        $val = $file->getClientOriginalExtension();
+                        if($val == 'jpeg'|| $val == 'jpg'|| $val == 'png'|| $val == 'svg')
+                          {
+                            $gallery = new Gallery;
+        
+                            $img = Image::make($file->getRealPath())->resize(800, 800);
+                            $thumbnail = time().Str::random(8).'.jpg';
+                            $img->save('assets/images/galleries/'.$thumbnail);
+        
+                            $gallery['photo'] = $thumbnail;
+                            $gallery['product_id'] = $lastid;
+                            $gallery->save();
+                            $data[] = $gallery;                        
+                          }
+                    }
+                } 
             }
         }
         return response()->json($data);      

@@ -26,7 +26,7 @@ class Rating extends Model
 
     public static function ratings($productid){
         $stars = Rating::where('product_id',$productid)->avg('rating');
-        $ratings = number_format((float)$stars, 1, '.', '') * 20;
+        $ratings = number_format((float)$stars, 1, '.', '');
         return $ratings;
     }
 

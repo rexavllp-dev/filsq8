@@ -131,9 +131,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-6 col-lg-5 offset-xl-1">
+            <div class="col-xl-6 col-lg-5 offset-xl-1 dealimgcont">
 
-                <div class="xs-mt-30"><img
+                <div class="xs-mt-30 dealimg"><img
                         src="{{ $gs->deal_background ? asset('assets/images/'.$gs->deal_background):asset('assets/images/noimage.png') }}"
                         alt=""></div>
 
@@ -428,6 +428,9 @@
                     </ul>
                 </div> --}}
                 <div class="footer-widget media-widget mb-5">
+                    <a href="https://www.tiktok.com">
+                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAACI0lEQVRIie2VX0hTYRjGf9vZMuaKjKBpma1WqEl4UVRGWo3MDAZFxSAkyKT7Aq8yuhpKdBFkfzGiiyDossirKMwyg6JUKKgdGA3mtDA4jG3nfJ4ucmtb5+xfdFXP3fee531+3zkv3/ngvwrIkrnweDzrhRBDQAtgLzFLBUaFEN2hUCiYKlozHUKI20BbGeEs9OyWJGkos2jLMe0olLLEVQuAMv0FXdeNLDvzAQru/EDfFdxSjMmBfh7J74wsWRlWI0c+LU4qnG7fhq+nCyl7hIYqGZDSPv9hzgcGqNvS+ncAiUSCLv8Rrvb14nXUmvpyZ/CbqptbqN9/jArlG2+uX0zXh4/2kvBuosZZxVKpojxAo+8EzXs6OLO3iblwmGt3V6efzURnCFzux2m1Y80zC1NA5QoXjV4fFzo3MzZ4j+j4JFEthjtlWMhU5tV8ezQHrGzaSoNDY2JkjNE7D7gxNwHwC2B8BooHaIk4q6qcOO064/FpAJbVbcBm0VEUBaGJPwNE3r8iGJmlvXMXxwPn0Ebesq71IB31y5kcfsYn9XtRgKzpuN3urPdu2N7G/VuDOCsdxJMqdptEcOoDkbM3OfX5Iao+bxgqy3I6Ny8AYOOatfQc8lPjqkb7GCb8+CWXZl/zVcRNd50PkMTkf+Sw2BDoJPSC316VZXlRapF7kl+YdcV0rZhwLBbL88x17n1wEnjKz8ujVKm6rj8RQnSX0fsv6we6QbYjz/cvLQAAAABJRU5ErkJggg==">
+                    </a>
                     @foreach(DB::table('social_links')->where('user_id',0)->where('status',1)->get() as $link)
                     <a href="{{ $link->link }}"><i class="{{ $link->icon }}"></i></a>
                     @endforeach

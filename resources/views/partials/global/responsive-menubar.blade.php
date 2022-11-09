@@ -26,14 +26,29 @@
                             @endif
                             <input type="text" id="prod_name" class="col form-control search-field " name="search" placeholder="Search Products..." value="{{ request()->input('search') }}">
                             <div class=" categori-container select-appearance-none " id="catSelectForm">
-                                <select name="category" class="form-control categoris " id="category_select">
-                                    <option selected="">{{ __('All Categories') }}</option>
-                                    @foreach(DB::table('categories')->where('language_id',$langg->id)->where('status',1)->get() as $data)
-                                     <option value="{{ $data->slug }}" {{ Request::route('category') == $data->slug ? 'selected' : '' }}>
+                                <select name="category" class="form-control categoris " id="category_select" style="display: none;">
+                                    <option selected="selected" value="" id="selcat">{{ __('All Categorgies') }}</option>
+                                    {{-- @foreach(DB::table('categories')->where('language_id',$langg->id)->where('status',1)->get() as $data)
+                                     <option class="thumbnailcat" value="{{ $data->slug }}" {{ Request::route('category') == $data->slug ? 'selected' : '' }} style="background-image: url('{{asset('assets/images/categories/'.$data->photo)}}')">
                                     {{ $data->name }}
+                                    <img src="{{asset('assets/images/categories/'.$data->photo)}}"/>
                                      </option>
-                                     @endforeach
+                                     @endforeach --}}
                                 </select>
+
+                                <div class="select">
+                                    <div class="selectBtn" data-type="">{{ __('All Categories') }}</div>
+                                    <div class="selectDropdown">
+                                        @foreach(DB::table('categories')->where('language_id',$langg->id)->where('status',1)->get() as $data)
+                                        <div class="option" data-type="{{ $data->slug }}">
+                                            <div class="categorylogo">
+                                                    <img src="{{ asset('assets/images/categories/'.$data->photo)}}"/>
+                                                    {{ $data->name }}
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
 
 
@@ -47,10 +62,10 @@
                     <div class="sign-in my-account-dropdown position-relative">
                         <a href="my-account.html" class="has-dropdown d-flex align-items-center text-white text-decoration-none">
                             @if (Auth::check())
-                            <i class="flaticon-user-3 flat-mini mx-auto text-dark"></i>
+                            <i class="flaticon-user-3 flat-mini mx-auto text-dark icon-thik-large"></i>
                             {{-- <img class="img-fluid user lazy" data-src="{{ asset('assets/images/users/'.Auth::user()->photo) }}" alt=""> --}}
                             @else
-                            <i class="flaticon-user-3 flat-mini mx-auto text-dark"></i>
+                            <i class="flaticon-user-3 flat-mini mx-auto text-dark icon-thik-large"></i>
                             @endif
                         </a>
                         <ul class="my-account-popup">
@@ -73,17 +88,17 @@
                     </div>
                     <div class="search-view d-xxl-none">
                         <a href="#" class="search-pop top-quantity d-flex align-items-center text-decoration-none">
-                            <i class="flaticon-search flat-mini text-dark mx-auto"></i>
+                            <i class="flaticon-search flat-mini text-dark mx-auto icon-thik-large"></i>
                         </a>
                     </div>
                     <div class="header-cart-1">
                         @if (Auth::check())
                         <a href="{{ route('user-wishlists') }}" class="cart " title="View Wishlist">
-                            <div class="cart-icon"><i class="flaticon-like flat-mini mx-auto text-dark"></i> <span class="header-cart-count " id="wishlist-count">{{ Auth::user()->wishlistCount() }}</span></div>
+                            <div class="cart-icon"><i class="flaticon-like flat-mini mx-auto text-dark icon-thik-large"></i> <span class="header-cart-count " id="wishlist-count">{{ Auth::user()->wishlistCount() }}</span></div>
                         </a>
                         @else
                         <a href="{{ route('user.login') }}" class="cart " title="View Wishlist">
-                        <div class="cart-icon"><i class="flaticon-like flat-mini mx-auto text-dark"></i> <span class="header-cart-count" id="wishlist-count">{{ 0 }}</span></div>
+                        <div class="cart-icon"><i class="flaticon-like flat-mini mx-auto text-dark icon-thik-large"></i> <span class="header-cart-count" id="wishlist-count">{{ 0 }}</span></div>
                         </a>
                     @endif
                     </div>
@@ -193,7 +208,10 @@
                                                     @foreach (App\Models\Category::where('language_id',$langg->id)->where('status',1)->get() as $category)
 
                                                     <li class="cat-item cat-parent">
-                                                        <a href="{{route('front.category', $category->slug)}}{{!empty(request()->input('search')) ? '?search='.request()->input('search') : ''}}" class="category-link" id="cat">{{ $category->name }} <span class="count"></span></a>
+                                                        <div class="categorylogo">
+                                                            <img src="{{ asset('assets/images/categories/'.$category->photo)}}"/>
+                                                            <a href="{{route('front.category', $category->slug)}}{{!empty(request()->input('search')) ? '?search='.request()->input('search') : ''}}" class="category-link" id="cat">{{ $category->name }} <span class="count"></span></a>
+                                                        </div>
 
                                                         @if($category->subs->count() > 0)
                                                             <span class="has-child"></span>
@@ -236,10 +254,10 @@
                     <div class="sign-in position-relative font-general my-account-dropdown">
                         <a href="my-account.html" class="has-dropdown d-flex align-items-center text-dark text-decoration-none" title="My Account">
                             @if (Auth::check())
-                            <i class="flaticon-user-3 flat-mini mx-auto text-dark"></i>
+                            <i class="flaticon-user-3 flat-mini mx-auto text-dark  icon-thik-large"></i>
                             {{-- <img class="img-fluid user lazy" data-src="{{ Auth::user()->photo? asset('assets/images/users/'.Auth::user()->photo) : '<i class="flaticon-user-3 flat-mini mx-auto text-dark"></i>' }}" alt=""> --}}
                             @else
-                            <i class="flaticon-user-3 flat-mini mx-auto text-dark"></i>
+                            <i class="flaticon-user-3 flat-mini mx-auto text-dark icon-thik-large"></i>
                             @endif
                         </a>
                         <ul class="my-account-popup">
@@ -262,17 +280,17 @@
                     <div class="wishlist-view header-cart-1 ms-2">
                         @if (Auth::check())
                             <a href="{{ route('user-wishlists') }}" class="cart " title="View Wishlist">
-                                <div class="cart-icon"><i class="flaticon-like flat-mini mx-auto text-dark"></i> <span class="header-cart-count " id="wishlist-count1">{{ Auth::user()->wishlistCount() }}</span></div>
+                                <div class="cart-icon"><i class="flaticon-like flat-mini mx-auto text-dark icon-thik-large"></i> <span class="header-cart-count " id="wishlist-count1">{{ Auth::user()->wishlistCount() }}</span></div>
                             </a>
                             @else
                             <a href="{{ route('user.login') }}" class="cart " title="View Wishlist">
-                            <div class="cart-icon"><i class="flaticon-like flat-mini mx-auto text-dark"></i> <span class="header-cart-count" id="wishlist-count1">{{ 0 }}</span></div>
+                            <div class="cart-icon"><i class="flaticon-like flat-mini mx-auto text-dark icon-thik-large"></i> <span class="header-cart-count" id="wishlist-count1">{{ 0 }}</span></div>
                             </a>
                         @endif
                     </div>
                     <div class="refresh-view header-cart-1 mx-2">
                         <a href="{{ route('product.compare') }}" class="cart " title="View Wishlist">
-                            <div class="cart-icon"><i class="flaticon-shuffle flat-mini mx-auto text-dark"></i> <span class="header-cart-count " id="compare-count1">{{ Session::has('compare') ? count(Session::get('compare')->items) : '0' }}</span></div>
+                            <div class="cart-icon"><i class="flaticon-shuffle flat-mini mx-auto text-dark icon-thik-large"></i> <span class="header-cart-count " id="compare-count1">{{ Session::has('compare') ? count(Session::get('compare')->items) : '0' }}</span></div>
                         </a>
                     </div>
                     <!-- <div class="header-cart-1">
@@ -303,14 +321,28 @@
                         <input type="text" id="prod_name2" class="col form-control search-field" name="search" placeholder="Search Product For" value="{{ request()->input('search') }}">
 
                         <div class="select-appearance-none categori-container" id="catSelectForm">
-                            <select name="category" class="form-control categoris" id="category_select">
-                                <option selected="">{{ __('All Categories') }}</option>
-                                @foreach(DB::table('categories')->where('language_id',$langg->id)->where('status',1)->get() as $data)
+                            <select name="category" class="form-control categoris" id="category_select" style="display: none">
+                                <option selected="selected" value="" id="selcat">{{ __('All Categories') }}</option>
+                                {{-- @foreach(DB::table('categories')->where('language_id',$langg->id)->where('status',1)->get() as $data)
                                  <option value="{{ $data->slug }}" {{ Request::route('category') == $data->slug ? 'selected' : '' }}>
                                 {{ $data->name }}
                                  </option>
-                                 @endforeach
+                                 @endforeach --}}
                             </select>
+
+                            <div class="select">
+                                <div class="selectBtn" data-type="">{{ __('All Categories') }}</div>
+                                <div class="selectDropdown">
+                                    @foreach(DB::table('categories')->where('language_id',$langg->id)->where('status',1)->get() as $data)
+                                    <div class="option" data-type="{{ $data->slug }}">
+                                        <div class="categorylogo">
+                                                <img src="{{ asset('assets/images/categories/'.$data->photo)}}"/>
+                                                {{ $data->name }}
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
 
 
@@ -330,4 +362,31 @@
     const openCategory = () => {
         document.getElementById('pills-push-categories-tab').click();
     }
-    </script>
+
+
+    // Custom select box
+
+    const select = document.querySelectorAll('.selectBtn');
+    const option = document.querySelectorAll('.option');
+    let index = 1;
+
+    select.forEach(a => {
+        a.addEventListener('click', b => {
+            const next = b.target.nextElementSibling;
+            next.classList.toggle('toggle');
+            next.style.zIndex = index++;
+        })
+    })
+    option.forEach(a => {
+        a.addEventListener('click', b => {
+            b.target.parentElement.classList.remove('toggle');
+            
+            const parent = b.target.closest('.select').children[0];
+            parent.setAttribute('data-type', b.target.getAttribute('data-type'));
+            parent.innerText = b.target.innerText;
+            console.log(b.target.getAttribute('data-type'))
+            document.getElementById('selcat').value = b.target.getAttribute('data-type');
+            document.getElementById('selcat').innerText = b.target.innerText;
+        })
+    })
+</script>

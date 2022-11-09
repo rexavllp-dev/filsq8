@@ -687,6 +687,11 @@ class ProductController extends VendorBaseController
             // Add To Gallery If any
                 $lastid = $data->id;
                 if ($files = $request->file('gallery')){
+                    if(count($files)>4)
+                    {
+                        $error = array("You can upload only total of five images.");
+                        return response()->json(array('errors' => $error));  
+                    }
                     foreach ($files as  $key => $file){
                         $extensions = ['jpeg','jpg','png','svg'];       
                         if(!in_array($file->getClientOriginalExtension(),$extensions)){

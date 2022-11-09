@@ -130,6 +130,7 @@
 						<div class="row">
 							<div class="col-sm-6 text-right">
 								<div class="upload-img-btn">
+									@include('alerts.admin.form-both')
 									<form  method="POST" enctype="multipart/form-data" id="form-gallery">
 										@csrf
 									<input type="hidden" id="pid" name="product_id" value="">

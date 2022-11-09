@@ -76,6 +76,7 @@ class VendorController extends VendorBaseController
             $image = base64_decode($image);
             $image_name = time().Str::random(8).'.png';
             $path = 'assets/logos/'.$image_name;
+
             if($affiliateFrom->logo != 'noimage.png')
                 {
                     if (file_exists('assets/logos/'.$affiliateFrom->logo)) {

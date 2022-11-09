@@ -210,9 +210,9 @@
                                     <li>
                                     	<a href="{{ route('vendor-sociallink-index') }}"><span>{{ __('Social Links') }}</span></a>
                                     </li>
-                                    <li>
+                                    {{-- <li>
                                     	<a href="{{ route('vendor-profile-logo') }}"><span>{{ __('Add Logo') }}</span></a>
-                                    </li>
+                                    </li> --}}
 									
 								</ul>
 							</li>

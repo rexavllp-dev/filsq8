@@ -79,14 +79,18 @@
                                     </div>
                                     <div class="col-lg-8">
                                         <p class="value">
-                                            {{$subs->days}} {{ __('Day(s)') }}
+                                            @if ($subs->days > 0)
+                                                {{$subs->days}} {{ __('Days') }}
+                                            @else
+                                                {{$subs->days}} {{ __('Day') }}
+                                            @endif
                                         </p>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-4">
                                         <h5 class="title">
-                                            {{ __('Product(s) Allowed:') }}
+                                            {{ __('Products Allowed:') }}
                                         </h5>
                                     </div>
                                     <div class="col-lg-8">

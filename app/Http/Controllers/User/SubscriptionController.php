@@ -6,8 +6,10 @@ use App\{
     Models\Subscription,
     Classes\GeniusMailer,
     Models\UserSubscription,
-    Models\PaymentGateway
+    Models\PaymentGateway,
+    Models\User
 };
+
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\AffilateFrom;
@@ -69,7 +71,8 @@ class SubscriptionController extends UserBaseController
 
             // create a new affiliate from each time a vendor starts selling and save it in user db
             // only if user not already have an affiliate_from_id
-            if($user->affiliate_from_id != null)
+            
+            if($user->affilate_from_id == null)
             {
                 $aff_from = new AffilateFrom;
                 $aff['name'] = $user->shop_name;
