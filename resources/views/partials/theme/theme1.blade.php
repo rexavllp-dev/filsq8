@@ -24,17 +24,17 @@
                 <div class="container">
                     <div class="banner-wrapper-item text-{{ $data->position }}">
                         <div class="banner-content text-dark ">
-                            <h5 class="subtitle text-dark slide-h5">{{$data->subtitle_text}}</h5>
+                            <h5 class="subtitle text-dark slide-h5" >{{$data->subtitle_text}}</h5>
+                            <h2 class="title text-dark slide-h5" >{{$data->title_text }}</h2>
 
-                            <h2 class="title text-dark slide-h5">{{$data->title_text}}</h2>
-
-                            <p class="slide-h5">{{$data->details_text}}</p>
+                            <p class="slide-h5" >{{$data->details_text}}</p>
 
                             <a href="{{$data->link}}" class="cmn--btn ">{{ __('SHOP NOW') }}</a>
                         </div>
                     </div>
                 </div>
             </div>
+            {{-- style="color: {{$data->details_color}} !important;" --}}
             @endforeach
         </section>
     </div>

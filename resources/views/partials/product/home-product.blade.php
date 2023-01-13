@@ -15,9 +15,9 @@
 
           <div class="hover-area">
             @if($prod->product_type == "affiliate")
-         <!--    <div class="cart-button">
+         {{-- <!--    <div class="cart-button">
                <a href="javascript:;" data-href="{{ $product->affiliate_link }}" class="button add_to_cart_button affilate-btn" data-bs-toggle="tooltip" data-bs-placement="right" title="" data-bs-original-title="{{ __('Add To Cart') }}" aria-label="{{ __('Add To Cart') }}"></a>
-            </div> -->
+            </div> --> --}}
             @else
             @if($prod->emptyStock())
             <div class="closed">

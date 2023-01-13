@@ -8503,9 +8503,9 @@ table.cart {
 }
 
 @media screen and (max-width: 420px) {
-	.navbar-brand {
+	/* .navbar-brand {
 		display: none;
-	}
+	} */
 
 	.xxs-text-primary {
 		color: var(--theme-primary-color) !important;

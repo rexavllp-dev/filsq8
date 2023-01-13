@@ -41,8 +41,11 @@
 		<link href="{{asset('assets/admin/css/custom.css')}}" rel="stylesheet"/>
 		<link href="{{asset('assets/admin/css/responsive.css')}}" rel="stylesheet" />
 		<link href="{{asset('assets/admin/css/common.css')}}" rel="stylesheet" />
-
+		
 		@endif
+
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+		<link rel="stylesheet" href="{{ asset('assets/vendor/css/vendoroverwrite.css') }}">
 
 		@yield('styles')
 
@@ -219,6 +222,9 @@
 							<li>
 								<a  href="{{ route('vendor.income') }}" class="wave-effect"><i class="fas fa-eye mr-2"></i> {{ __('Total Earning') }}</a>
 							</li>
+							<li>
+								<a  href="{{ route('vendor-ads-showlayout') }}" class="wave-effect"><i class="fas fa-ad"></i> {{ __('Advertisment') }}</a>
+							</li>
 						</ul>
 					</nav>
 					<!-- Main Content Area Start -->
@@ -246,6 +252,7 @@
 
 		<!-- Dashboard Core -->
 		<script src="{{asset('assets/admin/js/vendors/jquery-1.12.4.min.js')}}"></script>
+		<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 		<script src="{{asset('assets/admin/js/vendors/bootstrap.min.js')}}"></script>
 		<script src="{{asset('assets/admin/js/jqueryui.min.js')}}"></script>
 		<!-- Fullside-menu Js-->

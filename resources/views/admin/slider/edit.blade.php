@@ -18,7 +18,7 @@
                           <a href="{{ route('admin-sl-index') }}">{{ __('Sliders') }}</a>
                         </li>
                         <li>
-                          <a href="{{route('admin-sl-edit',$data->id)}}">{{ __('Edit') }}</a>
+                          <a href="{{route('admin-sl-edit',$data->id)}}">{{ __('View') }}</a>
                         </li>
                       </ul>
                   </div>
@@ -68,11 +68,11 @@
                                               <div class="form-group">
                                                   <div class="col-sm-12">
                                                    <div class="row">
-                                                      <div class="col-sm-4">
+                                                      <div class="col-sm-4 d-none">
                                                       <label class="control-label" for="subtitle_size">{{ __('Font Size') }} *<span> {{ __('(px)') }}</span></label>
                                                       <input class="form-control" type="number" name="subtitle_size" value="{{$data->subtitle_size}}" min="1">
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-12 d-none">
                                                         <label class="control-label" for="subtitle_color">{{ __('Font Color') }} *</label>
                                                       <div class="input-group colorpicker-component cp">
                                                         <input type="text" name="subtitle_color" value="{{$data->subtitle_color}}"  class="form-control cp"  />
@@ -80,7 +80,7 @@
                                                       </div>
 
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 d-none">
                                                         <label class="control-label" for="subtitle_anime">{{ __('Animation') }} *</label>
                                                           <select class="form-control" id="subtitle_anime" name="subtitle_anime">
                                                                 <option value="fadeIn" {{$data->subtitle_anime == 'fadeIn' ? 'selected' :''}}>fadeIn</option>
@@ -124,11 +124,11 @@
                                               <div class="form-group">
                                                   <div class="col-sm-12">
                                                    <div class="row">
-                                                      <div class="col-sm-4">
+                                                      <div class="col-sm-4 d-none">
                                                       <label class="control-label" for="title_size">{{ __('Font Size') }} *<span> {{ __('(px)') }}</span></label>
                                                       <input class="form-control" type="number" name="title_size" value="{{$data->title_size}}" min="1">
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-12 d-none">
                                                         <label class="control-label" for="title_color">{{ __('Font Color') }} *</label>
                                                       <div class="input-group colorpicker-component cp">
                                                         <input type="text" name="title_color" value="{{$data->title_color}}"  class="form-control cp"  />
@@ -136,7 +136,7 @@
                                                       </div>
 
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 d-none">
                                                         <label class="control-label" for="title_anime">{{ __('Animation') }} *</label>
                                                           <select class="form-control" id="title_anime" name="title_anime">
                                                                 <option value="fadeIn" {{$data->title_anime == 'fadeIn' ? 'selected' :''}}>fadeIn</option>
@@ -181,11 +181,11 @@
                                               <div class="form-group">
                                                   <div class="col-sm-12">
                                                    <div class="row">
-                                                      <div class="col-sm-4">
+                                                      <div class="col-sm-4 d-none">
                                                       <label class="control-label" for="details_size">{{ __('Font Size') }} *<span> {{ __('(px)') }}</span></label>
                                                       <input class="form-control" type="number" name="details_size" value="{{$data->details_size}}" min="1">
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-12 d-none">
                                                         <label class="control-label" for="details_color">{{ __('Font Color') }} *</label>
                                                       <div class="input-group colorpicker-component cp">
                                                         <input type="text" name="details_color" value="{{$data->details_color}}"  class="form-control cp" />
@@ -193,7 +193,7 @@
                                                       </div>
 
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 d-none">
                                                         <label class="control-label" for="details_anime">{{ __('Animation') }} *</label>
                                                           <select class="form-control" id="details_anime" name="details_anime">
                                                                 <option value="fadeIn" {{$data->details_anime == 'fadeIn' ? 'selected' :''}}>fadeIn</option>

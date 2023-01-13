@@ -85,7 +85,6 @@
                     <div class="product-style-2 owl-carousel owl-nav-hover-primary nav-top-right single-carousel dot-disable product-list e-bg-white">
 
                         @foreach($productt->user->products->take(9)->chunk(3) as $chunk)
-
                         <div class="item">
                             <div class="row row-cols-1">
                                 @foreach($chunk as $prod)
@@ -94,6 +93,7 @@
                                     <div class="product type-product">
                                         <div class="product-wrapper">
                                             <div class="product-image">
+                                             {{-- {{dd($prod)}} --}}
                                                 <a href="{{ route('front.product', $prod['slug']) }}" class="woocommerce-LoopProduct-link"><img class="lazy" data-src="{{ $prod['photo'] ? asset('assets/images/products/'.$prod['photo'] ):asset('assets/images/noimage.png') }}" alt="Product Image"></a>
                                                 <div class="wishlist-view">
                                                     <div class="quickview-button">

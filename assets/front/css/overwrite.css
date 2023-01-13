@@ -405,3 +405,24 @@ li.cat-item.cat-parent img {
    -webkit-transform: scale(1, 1);
            transform: scale(1, 1);
  }
+
+ .bottomad{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-top: 2rem;
+ }
+
+ .showimg {
+   width: 570px;
+   height:230px;
+   object-fit: fill;
+ }
+
+ @media screen and (min-width: 992px) {
+   .bottomad{
+      width: 300px;
+   }
+ }
+
+ 

@@ -396,6 +396,29 @@ if(admin_loader == 1)
     });
 });
 
+$(document).on('click','.confirmopen',function(){
+  if(admin_loader == 1)
+    {
+    $('.submit-loader').show();
+  }
+  $('#confirm-approve .modal-content .modal-body').html('').load($(this).attr('data-href'),function(response, status, xhr){
+        if(status == "success")
+        {
+          if(admin_loader == 1)
+            {
+              $('.submit-loader').hide();
+            }
+            console.log(response);
+            // var dateToday = new Date();
+            // $( "#discount_date" ).datepicker({
+            //     changeMonth: true,
+            //     changeYear: true,
+            //     minDate: dateToday,
+            // });
+  
+        }
+      });
+  });
 
 // EDIT OPERATION END
 

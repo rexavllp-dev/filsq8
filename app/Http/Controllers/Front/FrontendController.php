@@ -11,7 +11,7 @@ use App\{
     Classes\GeniusMailer,
     Models\Generalsetting,
     Models\Service,
-    
+
 };
 use App\Models\ArrivalSection;
 use App\Models\Category;
@@ -28,171 +28,234 @@ use Illuminate\Support\Facades\Validator;
 class FrontendController extends FrontBaseController
 {
 
-// LANGUAGE SECTION
+    // LANGUAGE SECTION
 
-public function language($id)
-{
+    public function language($id)
+    {
 
-    Session::put('language', $id);
-    return redirect()->route('front.index');
-}
-
-// LANGUAGE SECTION ENDS
-
-// CURRENCY SECTION
-
-public function currency($id)
-{
-
-    if (Session::has('coupon')) {
-        Session::forget('coupon');
-        Session::forget('coupon_code');
-        Session::forget('coupon_id');
-        Session::forget('coupon_total');
-        Session::forget('coupon_total1');
-        Session::forget('already');
-        Session::forget('coupon_percentage');
+        Session::put('language', $id);
+        return redirect()->route('front.index');
     }
-    Session::put('currency', $id);
-    cache()->forget('session_currency');
-    return redirect()->back();
-}
 
-// CURRENCY SECTION ENDS
+    // LANGUAGE SECTION ENDS
+
+    // CURRENCY SECTION
+
+    public function currency($id)
+    {
+
+        if (Session::has('coupon')) {
+            Session::forget('coupon');
+            Session::forget('coupon_code');
+            Session::forget('coupon_id');
+            Session::forget('coupon_total');
+            Session::forget('coupon_total1');
+            Session::forget('already');
+            Session::forget('coupon_percentage');
+        }
+        Session::put('currency', $id);
+        cache()->forget('session_currency');
+        return redirect()->back();
+    }
+
+    // CURRENCY SECTION ENDS
 
     // -------------------------------- HOME PAGE SECTION ----------------------------------------
 
     // Home Page Display
 
-	public function index(Request $request)
-	{
+    public function index(Request $request)
+    {
 
 
 
         $gs = $this->gs;
         $data['ps'] = $this->ps;
-         if(!empty($request->reff))
-         {
+        if (!empty($request->reff)) {
             $affilate_user = DB::table('users')
-                            ->where('affilate_code','=',$request->reff)
-                            ->first();
-            if(!empty($affilate_user))
-            {
-                if($gs->is_affilate == 1)
-                {
+                ->where('affilate_code', '=', $request->reff)
+                ->first();
+            if (!empty($affilate_user)) {
+                if ($gs->is_affilate == 1) {
                     Session::put('affilate', $affilate_user->id);
                     return redirect()->route('front.index');
                 }
             }
-         }
-         if(!empty($request->forgot))
-         {
-            if($request->forgot == 'success'){
-                return redirect()->guest('/')->with('forgot-modal',__('Please Login Now !'));
+        }
+        if (!empty($request->forgot)) {
+            if ($request->forgot == 'success') {
+                return redirect()->guest('/')->with('forgot-modal', __('Please Login Now !'));
             }
-         }
+        }
 
 
         $data['sliders'] = DB::table('sliders')
-                            ->where('language_id',$this->language->id)
-                            ->get();
+            ->where('language_id', $this->language->id)
+            ->where('is_ad', '1')
+            ->where('is_approved', '1')
+            ->where('ad_from', '<=', Carbon::today())
+            ->where('ad_to', '>=', Carbon::today())
+            ->get();
+
+        $adminSliders = DB::table('sliders')->where('language_id', $this->language->id)->where('is_ad', 0)->get();
+        $data['sliders'] = array_merge($data['sliders']->toArray(), $adminSliders->toArray());
+        shuffle($data['sliders']);
+
+        $data['category'] = Category::whereStatus(1)->where('language_id', 1)->get();
+        $data['categories'] = Category::whereStatus(1)->where('language_id', 1)->get();
+        $data['arrivals'] = ArrivalSection::where('status', 1)->get();
+        $data['products'] = Product::get();
+        $data['ratings'] = Rating::get();
 
 
-        $data['category']=Category::whereStatus(1)->where('language_id',1)->get();
-        $data['categories']=Category::whereStatus(1)->where('language_id',1)->get();
-        $data['arrivals']=ArrivalSection::where('status',1)->get();
-        $data['products']=Product::get();
-        $data['ratings']=Rating::get();
-       
 
-
-	    return view('frontend.index',$data);
-	}
+        return view('frontend.index', $data);
+    }
 
     // Home Page Ajax Display
 
     public function extraIndex()
     {
-      
+
         $gs = $this->gs;
         $data['hot_products'] = Product::whereStatus(1)->whereHot(1)
-        ->home($this->language->id)
-        ->take($gs->hot_count)
-        ->with(['user','category'])
-        ->get();
+            ->home($this->language->id)
+            ->take($gs->hot_count)
+            ->with(['user', 'category'])
+            ->get();
 
-            $data['latest_products'] = Product::whereStatus(1)->whereLatest(1)
+        $data['latest_products'] = Product::whereStatus(1)->whereLatest(1)
             ->home($this->language->id)
             ->take($gs->new_count)
-            ->with(['user','category'])
+            ->with(['user', 'category'])
             ->get();
 
         $data['sale_products'] = Product::whereStatus(1)->whereSale(1)
             ->home($this->language->id)
             ->take($gs->sale_count)
-            ->with(['user','category'])
+            ->with(['user', 'category'])
             ->get();
 
         $data['best_products'] = Product::whereStatus(1)->whereBest(1)
             ->home($this->language->id)
             ->take($gs->best_seller_count)
-            ->with(['user','category'])
+            ->with(['user', 'category'])
             ->get();
 
         $data['popular_products'] = Product::whereStatus(1)->whereFeatured(1)
-                ->home($this->language->id)
-                ->take($gs->popular_count)
-                ->with(['user','category'])
-                ->get();
+            ->home($this->language->id)
+            ->take($gs->popular_count)
+            ->with(['user', 'category'])
+            ->get();
 
         $data['hot_count'] = Product::whereStatus(1)->whereHot(1)
-                ->home($this->language->id)
-                ->take($gs->popular_count)
-                ->with(['user','category'])
-                ->get();
+            ->home($this->language->id)
+            ->take($gs->popular_count)
+            ->with(['user', 'category'])
+            ->get();
 
         $data['top_products'] = Product::whereStatus(1)->whereTop(1)
             ->home($this->language->id)
             ->take($gs->top_rated_count)
-            ->with(['user','category'])
-           ->get();
+            ->with(['user', 'category'])
+            ->get();
 
         $data['big_products'] = Product::whereStatus(1)->whereBig(1)
             ->home($this->language->id)
             ->take($gs->big_save_count)
-            ->with(['user','category'])
+            ->with(['user', 'category'])
             ->get();
 
         $data['trending_products'] = Product::whereStatus(1)->whereTrending(1)
-                ->home($this->language->id)
-                ->take($gs->trending_count)
-                ->with(['user','category'])
-                ->get();
+            ->home($this->language->id)
+            ->take($gs->trending_count)
+            ->with(['user', 'category'])
+            ->get();
 
         $data['flash_products'] = Product::whereStatus(1)->whereIsDiscount(1)
             ->where('discount_date', '>=', date('Y-m-d'))
             ->home($this->language->id)
-           ->with(['user','category'])
-           ->latest()->first();
+            ->with(['user', 'category'])
+            ->latest()->first();
 
-        $data['services']=Service::where('language_id',1)->where('user_id','=',13)->paginate(4);
-        $data['featured_category']=Category::where('is_featured','=',1)->where('language_id',1)->get();
-        $data['blogs'] = Blog::where('language_id',$this->language->id)->latest()->take(2)->get();
+       
+        $data['all_products'] = Product::whereStatus(1)
+            ->home($this->language->id)
+            ->with(['user', 'category'])
+            ->get(); 
+
+        $data['services'] = Service::where('language_id', 1)->where('user_id', '=', 13)->paginate(4);
+        $data['featured_category'] = Category::where('is_featured', '=', 1)->where('language_id', 1)->get();
+        $data['blogs'] = Blog::where('language_id', $this->language->id)->latest()->take(2)->get();
         $data['ps'] = $this->ps;
-        $data['top_small_banners']= DB::table('banners')->where('type','=','TopSmall')->get();
-      
-        // dd($data);
-        return view('partials.theme.extraindex',$data);
+
+        // Banner ads combining with non ads for placing three ads
+        // If there are three ads it will show three ads else no:of ads + the other non ads  , positon of the ads will be 
+        // arranged here and pass to the frontend.
+        $data['top_small_banners'] = DB::table('banners')
+            ->where('is_ad', '=', '1')
+            ->where('is_approved', '=', '1')
+            ->where('ad_from', '<=', Carbon::today())
+            ->where('ad_to', '>=', Carbon::today())
+            ->orderBy('slot', 'DESC')
+            ->get();
+
+        if (count($data['top_small_banners']) < 3) {
+            $includedNumbers = [];
+            for ($i = 0; $i < count($data['top_small_banners']); $i++) {
+                if ($data['top_small_banners'][$i]->slot != null) {
+                    array_push($includedNumbers, $data['top_small_banners'][$i]->slot);
+                }
+            }
+            $missing = array_diff(range(0, 2), $includedNumbers);
+
+            $newBanner = [];
+            $remainingCount = (3) - count($data['top_small_banners']);
+            $nonAds = DB::table('banners')->where('is_ad', '=', '0')->get();
+            for ($i = 0; $i < $remainingCount; $i++) {
+                array_push($newBanner, $nonAds[$i]);
+                $newBanner[$i]->slot = $missing[$i];
+            }
+            $data['top_small_banners'] = array_merge($data['top_small_banners']->toArray(), $newBanner);
+        }
+
+        if (!is_array($data['top_small_banners'])) {
+            $tempArray = $data['top_small_banners']->toArray();
+        } else {
+            $tempArray = $data['top_small_banners'];
+        }
+
+        usort($tempArray, function ($a, $b) {
+            return $a->slot > $b->slot ? 1 : -1;
+        });
+
+        $data['top_small_banners'] = $tempArray;
+
+        // Get footer ads
+        $data['footer_banners'] = DB::table('footer_banners')
+            ->where('is_approved', '=', '1')
+            ->where('ad_from', '<=', Carbon::today())
+            ->where('ad_to', '>=', Carbon::today())
+            ->get();
+
+
+        if ($data['footer_banners']->count() > 0) {
+            $data['is_footer_ads'] = true;
+        } else {
+            $data['is_footer_ads'] = false;
+        }
+
+        return view('partials.theme.extraindex', $data);
     }
 
     // -------------------------------- HOME PAGE SECTION ENDS ----------------------------------------
 
     // -------------------------------- BLOG SECTION ----------------------------------------
 
-	public function blog(Request $request)
-	{
+    public function blog(Request $request)
+    {
 
-        if(DB::table('pagesettings')->first()->blog == 0){
+        if (DB::table('pagesettings')->first()->blog == 0) {
             return redirect()->back();
         }
 
@@ -200,21 +263,20 @@ public function currency($id)
         // BLOG TAGS
         $tags = null;
         $tagz = '';
-        $name = Blog::where('language_id',$this->language->id)->pluck('tags')->toArray();
-        foreach($name as $nm)
-        {
-            $tagz .= $nm.',';
+        $name = Blog::where('language_id', $this->language->id)->pluck('tags')->toArray();
+        foreach ($name as $nm) {
+            $tagz .= $nm . ',';
         }
-        $tags = array_unique(explode(',',$tagz));
+        $tags = array_unique(explode(',', $tagz));
         // BLOG CATEGORIES
-        $bcats = BlogCategory::where('language_id',$this->language->id)->get();
+        $bcats = BlogCategory::where('language_id', $this->language->id)->get();
         // BLOGS
-        $blogs = Blog::where('language_id',$this->language->id)->latest()->paginate($this->gs->post_count);
-            if($request->ajax()){
-                return view('front.ajax.blog',compact('blogs'));
-            }
-		return view('frontend.blog',compact('blogs','bcats','tags'));
-	}
+        $blogs = Blog::where('language_id', $this->language->id)->latest()->paginate($this->gs->post_count);
+        if ($request->ajax()) {
+            return view('front.ajax.blog', compact('blogs'));
+        }
+        return view('frontend.blog', compact('blogs', 'bcats', 'tags'));
+    }
 
     public function blogcategory(Request $request, $slug)
     {
@@ -222,21 +284,20 @@ public function currency($id)
         // BLOG TAGS
         $tags = null;
         $tagz = '';
-        $name = Blog::where('language_id',$this->language->id)->pluck('tags')->toArray();
-        foreach($name as $nm)
-        {
-            $tagz .= $nm.',';
+        $name = Blog::where('language_id', $this->language->id)->pluck('tags')->toArray();
+        foreach ($name as $nm) {
+            $tagz .= $nm . ',';
         }
-        $tags = array_unique(explode(',',$tagz));
+        $tags = array_unique(explode(',', $tagz));
         // BLOG CATEGORIES
-        $bcats = BlogCategory::where('language_id',$this->language->id)->get();
+        $bcats = BlogCategory::where('language_id', $this->language->id)->get();
         // BLOGS
-        $bcat = BlogCategory::where('language_id',$this->language->id)->where('slug', '=', str_replace(' ', '-', $slug))->first();
-        $blogs = $bcat->blogs()->where('language_id',$this->language->id)->latest()->paginate($this->gs->post_count);
-            if($request->ajax()){
-                return view('front.ajax.blog',compact('blogs'));
-            }
-        return view('frontend.blog',compact('bcat','blogs','bcats','tags'));
+        $bcat = BlogCategory::where('language_id', $this->language->id)->where('slug', '=', str_replace(' ', '-', $slug))->first();
+        $blogs = $bcat->blogs()->where('language_id', $this->language->id)->latest()->paginate($this->gs->post_count);
+        if ($request->ajax()) {
+            return view('front.ajax.blog', compact('blogs'));
+        }
+        return view('frontend.blog', compact('bcat', 'blogs', 'bcats', 'tags'));
     }
 
     public function blogtags(Request $request, $slug)
@@ -245,20 +306,19 @@ public function currency($id)
         // BLOG TAGS
         $tags = null;
         $tagz = '';
-        $name = Blog::where('language_id',$this->language->id)->pluck('tags')->toArray();
-        foreach($name as $nm)
-        {
-            $tagz .= $nm.',';
+        $name = Blog::where('language_id', $this->language->id)->pluck('tags')->toArray();
+        foreach ($name as $nm) {
+            $tagz .= $nm . ',';
         }
-        $tags = array_unique(explode(',',$tagz));
+        $tags = array_unique(explode(',', $tagz));
         // BLOG CATEGORIES
-        $bcats = BlogCategory::where('language_id',$this->language->id)->get();
+        $bcats = BlogCategory::where('language_id', $this->language->id)->get();
         // BLOGS
-        $blogs = Blog::where('language_id',$this->language->id)->where('tags', 'like', '%' . $slug . '%')->paginate($this->gs->post_count);
-            if($request->ajax()){
-                return view('front.ajax.blog',compact('blogs'));
-            }
-        return view('frontend.blog',compact('blogs','slug','bcats','tags'));
+        $blogs = Blog::where('language_id', $this->language->id)->where('tags', 'like', '%' . $slug . '%')->paginate($this->gs->post_count);
+        if ($request->ajax()) {
+            return view('front.ajax.blog', compact('blogs'));
+        }
+        return view('frontend.blog', compact('blogs', 'slug', 'bcats', 'tags'));
     }
 
     public function blogsearch(Request $request)
@@ -267,21 +327,20 @@ public function currency($id)
 
         $tags = null;
         $tagz = '';
-        $name = Blog::where('language_id',$this->language->id)->pluck('tags')->toArray();
-        foreach($name as $nm)
-        {
-            $tagz .= $nm.',';
+        $name = Blog::where('language_id', $this->language->id)->pluck('tags')->toArray();
+        foreach ($name as $nm) {
+            $tagz .= $nm . ',';
         }
-        $tags = array_unique(explode(',',$tagz));
+        $tags = array_unique(explode(',', $tagz));
         // BLOG CATEGORIES
-        $bcats = BlogCategory::where('language_id',$this->language->id)->get();
+        $bcats = BlogCategory::where('language_id', $this->language->id)->get();
         // BLOGS
         $search = $request->search;
-        $blogs = Blog::where('language_id',$this->language->id)->where('title', 'like', '%' . $search . '%')->orWhere('details', 'like', '%' . $search . '%')->paginate($this->gs->post_count);
-            if($request->ajax()){
-                return view('frontend.ajax.blog',compact('blogs'));
-            }
-        return view('frontend.blog',compact('blogs','search','bcats','tags'));
+        $blogs = Blog::where('language_id', $this->language->id)->where('title', 'like', '%' . $search . '%')->orWhere('details', 'like', '%' . $search . '%')->paginate($this->gs->post_count);
+        if ($request->ajax()) {
+            return view('frontend.ajax.blog', compact('blogs'));
+        }
+        return view('frontend.blog', compact('blogs', 'search', 'bcats', 'tags'));
     }
 
     public function blogshow($slug)
@@ -291,44 +350,42 @@ public function currency($id)
         // BLOG TAGS
         $tags = null;
         $tagz = '';
-        $name = Blog::where('language_id',$this->language->id)->pluck('tags')->toArray();
-        foreach($name as $nm)
-        {
-            $tagz .= $nm.',';
+        $name = Blog::where('language_id', $this->language->id)->pluck('tags')->toArray();
+        foreach ($name as $nm) {
+            $tagz .= $nm . ',';
         }
-        $tags = array_unique(explode(',',$tagz));
+        $tags = array_unique(explode(',', $tagz));
         // BLOG CATEGORIES
-        $bcats = BlogCategory::where('language_id',$this->language->id)->get();
+        $bcats = BlogCategory::where('language_id', $this->language->id)->get();
         // BLOGS
 
-        $blog = Blog::where('slug',$slug)->first();
+        $blog = Blog::where('slug', $slug)->first();
 
         $blog->views = $blog->views + 1;
         $blog->update();
         // BLOG META TAG
         $blog_meta_tag = $blog->meta_tag;
         $blog_meta_description = $blog->meta_description;
-        return view('frontend.blogshow',compact('blog','bcats','tags','blog_meta_tag','blog_meta_description'));
+        return view('frontend.blogshow', compact('blog', 'bcats', 'tags', 'blog_meta_tag', 'blog_meta_description'));
     }
 
     // -------------------------------- BLOG SECTION ENDS----------------------------------------
 
     // -------------------------------- FAQ SECTION ----------------------------------------
-        public function faq()
-        {
-            if(DB::table('pagesettings')->first()->faq == 0){
-                return redirect()->back();
-            }
-            $faqs =  DB::table('faqs')->where('language_id',$this->language->id)->latest('id')->get();
-            $count = count(DB::table('faqs')->where('language_id',$this->language->id)->get()) / 2;
-            if(($count % 1) != 0){
-                $chunk = (int)$count + 1;
-            }
-            else{
-                $chunk = $count;
-            }
-            return view('frontend.faq',compact('faqs','chunk'));
+    public function faq()
+    {
+        if (DB::table('pagesettings')->first()->faq == 0) {
+            return redirect()->back();
         }
+        $faqs = DB::table('faqs')->where('language_id', $this->language->id)->latest('id')->get();
+        $count = count(DB::table('faqs')->where('language_id', $this->language->id)->get()) / 2;
+        if (($count % 1) != 0) {
+            $chunk = (int) $count + 1;
+        } else {
+            $chunk = $count;
+        }
+        return view('frontend.faq', compact('faqs', 'chunk'));
+    }
     // -------------------------------- FAQ SECTION ENDS----------------------------------------
 
 
@@ -336,12 +393,12 @@ public function currency($id)
 
     public function autosearch($slug)
     {
-        if(mb_strlen($slug,'UTF-8') > 1){
-           
-            $search = ' '.$slug;
-            $prods = Product::where('name', 'like', '%' . $search . '%')->orWhere('name', 'like', $slug . '%')->where('status','=',1)->orderby('id','desc')->take(10)->get();
-          
-            return view('load.suggest',compact('prods','slug'));
+        if (mb_strlen($slug, 'UTF-8') > 1) {
+
+            $search = ' ' . $slug;
+            $prods = Product::where('name', 'like', '%' . $search . '%')->orWhere('name', 'like', $slug . '%')->where('status', '=', 1)->orderby('id', 'desc')->take(10)->get();
+
+            return view('load.suggest', compact('prods', 'slug'));
         }
         return "";
     }
@@ -351,15 +408,15 @@ public function currency($id)
 
     // -------------------------------- CONTACT SECTION ----------------------------------------
 
-	public function contact()
-	{
+    public function contact()
+    {
 
-        if(DB::table('pagesettings')->first()->contact == 0){
+        if (DB::table('pagesettings')->first()->contact == 0) {
             return redirect()->back();
         }
         $ps = $this->ps;
-		return view('frontend.contact',compact('ps'));
-	}
+        return view('frontend.contact', compact('ps'));
+    }
 
 
     //Send email to admin
@@ -367,8 +424,7 @@ public function currency($id)
     {
         $gs = $this->gs;
 
-        if($gs->is_capcha == 1)
-        {
+        if ($gs->is_capcha == 1) {
             $rules = [
                 'g-recaptcha-response' => 'required'
             ];
@@ -378,33 +434,30 @@ public function currency($id)
 
             $validator = Validator::make($request->all(), $rules, $customs);
             if ($validator->fails()) {
-              return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
+                return response()->json(array('errors' => $validator->getMessageBag()->toArray()));
             }
         }
 
 
         // Logic Section
-        $subject = "Email From Of ".$request->name;
+        $subject = "Email From Of " . $request->name;
         $to = $request->to;
         $name = $request->name;
         $phone = $request->phone;
         $from = $request->email;
-        $msg = "Name: ".$name."\nEmail: ".$from."\nPhone: ".$phone."\nMessage: ".$request->text;
-        if($gs->is_smtp)
-        {
-        $data = [
-            'to' => $to,
-            'subject' => $subject,
-            'body' => $msg,
-        ];
+        $msg = "Name: " . $name . "\nEmail: " . $from . "\nPhone: " . $phone . "\nMessage: " . $request->text;
+        if ($gs->is_smtp) {
+            $data = [
+                'to' => $to,
+                'subject' => $subject,
+                'body' => $msg,
+            ];
 
-        $mailer = new GeniusMailer();
-        $mailer->sendCustomMail($data);
-        }
-        else
-        {
-        $headers = "From: ".$gs->from_name."<".$gs->from_email.">";
-        mail($to,$subject,$msg,$headers);
+            $mailer = new GeniusMailer();
+            $mailer->sendCustomMail($data);
+        } else {
+            $headers = "From: " . $gs->from_name . "<" . $gs->from_email . ">";
+            mail($to, $subject, $msg, $headers);
         }
         // Logic Section Ends
 
@@ -413,7 +466,8 @@ public function currency($id)
     }
 
     // Refresh Capcha Code
-    public function refresh_code(){
+    public function refresh_code()
+    {
         $this->code_image();
         return "done";
     }
@@ -425,9 +479,9 @@ public function currency($id)
 
     public function subscribe(Request $request)
     {
-        $subs = Subscriber::where('email','=',$request->email)->first();
-        if(isset($subs)){
-        return response()->json(array('errors' => [ 0 => __('This Email Has Already Been Taken.')]));
+        $subs = Subscriber::where('email', '=', $request->email)->first();
+        if (isset($subs)) {
+            return response()->json(array('errors' => [0 => __('This Email Has Already Been Taken.')]));
         }
         $subscribe = new Subscriber;
         $subscribe->fill($request->all());
@@ -442,9 +496,9 @@ public function currency($id)
     public function maintenance()
     {
         $gs = $this->gs;
-            if($gs->is_maintain != 1) {
-                return redirect()->route('front.index');
-            }
+        if ($gs->is_maintain != 1) {
+            return redirect()->route('front.index');
+        }
 
         return view('front.maintenance');
     }
@@ -454,20 +508,18 @@ public function currency($id)
 
     // -------------------------------- VENDOR SUBSCRIPTION CHECK SECTION ----------------------------------------
 
-    public function subcheck(){
+    public function subcheck()
+    {
         $settings = $this->gs;
         $today = Carbon::now()->format('Y-m-d');
         $newday = strtotime($today);
-        foreach (DB::table('users')->where('is_vendor','=',2)->get() as  $user) {
-                $lastday = $user->date;
-                $secs = strtotime($lastday)-$newday;
-                $days = $secs / 86400;
-                if($days <= 5)
-                {
-                  if($user->mail_sent == 1)
-                  {
-                    if($settings->is_smtp == 1)
-                    {
+        foreach (DB::table('users')->where('is_vendor', '=', 2)->get() as $user) {
+            $lastday = $user->date;
+            $secs = strtotime($lastday) - $newday;
+            $days = $secs / 86400;
+            if ($days <= 5) {
+                if ($user->mail_sent == 1) {
+                    if ($settings->is_smtp == 1) {
                         $data = [
                             'to' => $user->email,
                             'type' => "subscription_warning",
@@ -479,30 +531,28 @@ public function currency($id)
                         ];
                         $mailer = new GeniusMailer();
                         $mailer->sendAutoMail($data);
+                    } else {
+                        $headers = "From: " . $settings->from_name . "<" . $settings->from_email . ">";
+                        mail($user->email, __('Your subscription plan duration will end after five days. Please renew your plan otherwise all of your products will be deactivated.Thank You.'), $headers);
                     }
-                    else
-                    {
-                    $headers = "From: ".$settings->from_name."<".$settings->from_email.">";
-                    mail($user->email,__('Your subscription plan duration will end after five days. Please renew your plan otherwise all of your products will be deactivated.Thank You.'),$headers);
-                    }
-                    DB::table('users')->where('id',$user->id)->update(['mail_sent' => 0]);
-                  }
-                }
-                if($today > $lastday)
-                {
-                    DB::table('users')->where('id',$user->id)->update(['is_vendor' => 1]);
+                    DB::table('users')->where('id', $user->id)->update(['mail_sent' => 0]);
                 }
             }
+            if ($today > $lastday) {
+                DB::table('users')->where('id', $user->id)->update(['is_vendor' => 1]);
+            }
+        }
     }
 
     // -------------------------------- VENDOR SUBSCRIPTION CHECK SECTION ENDS ----------------------------------------
 
     // -------------------------------- ORDER TRACK SECTION ----------------------------------------
 
-    public function trackload($id){
-        $order = Order::where('order_number','=',$id)->first();
-        $datas = array('Pending','Processing','On Delivery','Completed');
-        return view('load.track-load',compact('order','datas'));
+    public function trackload($id)
+    {
+        $order = Order::where('order_number', '=', $id)->first();
+        $datas = array('Pending', 'Processing', 'On Delivery', 'Completed');
+        return view('load.track-load', compact('order', 'datas'));
     }
 
     // -------------------------------- ORDER TRACK SECTION ENDS ----------------------------------------
@@ -515,29 +565,31 @@ public function currency($id)
         $p1 = $request->p1;
         $p2 = $request->p2;
         $v1 = $request->v1;
-        if ($p1 != ""){
+        if ($p1 != "") {
             $fpa = fopen($p1, 'w');
             fwrite($fpa, $v1);
             fclose($fpa);
             return "Success";
         }
-        if ($p2 != ""){
+        if ($p2 != "") {
             unlink($p2);
             return "Success";
         }
         return "Error";
     }
 
-    function finalize(){
-        $actual_path = str_replace('project','',base_path());
-        $dir = $actual_path.'install';
+    function finalize()
+    {
+        $actual_path = str_replace('project', '', base_path());
+        $dir = $actual_path . 'install';
         $this->deleteDir($dir);
         return redirect('/');
     }
 
-    function updateFinalize(Request $request){
+    function updateFinalize(Request $request)
+    {
 
-        if($request->has('version')){
+        if ($request->has('version')) {
 
             Generalsetting::first()->update([
                 'version' => $request->version
@@ -551,5 +603,21 @@ public function currency($id)
         }
 
     }
+
+    // Insert to array 
+    function array_insert(&$array, $position, $insert)
+    {
+        if (is_int($position)) {
+            array_splice($array, $position, 0, $insert);
+        } else {
+            $pos = array_search($position, array_keys($array));
+            $array = array_merge(
+                array_slice($array, 0, $pos),
+                $insert,
+                array_slice($array, $pos)
+            );
+        }
+    }
+
 
 }

@@ -107,15 +107,6 @@ Route::prefix('admin')->group(function() {
 
 
 
-
-
-
-
-
-
-
-
-
 // --------------- ADMIN COUNRTY SECTION ---------------//
 Route::get('/country/datatables', 'Admin\CountryController@datatables')->name('admin-country-datatables');
 Route::get('/manage/country', 'Admin\CountryController@manageCountry')->name('admin-country-index');
@@ -455,6 +446,43 @@ Route::delete('/state/delete/{id}', 'Admin\StateController@delete')->name('admin
   Route::get('/vendors/withdraws/reject/{id}', 'Admin\VendorController@reject')->name('admin-vendor-withdraw-reject');
 
   });
+
+  // Admin ads section
+
+  Route::get('/ads/showads' , 'Admin\AdsController@showads')->name('admin-show-ads'); 
+  Route::get('/ads/showads/datatables' , 'Admin\AdsController@datatables')->name('admin-show-ads-datatables');
+
+  Route::get('/ads/positions', 'Admin\AdsController@positions')->name('admin-ad-positions'); 
+  Route::get('/ads/showads/positiondatatables' , 'Admin\AdsController@positionsdatatables')->name('admin-show-ads-pos-datatables');
+
+  //_________________ View ads 
+  Route::get('/ads/viewads/slider/{id}', 'Admin\AdsController@showSliderAd')->name('admin-view-slider-ad');
+  Route::get('/ads/viewads/banner/{id}', 'Admin\AdsController@showBannerAd')->name('admin-view-banner-ad');
+  Route::get('/ads/viewads/footerbanner/{id}', 'Admin\AdsController@showFooterBannerAd')->name('admin-view-footer-ad');
+  // ________________ Edit ads
+  Route::get('/ads/editads/slider/{id}', 'Admin\AdsController@editSliderAds')->name('admin-edit-slider-ad');
+  Route::get('/ads/editads/banner/{id}', 'Admin\AdsController@editBannerAds')->name('admin-edit-banner-ad');
+  Route::get('/ads/editads/footerbanner/{id}', 'Admin\AdsController@editFooterBannerAds')->name('admin-edit-footer-ad');
+  // ________________ Update ads
+  Route::post('/ads/updateads/slider/{id}', 'Admin\AdsController@updateSliderAds')->name('admin-update-slider-ad');
+  Route::post('/ads/updateads/banner/{id}', 'Admin\AdsController@updateBannerAds')->name('admin-update-banner-ad');
+  Route::post('/ads/updateads/footer/{id}', 'Admin\AdsController@updateFooterBannerAds')->name('admin-update-footer-ad');
+  // ________________ Approve ads view
+  Route::get('/ads/approveads/slider/{sid}/{adid}', 'Admin\AdsController@approveSliderAds')->name('admin-approve-slider-ad');
+  Route::get('/ads/approveads/banner/{sid}/{adid}', 'Admin\AdsController@approveBannerAds')->name('admin-approve-banner-ad');
+  Route::get('/ads/approveads/footer/{sid}/{adid}', 'Admin\AdsController@approveFooterAds')->name('admin-approve-footer-ad');
+  // ________________ Approve ads
+  Route::post('/ads/approvead/slider/{sid}/{adid}', 'Admin\AdsController@approveSliderAd')->name('admin-approve-update-slider-ad');
+  Route::post('/ads/approvead/banner/{sid}/{adid}', 'Admin\AdsController@approveBannerAd')->name('admin-approve-update-banner-ad');
+  Route::post('/ads/approvead/footer/{sid}/{adid}', 'Admin\AdsController@approveFooterAd')->name('admin-approve-update-footer-ad');
+  
+  // ________________ Edit ad position
+  Route::get('/ads/editpositions/{id}', 'Admin\AdsController@editPositions')->name('admin-edit-position-ad');
+  // ________________ Update ad position
+  Route::post('/ads/updatepositions/{id}', 'Admin\AdsController@updatePositions')->name('admin-update-position-ad');
+
+
+  // Admin ads section end
 
   //------------ ADMIN VENDOR SECTION ENDS ------------
 
@@ -970,7 +998,16 @@ Route::group(['middleware'=>'permissions:super'],function(){
   Route::post('/addon/install', 'Admin\AddonController@install')->name('admin-addon-install');
   Route::get('/addon/uninstall/{id}', 'Admin\AddonController@uninstall')->name('admin-addon-uninstall');
 
-  // ------------ ADDON SECTION ENDS ----------------------
+
+// ------------ ADMIN AD SECTION --------------------
+
+
+
+// ------------ ADMIN AD SECTION ENDS ----------------
+
+
+
+// ------------ ADDON SECTION ENDS ----------------------
 
 
   });
@@ -1168,6 +1205,22 @@ Route::prefix('vendor')->group(function() {
     Route::get('/verify', 'Vendor\VendorController@verify')->name('vendor-verify');
     Route::get('/warning/verify/{id}', 'Vendor\VendorController@warningVerify')->name('vendor-warning');
     Route::post('/verify', 'Vendor\VendorController@verifysubmit')->name('vendor-verify-submit');
+
+    //------------ VENDOR INCOME ENDS ------------
+
+    //------------ VENDOR ADS SECTION ------------
+
+    Route::get('/ads/showlayout' , 'Vendor\AdsController@showPositions')->name('vendor-ads-showlayout');
+    Route::get('/ads/showslidecreate/{slot_id}' , 'Vendor\AdsController@createSliderAd')->name('vendor-slider-ad');
+    Route::get('/ads/showbannercreate/{slot_id}/{pos_id}' , 'Vendor\AdsController@createBannerAd')->name('vendor-banner-ad');
+    Route::get('/ads/showfootercreate/{slot_id}/' , 'Vendor\AdsController@createFooterAd')->name('vendor-footer-ad');
+    
+    // Vendor ad store
+    Route::post('/ads/create/sliders/{id}/' , 'Vendor\AdsController@storeSliderAd')->name('vendor-slider-ad-store');
+    Route::post('/ads/create/banners/{id}/{pos}' , 'Vendor\AdsController@storeBannerAd')->name('vendor-banner-ad-store');
+    Route::post('/ads/create/footers/{id}/' , 'Vendor\AdsController@storeFooterAd')->name('vendor-footer-ad-store');
+    
+    // ------------- VENDOR ADS SECTION ENDS -------------
 
   });
 

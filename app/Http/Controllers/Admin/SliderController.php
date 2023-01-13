@@ -121,6 +121,7 @@ class SliderController extends AdminBaseController
     public function destroy($id)
     {
         $data = Slider::findOrFail($id);
+        
         //If Photo Doesn't Exist
         if($data->photo == null){
             $data->delete();
@@ -129,6 +130,7 @@ class SliderController extends AdminBaseController
             return response()->json($msg);
             //--- Redirect Section Ends
         }
+
         //If Photo Exist
         if (file_exists(public_path().'/assets/images/sliders/'.$data->photo)) {
             unlink(public_path().'/assets/images/sliders/'.$data->photo);

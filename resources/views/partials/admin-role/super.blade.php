@@ -241,6 +241,14 @@
     </li>
 
     <li>
+        <a href="{{ route('admin-show-ads') }}" class=" wave-effect"><i class="fas fa-ad"></i>{{ __('Advertisments') }}</a>
+    </li>
+
+    <li>
+        <a href="{{ route('admin-ad-positions') }}" class=" wave-effect"><i class="fas fa-ad"></i>{{ __('Ads Position') }}</a>
+    </li>
+
+    <li>
         <a href="#msg" class="accordion-toggle wave-effect" data-toggle="collapse" aria-expanded="false">
             <i class="fas fa-fw fa-newspaper"></i>{{ __('Messages') }}
         </a>

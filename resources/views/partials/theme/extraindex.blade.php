@@ -62,7 +62,9 @@
             <div class="col-lg-4 remove-padding">
                 <div class="left d-flex justify-content-center">
                     <a class="banner-effect hover-img-zoom" href="{{ $img->link }}" target="_blank">
-                        <img src="{{asset('assets/images/banners/'.$img->photo)}}" alt="" class="lazy">
+                        {{-- <div class="showimg"
+                            style="background-image: url({{asset('assets/images/banners/'.$img->photo)}});"></div> --}}
+                        <img src="{{asset('assets/images/banners/'.$img->photo)}}" alt="" class="lazy showimg">
                     </a>
                 </div>
             </div>
@@ -101,6 +103,29 @@
 </div>
 <!--==================== Top Products Section End ====================-->
 @endif
+
+<div class="full-row">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+                {{-- <span class="text-secondary pb-2 d-table tagline mx-auto text-uppercase text-center">{{
+                    __('Featured
+                    Products') }}</span> --}}
+                <h2 class="main-title mb60 text-center text-secondary mb30">{{ __('All Products') }}</h2>
+            </div>
+        </div>
+        <div class="products product-style-1">
+            <div
+                class="row  g-4 row-cols-xl-4 row-cols-md-3 row-cols-sm-2 row-cols-1 e-title-general e-title-hover-primary e-image-bg-light e-hover-image-zoom e-info-center">
+                @foreach($all_products as $prod)
+                <div class="col col-6">
+                    @include('partials.product.all-product')
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</div>
 
 @if($ps->deal_of_the_day==1)
 
@@ -429,11 +454,25 @@
                 </div> --}}
                 <div class="footer-widget media-widget mb-5">
                     <a href="https://www.tiktok.com">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAACI0lEQVRIie2VX0hTYRjGf9vZMuaKjKBpma1WqEl4UVRGWo3MDAZFxSAkyKT7Aq8yuhpKdBFkfzGiiyDossirKMwyg6JUKKgdGA3mtDA4jG3nfJ4ucmtb5+xfdFXP3fee531+3zkv3/ngvwrIkrnweDzrhRBDQAtgLzFLBUaFEN2hUCiYKlozHUKI20BbGeEs9OyWJGkos2jLMe0olLLEVQuAMv0FXdeNLDvzAQru/EDfFdxSjMmBfh7J74wsWRlWI0c+LU4qnG7fhq+nCyl7hIYqGZDSPv9hzgcGqNvS+ncAiUSCLv8Rrvb14nXUmvpyZ/CbqptbqN9/jArlG2+uX0zXh4/2kvBuosZZxVKpojxAo+8EzXs6OLO3iblwmGt3V6efzURnCFzux2m1Y80zC1NA5QoXjV4fFzo3MzZ4j+j4JFEthjtlWMhU5tV8ezQHrGzaSoNDY2JkjNE7D7gxNwHwC2B8BooHaIk4q6qcOO064/FpAJbVbcBm0VEUBaGJPwNE3r8iGJmlvXMXxwPn0Ebesq71IB31y5kcfsYn9XtRgKzpuN3urPdu2N7G/VuDOCsdxJMqdptEcOoDkbM3OfX5Iao+bxgqy3I6Ny8AYOOatfQc8lPjqkb7GCb8+CWXZl/zVcRNd50PkMTkf+Sw2BDoJPSC316VZXlRapF7kl+YdcV0rZhwLBbL88x17n1wEnjKz8ujVKm6rj8RQnSX0fsv6we6QbYjz/cvLQAAAABJRU5ErkJggg==">
+                        <img
+                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAACI0lEQVRIie2VX0hTYRjGf9vZMuaKjKBpma1WqEl4UVRGWo3MDAZFxSAkyKT7Aq8yuhpKdBFkfzGiiyDossirKMwyg6JUKKgdGA3mtDA4jG3nfJ4ucmtb5+xfdFXP3fee531+3zkv3/ngvwrIkrnweDzrhRBDQAtgLzFLBUaFEN2hUCiYKlozHUKI20BbGeEs9OyWJGkos2jLMe0olLLEVQuAMv0FXdeNLDvzAQru/EDfFdxSjMmBfh7J74wsWRlWI0c+LU4qnG7fhq+nCyl7hIYqGZDSPv9hzgcGqNvS+ncAiUSCLv8Rrvb14nXUmvpyZ/CbqptbqN9/jArlG2+uX0zXh4/2kvBuosZZxVKpojxAo+8EzXs6OLO3iblwmGt3V6efzURnCFzux2m1Y80zC1NA5QoXjV4fFzo3MzZ4j+j4JFEthjtlWMhU5tV8ezQHrGzaSoNDY2JkjNE7D7gxNwHwC2B8BooHaIk4q6qcOO064/FpAJbVbcBm0VEUBaGJPwNE3r8iGJmlvXMXxwPn0Ebesq71IB31y5kcfsYn9XtRgKzpuN3urPdu2N7G/VuDOCsdxJMqdptEcOoDkbM3OfX5Iao+bxgqy3I6Ny8AYOOatfQc8lPjqkb7GCb8+CWXZl/zVcRNd50PkMTkf+Sw2BDoJPSC316VZXlRapF7kl+YdcV0rZhwLBbL88x17n1wEnjKz8ujVKm6rj8RQnSX0fsv6we6QbYjz/cvLQAAAABJRU5ErkJggg==">
                     </a>
+
                     @foreach(DB::table('social_links')->where('user_id',0)->where('status',1)->get() as $link)
                     <a href="{{ $link->link }}"><i class="{{ $link->icon }}"></i></a>
                     @endforeach
+
+                    @php
+                    $isAvailable = $is_footer_ads;
+                    // dd($isAvailable);
+                    @endphp
+
+                    @if($isAvailable)
+                    <div class="bottomad">
+                        <img src="{{asset('assets/images/footers/'.$footer_banners[0]->photo)}}" class="lazy footerimg"
+                            style="width: 300px; height:200px;" />
+                    </div>
+                    @endif
                 </div>
             </div>
 

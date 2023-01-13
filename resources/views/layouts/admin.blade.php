@@ -43,6 +43,8 @@
 		<link href="{{asset('assets/admin/css/common.css')}}" rel="stylesheet" />
 		@endif
 
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+
 		@yield('styles')
 
 	</head>
@@ -191,6 +193,7 @@
 
 		<!-- Dashboard Core -->
 		<script src="{{asset('assets/admin/js/vendors/jquery-1.12.4.min.js')}}"></script>
+		<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 		<script src="{{asset('assets/admin/js/vendors/vue.js')}}"></script>
 		<script src="{{asset('assets/admin/js/vendors/bootstrap.min.js')}}"></script>
 		<script src="{{asset('assets/admin/js/jqueryui.min.js')}}"></script>

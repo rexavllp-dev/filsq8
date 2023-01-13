@@ -374,6 +374,7 @@ class ProductController extends VendorBaseController
         $user = $this->user;
         $package = $user->subscribes()->latest('id')->first();
         $prods = $user->products()->latest('id')->get()->count();
+
         if(Generalsetting::find(1)->verify_product == 1)
         {
             if(!$user->checkStatus())
@@ -1038,6 +1039,7 @@ class ProductController extends VendorBaseController
              }
            }
          }
+
          if (!empty($request->childcategory_id)) {
            $childAttrs = Attribute::where('attributable_id', $request->childcategory_id)->where('attributable_type', 'App\Models\Childcategory')->get();
            if (!empty($childAttrs)) {
@@ -1068,7 +1070,7 @@ class ProductController extends VendorBaseController
 
         $data->slug = Str::slug($data->name,'-').'-'.strtolower($data->sku);
      
-         $data->update($input);
+        $data->update($input);
         //-- Logic Section Ends
 
         //--- Redirect Section

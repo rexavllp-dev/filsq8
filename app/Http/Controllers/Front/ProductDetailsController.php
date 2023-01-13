@@ -90,6 +90,7 @@ class ProductDetailsController extends FrontBaseController
             $vendors = Product::where('status', '=', 1)->where('user_id', '=', 0)->where('language_id', $this->language->id)
                 ->take($gs->seller_product_count)->get();
         }
+        // dd($productt);
         return view('frontend.product', compact('productt', 'curr', 'vendors', 'affilate_user', 'other_affiliates' ));
 
     }

@@ -68,11 +68,11 @@
                                               <div class="form-group">
                                                   <div class="col-sm-12">
                                                    <div class="row">
-                                                      <div class="col-sm-4">
+                                                      <div class="col-sm-4 d-none">
                                                       <label class="control-label" for="subtitle_size">{{ __('Font Size') }} *<span> {{ __('(px)') }}</span></label>
                                                       <input class="form-control" type="number" name="subtitle_size" value="" min="1">
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-12 d-none">
                                                         <label class="control-label" for="subtitle_color">{{ __('Font Color') }} *</label>
                                                       <div class="input-group colorpicker-component cp">
                                                         <input type="text" name="subtitle_color" value="#000000"  class="form-control cp"  />
@@ -80,7 +80,7 @@
                                                       </div>
 
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 d-none">
                                                         <label class="control-label" for="subtitle_anime">{{ __('Animation') }} *</label>
                                                           <select class="form-control" id="subtitle_anime" name="subtitle_anime">
                                                                 <option value="fadeIn">fadeIn</option>
@@ -123,13 +123,13 @@
 
 
                                               <div class="form-group">
-                                                  <div class="col-sm-12">
+                                                  <div class="col-sm-12 d-none">
                                                    <div class="row">
                                                       <div class="col-sm-4">
                                                       <label class="control-label" for="title_size">{{ __('Font Size') }} *<span> {{ __('(px)') }}</span></label>
                                                       <input class="form-control" type="number" name="title_size" value="" min="1">
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-12 d-none">
                                                         <label class="control-label" for="title_color">{{ __('Font Color') }} *</label>
                                                       <div class="input-group colorpicker-component cp">
                                                         <input type="text" name="title_color" value="#000000"  class="form-control cp"  />
@@ -137,7 +137,7 @@
                                                       </div>
 
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 d-none">
                                                         <label class="control-label" for="title_anime">{{ __('Animation') }} *</label>
                                                           <select class="form-control" id="title_anime" name="title_anime">
                                                                 <option value="fadeIn">fadeIn</option>
@@ -180,13 +180,13 @@
 
 
                                               <div class="form-group">
-                                                  <div class="col-sm-12">
+                                                  <div class="col-sm-12 d-none">
                                                    <div class="row">
                                                       <div class="col-sm-4">
                                                       <label class="control-label" for="details_size">{{ __('Font Size') }} *<span> {{ __('(px)') }}</span></label>
                                                       <input class="form-control" type="number" name="details_size" value="" min="1">
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 d-none">
                                                         <label class="control-label" for="details_color">{{ __('Font Color') }} *</label>
                                                       <div class="input-group colorpicker-component cp">
                                                         <input type="text" name="details_color" value="#000000"  class="form-control cp"  />
@@ -194,7 +194,7 @@
                                                       </div>
 
                                                     </div>
-                                                    <div class="col-sm-4">
+                                                    <div class="col-sm-4 d-none">
                                                         <label class="control-label" for="details_anime">{{ __('Animation') }} *</label>
                                                           <select class="form-control" id="details_anime" name="details_anime">
                                                                 <option value="fadeIn">fadeIn</option>
